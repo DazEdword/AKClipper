@@ -1,0 +1,83 @@
+﻿<Window x:Class="ClippingManager.DatabaseWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClippingManager"       
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        UseLayoutRounding="True"
+        MinHeight="500" MinWidth="800"
+        Title="Browse Clippings" Height="500" Width="800" Topmost="True" Closing="Window_Closing" Loaded="Window_Loaded" Background="#FFE4E4E4" ShowInTaskbar="False" >
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="125*"/>
+            <ColumnDefinition Width="17*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <DataGrid x:Name="dataGrid" Margin="10,15,10,10" CanUserReorderColumns="True" CanUserResizeColumns="True" CanUserSortColumns="True" IsReadOnly="True" IsTextSearchCaseSensitive="True" SelectionUnit ="CellOrRowHeader" CanUserResizeRows="False" AlternatingRowBackground="Gainsboro"  AlternationCount="2" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn" Grid.Row="1" Grid.ColumnSpan="2" >
+
+            
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Command="Copy"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+
+            <DataGrid.Resources>
+                <DataTemplate x:Key="wrappedText">
+                    <TextBlock Text="{Binding}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Center"/>
+                </DataTemplate>
+            </DataGrid.Resources>
+
+            <DataGrid.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Expander Header="{Binding Name}" IsExpanded="True">
+                                            <ItemsPresenter />
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
+        </DataGrid>
+        <Grid Margin="10,10,0,0" HorizontalAlignment="Left" Width="360" Height="85" VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+
+            <TextBox x:Name="filterTextBox" Height="23" Margin="61,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" SelectionOpacity="-2" HorizontalAlignment="Left" Width="231" KeyDown="FilterTextBox_KeyDown" FontStyle="Italic" GotFocus="FilterTextBox_GotFocus"/>
+            <ComboBox x:Name="categoryDropdown" HorizontalAlignment="Left" Margin="61,47,0,0" VerticalAlignment="Top" Width="144" IsReadOnly="True" Loaded="CategoryDropdown_Loaded" SelectionChanged="CategoryDropdown_SelectionChanged"/>
+            <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Search:" Width="46" BorderThickness="0" IsReadOnly="True" RenderTransformOrigin="0.587,1.565" Background="#FFE4E4E4" Margin="10,10,0,0" Height="59" VerticalAlignment="Top"/>
+            <TextBox x:Name="textBox_Copy1" HorizontalAlignment="Left" Height="23" Margin="10,47,0,0" TextWrapping="Wrap" Text="Filter by:" VerticalAlignment="Top" Width="50" BorderThickness="0" IsReadOnly="True" Background="#FFE4E4E4" />
+            <Button x:Name="Delete_Button" Content="Clear" BorderBrush="#FFABADB3" Click="Delete_Button_Click" Margin="297,10,0,0" Height="23" VerticalAlignment="Top" Background="White" HorizontalAlignment="Left" Width="53"  />
+
+
+        </Grid>
+        <Grid Margin="375,20,10,0" Grid.ColumnSpan="2">
+            <CheckBox x:Name="exportTXTBox" Content=".TXT" Margin="0,3,97,0" VerticalAlignment="Top" IsChecked="True" Checked="ExportTXTBox_Checked" Unchecked="ExportTXTBox_Unchecked" HorizontalAlignment="Right" Width="42"/>
+            <CheckBox x:Name="exportCSVBox" Content=".CSV" Margin="0,28,95,0" VerticalAlignment="Top" IsChecked="True" Checked="ExportCSVBox_Checked" Unchecked="ExportCSVBox_Unchecked" HorizontalAlignment="Right" Width="44"/>
+            <CheckBox x:Name="exportHTMLBox" Content=".HTML" Margin="0,50,85,0" VerticalAlignment="Top" IsChecked="True" Checked="ExportHTMLBox_Checked" Unchecked="ExportHTMLBox_Unchecked" RenderTransformOrigin="0.444,0.667" HorizontalAlignment="Right" Width="54"/>
+            <TextBlock x:Name="textBlock" TextWrapping="Wrap" VerticalAlignment="Top"  Height="75" Margin="5,0,0,0" HorizontalAlignment="Left" Width="235"><Run Text="Select all the formats you want your "/><Run Text="filtered"/><Run Text=" data"/><Run Text=" to be exported, click the 'Export' button"/><Run Text=", select a target folder"/><Run Text=" in the dialog"/><Run Text=" prompt"/><Run Text=" and click &quot;OK&quot; to "/><Run Text="finish"/><Run Text=" the export."/><Run Text=" "/></TextBlock>
+            <Button x:Name="exportButton" Content="Export" Margin="0,3,0,0" VerticalAlignment="Top" Height="65" Click="ExportButton_Click" Background="White" HorizontalAlignment="Right" Width="71"/>
+        </Grid>
+    </Grid>
+</Window>
