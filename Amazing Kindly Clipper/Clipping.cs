@@ -48,6 +48,11 @@ namespace ClippingManager
                 return null;
            }
         }
+
+        public static bool IsNullOrEmpty(Clipping item)
+        {
+            return item == null || string.IsNullOrEmpty(item.Text);
+        }
         
     }
 }

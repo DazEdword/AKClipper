@@ -32,18 +32,9 @@ namespace ClippingManager
         internal DateTime defaultDateAdded;
         internal string defaultText;
 
-        public virtual IEnumerable<Clipping> Parse(string path)
+        public virtual IEnumerable<Clipping> Parse(string path) //Directly parse the stream matching the format of the .txt file. 
         {
-            using (var stream = new FileStream(path, FileMode.Open)) //Open stream via path to the .txt file.
-            {
-                return Parse(stream);
-            }
-        }
-
-        public virtual IEnumerable<Clipping> Parse(Stream stream) //Directly parse the stream matching the format of the .txt file. 
-        {
-            var clippings = new Collection<Clipping>();
-
+            var stream = new FileStream(path, FileMode.Open); //Open stream via path to the .txt file.
             using (var sr = new StreamReader(stream))
             {
                 int lineNumber = 0;
@@ -52,26 +43,26 @@ namespace ClippingManager
                 Clipping clipping = new Clipping();
                 FormatType format = Options.FormatInUse;
 
-                try
+                while ((line = sr.ReadLine()) != null)
                 {
-                    while ((line = sr.ReadLine()) != null)
+                    lineNumber++;
+
+                    if (line == ClippingSeparator)
                     {
-                        lineNumber++;
+                        yield return clipping;
+                        clippingLineNumber = 0;
+                        clipping = new Clipping();
+                    }
+                    else
+                    {
+                        clippingLineNumber++;
+                    }
 
-                        if (line == ClippingSeparator)
-                        {
-                            clippings.Add(clipping);
-                            clippingLineNumber = 0;
-                            clipping = new Clipping();
-                        }
-                        else
-                        {
-                            clippingLineNumber++;
-                        }
+                    /*Calling to the different methods parsing the different lines.
+                    Line 3 is irrelevant (just white space acting as a separator) and thus is not included in the logic. */
 
-                        /*Calling to the different methods parsing the different lines.
-                        Line 3 is irrelevant (just white space acting as a separator) and thus is not included in the logic. */
-
+                    try
+                    {
                         switch (clippingLineNumber)
                         {
                             case 1:
@@ -84,14 +75,14 @@ namespace ClippingManager
                                 ParseLine4(line, clipping);
                                 break;
                         }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        new Exception("Error encountered parsing line " + lineNumber + ": " + ex.Message, ex);
                     }
                 }
-                catch (Exception ex)
-                {
-                    new Exception("Error encountered parsing line " + lineNumber + ": " + ex.Message, ex);
-                }
             }
-            return clippings;
         }
 
         public virtual void ParseLine1(string line, Clipping clipping)

@@ -363,18 +363,18 @@ namespace ClippingManager
 
             try
             {
-                var rawClippings = parserToUse.Parse(path).ToList(); //Collection copy, will later be used to count number of empty clippings. 
-                classwideRawCount = rawClippings.Count();
-                var clippings = parserToUse.Parse(path).ToList();
+                var clippings = parserToUse.Parse(path);
 
+                classwideRawCount = 0;
                 foreach (var item in clippings)
                 {
                     //Adding clippings to the currently used, dictionary database.
-
-                    if (item.Text != "" || item.Text == null)
+                    if (!Clipping.IsNullOrEmpty(item))
                     {
                         ClippingDatabase.AddClipping(item);
                     }
+                    ++classwideRawCount;
+
                 }
 
                 //Now adding clippings to the layout'ed, list database. 
