@@ -1,14 +1,12 @@
 ﻿using System.Globalization;
 using System.Text;
 
-namespace ClippingManager
-{
+namespace ClippingManager {
     /// <summary>
     /// Global options belong here.
     /// </summary>
 
-    public static class Options
-    {
+    public static class Options {
         private static string language = null;
         private static CultureInfo currentCulture;
         private static CultureInfo engCulture;
@@ -18,8 +16,7 @@ namespace ClippingManager
         private static bool filtersActive;
         private static FormatType formatInUse;
 
-        static Options()
-        {
+        static Options() {
             language = null;
             engCulture = new CultureInfo("en-GB");
             spaCulture = new CultureInfo("es-ES");
@@ -29,101 +26,76 @@ namespace ClippingManager
             formatInUse = null;
         }
 
-        public static string Language
-        {
-            get
-            {
+        public static string Language {
+            get {
                 return language;
             }
-            set
-            {
+            set {
                 language = value;
             }
         }
 
-        public static CultureInfo CurrentCulture
-        {
-            get
-            {
+        public static CultureInfo CurrentCulture {
+            get {
                 return currentCulture;
             }
-            set
-            {
+            set {
                 currentCulture = value;
             }
         }
 
-        public static CultureInfo SpaCulture
-        {
-            get
-            {
+        public static CultureInfo SpaCulture {
+            get {
                 return spaCulture;
             }
-            set
-            {
+            set {
                 SpaCulture = value;
             }
         }
 
-        public static CultureInfo EngCulture
-        {
-            get
-            {
+        public static CultureInfo EngCulture {
+            get {
                 return engCulture;
             }
-            set
-            {
+            set {
                 EngCulture = value;
             }
         }
 
-        public static string TextToParsePath
-        {
-            get
-            {
+        public static string TextToParsePath {
+            get {
                 return textToParsePath;
             }
-            set
-            {
+            set {
                 textToParsePath = value;
             }
         }
-    
-        public static Encoding FileEncoding
-        {
-            get
-            {
+
+        public static Encoding FileEncoding {
+            get {
                 return fileEncoding;
             }
-            set
-            {
+            set {
                 fileEncoding = value;
             }
         }
 
-        public static bool FiltersActive
-        {
-            get
-            {
+        public static bool FiltersActive {
+            get {
                 return filtersActive;
             }
-            set
-            {
+            set {
                 filtersActive = value;
             }
-        }  
-             
-        public static FormatType FormatInUse
-        {
-            get
-            {
+        }
+
+        public static FormatType FormatInUse {
+            get {
                 return formatInUse;
             }
-            set
-            {
+            set {
                 formatInUse = value;
             }
         }
-    
     }
 }

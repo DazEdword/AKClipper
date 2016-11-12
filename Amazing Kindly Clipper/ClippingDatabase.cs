@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace ClippingManager
-{
-    public static class ClippingDatabase
-    {
+namespace ClippingManager {
+
+    public static class ClippingDatabase {
         public static List<Clipping> finalClippingsList = new List<Clipping>();
         public static Dictionary<int, Clipping> numberedClippings = new Dictionary<int, Clipping>();
 
@@ -16,9 +11,8 @@ namespace ClippingManager
         /// </summary>
         /// <param name="clipping">The clipping to add to the database</param>
         /// <returns>The unique identifier corresponding to this clipping</returns>
-        
-        public static int AddClipping(Clipping clipping)
-        {
+
+        public static int AddClipping(Clipping clipping) {
             var id = numberedClippings.Keys.Count;
 
             numberedClippings.Add(id, clipping);
@@ -31,9 +25,8 @@ namespace ClippingManager
         /// </summary>
         /// <param name="id">Unique identifier (obtained as the return result of the AddClipping method)</param>
         /// <returns>The clipping associated with the identifier</returns>
-       
-        public static Clipping GetClipping(int id)
-        {
+
+        public static Clipping GetClipping(int id) {
             return numberedClippings[id];
         }
     }

@@ -3,10 +3,9 @@ using System.Globalization;
 using System.Linq;
 using System.Windows;
 
-namespace ClippingManager
-{
-    public class MyClippingsParserSPA : MyClippingsParser
-    {
+namespace ClippingManager {
+
+    public class MyClippingsParserSPA : MyClippingsParser {
         public string[] typeEdPageKeys;
         public string[] typeEdLocationKeys;
         public string[] typeRubPageKeys;
@@ -15,12 +14,11 @@ namespace ClippingManager
         public FormatType typeRub;
         public FormatType[] spaFormats;
 
-        private static readonly MyClippingsParserSPA myParserSPA = new MyClippingsParserSPA(); //Singleton instantiation. 
+        private static readonly MyClippingsParserSPA myParserSPA = new MyClippingsParserSPA(); //Singleton instantiation.
 
         /* Following three methods: simple, thread safe singleton implementation*/
 
-        private MyClippingsParserSPA()
-        {
+        private MyClippingsParserSPA() {
             defaultBookName = "Título desconocido";
             defaultAuthor = "Autor desconocido";
             defaultText = "";
@@ -28,7 +26,7 @@ namespace ClippingManager
             defaultPage = "";
             defaultDateAdded = new DateTime();
 
-            typeEdPageKeys = new string[] { " en la página " };   //Manually instancing an array of keys per type to be added to struct constructor. Modifyable. 
+            typeEdPageKeys = new string[] { " en la página " };   //Manually instancing an array of keys per type to be added to struct constructor. Modifyable.
             typeEdLocationKeys = new string[] { " Posición " };
 
             typeRubPageKeys = new string[] { " en la página " };
@@ -38,7 +36,7 @@ namespace ClippingManager
                 new FormatType.KeyPositionLang[]
                 {
                     new FormatType.KeyPositionLang("Mi", 2, "Spanish"),
-                    new FormatType.KeyPositionLang("Tu", 2, "Spanish") 
+                    new FormatType.KeyPositionLang("Tu", 2, "Spanish")
                 }, 8, 4, 6, 6, 9, 13);
 
             typeRub = new FormatType("typeRub", typeRubPageKeys, typeRubLocationKeys, 1,
@@ -47,24 +45,20 @@ namespace ClippingManager
                     new FormatType.KeyPositionLang("-", 1, "Spanish"),
                 }, 7, 3, 5, 5, 8, 13);
 
-            spaFormats = new FormatType[] {typeEd, typeRub};
+            spaFormats = new FormatType[] { typeEd, typeRub };
         }
 
-        public static MyClippingsParserSPA MyParserSPA
-        {
-            get
-            {
+        public static MyClippingsParserSPA MyParserSPA {
+            get {
                 return myParserSPA;
             }
         }
 
         // Explicit static constructor to tell C# compiler not to mark type as 'beforefieldinit'
-        static MyClippingsParserSPA()
-        {
+        static MyClippingsParserSPA() {
         }
 
-        public override void ParseLine2(string line, Clipping clipping, FormatType format)
-        {
+        public override void ParseLine2(string line, Clipping clipping, FormatType format) {
             var split = line.Split(' ');
             var fileType = "";
 
@@ -73,32 +67,30 @@ namespace ClippingManager
 
             //Detect type of file.
 
-            try
-            {
-                if (!String.IsNullOrEmpty(format.ID))
-                {
+            try {
+                if (!String.IsNullOrEmpty(format.ID)) {
                     fileType = format.ID;
                 }
             }
-
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 MessageBox.Show(ex.Message, "Can't identify TXT format.");
             }
 
             var clippingType = split[format.clippingTypePosition];
 
-            switch (clippingType.ToLower())
-            {
+            switch (clippingType.ToLower()) {
                 case "subrayado":
                     clipping.ClippingType = ClippingTypeEnum.Subrayado;
                     break;
+
                 case "nota":
                     clipping.ClippingType = ClippingTypeEnum.Notas;
                     break;
+
                 case "marcador":
                     clipping.ClippingType = ClippingTypeEnum.Marcador;
                     break;
+
                 default:
                     clipping.ClippingType = ClippingTypeEnum.NoReconocido;
                     break;
@@ -113,20 +105,16 @@ namespace ClippingManager
 
             bool isSubtypeKyuni = false;
 
-            if (split[1] == "Tu")
-            {
+            if (split[1] == "Tu") {
                 isSubtypeKyuni = true;
             }
 
-            if (isSubtypeKyuni)
-            {
+            if (isSubtypeKyuni) {
                 dateIndex = 10;
             }
 
-            try
-            {
-                if (hasPageNumber)
-                {
+            try {
+                if (hasPageNumber) {
                     var pageNumber = split[pageIndex];
                     clipping.Page = pageNumber;
 
@@ -134,22 +122,17 @@ namespace ClippingManager
                     dateIndex = hasLocation ? format.hasPageHasLocationDateIndex : format.hasPageDateIndex;
                 }
             }
-
-            catch (Exception)
-            {
+            catch (Exception) {
                 clipping.Page = defaultPage;
             }
 
-            try
-            {
-                if (hasLocation)
-                {
+            try {
+                if (hasLocation) {
                     var location = split[locationIndex];
                     clipping.Location = location;
                 }
             }
-            catch (Exception)
-            {
+            catch (Exception) {
                 clipping.Location = defaultLocation;
             }
 
@@ -160,28 +143,21 @@ namespace ClippingManager
             string dateAddedStringSPA = String.Join(" ", split[dateIndex], split[dateIndex + 1], split[dateIndex + 3], split[dateIndex + 5], split[dateIndex + 6]);
             string input = dateAddedStringSPA;  //domingo 2 septiembre 2012, 23:54:20 Case Edu //miércoles 29 abril 2015 15H08 case ruber
 
-            try
-            {
-
+            try {
                 /*Dates have to be parsed and converted to a dateTime format. TryParseExact should do the trick as long as
                  *the proper format is added to the formats array.  */
 
                 DateTime dt;
-                if (DateTime.TryParseExact(input, formats, Options.SpaCulture, DateTimeStyles.None, out dt))
-                {
-                    if (dt < DateTime.Now)
-                    {
+                if (DateTime.TryParseExact(input, formats, Options.SpaCulture, DateTimeStyles.None, out dt)) {
+                    if (dt < DateTime.Now) {
                         clipping.DateAdded = dt;
                     }
                 }
             }
-
-            catch (Exception ex)
-            {
+            catch (Exception ex) {
                 clipping.DateAdded = defaultDateAdded;
                 new Exception("Error encountered adding date: " + ex.Message, ex);
-            }          
-            }         
-      }
-  }
-
+            }
+        }
+    }
+}

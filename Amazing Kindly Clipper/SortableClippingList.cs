@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
-namespace ClippingManager
-{
-    public class SortableClippingList : ObservableCollection<Clipping>
-    {
+namespace ClippingManager {
+
+    public class SortableClippingList : ObservableCollection<Clipping> {
         // Creating the Tasks collection in this fashion enables data binding from XAML.
     }
 }
-
-

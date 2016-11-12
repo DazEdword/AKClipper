@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace ClippingManager
-{
-    public static class FormatTypeDatabase
-    {
+namespace ClippingManager {
+
+    public static class FormatTypeDatabase {
         public static List<FormatType> formatTypeList = new List<FormatType>();
         public static Dictionary<FormatType.KeyPositionLang, FormatType> FormatDictionary = new Dictionary<FormatType.KeyPositionLang, FormatType>();
         public static bool isLastFormatSafeMatch = false;
@@ -20,37 +15,29 @@ namespace ClippingManager
         /// </summary>
         /// <param name="formatType">The formatType to add to the database</param>
 
-        public static void PopulateFormatList(FormatType[] formatLanguagePack)
-        {
-            foreach (FormatType formatInstance in formatLanguagePack)
-            {
+        public static void PopulateFormatList(FormatType[] formatLanguagePack) {
+            foreach (FormatType formatInstance in formatLanguagePack) {
                 formatTypeList.Add(formatInstance);
             }
         }
 
-        public static void GenerateFormatTypeDatabase()
-        {
-            foreach (FormatType formatType in formatTypeList)
-            {
-                foreach (var keypair in formatType.keyPositions)
-                {
+        public static void GenerateFormatTypeDatabase() {
+            foreach (FormatType formatType in formatTypeList) {
+                foreach (var keypair in formatType.keyPositions) {
                     FormatDictionary.Add(keypair, formatType);
                 }
             }
         }
 
-        public static void AddFormat(FormatType formatInstance)
-        {
-            foreach (var keypair in formatInstance.keyPositions)
-            {
+        public static void AddFormat(FormatType formatInstance) {
+            foreach (var keypair in formatInstance.keyPositions) {
                 FormatDictionary.Add(keypair, formatInstance);
-            }         
+            }
         }
 
-        public static FormatType GetFormat(FormatType.KeyPositionLang KeyPosition, out bool isSafe)
-        {
-            /* This method compares they keyword and positions of a KeyPosition objects with the Keys (keyword + position) 
-             * in FormatDictionary. When it finds two coinciding keys (both values in each key are equal to both values in dict 
+        public static FormatType GetFormat(FormatType.KeyPositionLang KeyPosition, out bool isSafe) {
+            /* This method compares they keyword and positions of a KeyPosition objects with the Keys (keyword + position)
+             * in FormatDictionary. When it finds two coinciding keys (both values in each key are equal to both values in dict
              * it returns the correct FormatType. Otherwise returns null. Currently Called from MainWindow. */
 
             var importedKeyPos = KeyPosition;
@@ -59,63 +46,54 @@ namespace ClippingManager
             var importedLanguage = KeyPosition.Language;
 
             bool possibleFormatFound = false;
-            bool safeFormatFound = false;      
+            bool safeFormatFound = false;
             FormatType possibleMatch = null;
             FormatType safeMatch = null;
 
-            foreach (var keywordPosLangKeyring in FormatDictionary.Keys)
-            {
-                if (safeFormatFound != true)
-                {
+            foreach (var keywordPosLangKeyring in FormatDictionary.Keys) {
+                if (safeFormatFound != true) {
                     var dictionaryKeyPos = keywordPosLangKeyring;
                     var dictionaryKeyword = dictionaryKeyPos.Keyword;
                     var dictionaryPosition = dictionaryKeyPos.Position;
                     var dictionaryLanguage = dictionaryKeyPos.Language;
 
                     if ((importedKeyword == dictionaryKeyword) && (importedPosition == dictionaryPosition)
-                        && importedLanguage == dictionaryLanguage)
-                    {
-                        switch (importedPosition)
-                        {
-                            case 1: //Keywords in position 1 catch base formats, while position 2 are subtypes (safe). 
+                        && importedLanguage == dictionaryLanguage) {
+                        switch (importedPosition) {
+                            case 1: //Keywords in position 1 catch base formats, while position 2 are subtypes (safe).
                                 possibleMatch = FormatDictionary[keywordPosLangKeyring];
-                                possibleFormatFound = true; 
+                                possibleFormatFound = true;
                                 break;
+
                             case 2:
                                 safeMatch = FormatDictionary[keywordPosLangKeyring];
                                 safeFormatFound = true;
-                                break;                              
-                        }                      
+                                break;
+                        }
                     }
 
-                    if (safeFormatFound)
-                    {
+                    if (safeFormatFound) {
                         break;
                     }
                 }
-                /* Formerly used to detect last entry in dictionary, now unnecessary due to foreach loop breaks. 
+                /* Formerly used to detect last entry in dictionary, now unnecessary due to foreach loop breaks.
                 if (keywordPosLangKeyring.Equals(FormatDictionary.Last().Value) && (safeMatch == null))
                 {
                     isLastFormatSafeMatch = false;
                     return possibleMatch;
-                }       
+                }
                 */
             }
 
-            if (safeFormatFound == true)
-            {
+            if (safeFormatFound == true) {
                 isSafe = true;
                 return safeMatch;
             }
-
-            else if ((safeFormatFound == false) && (possibleFormatFound == true))
-            {
+            else if ((safeFormatFound == false) && (possibleFormatFound == true)) {
                 isSafe = false;
                 return possibleMatch;
             }
-
-            else
-            {
+            else {
                 isSafe = false;
                 return null;
             }

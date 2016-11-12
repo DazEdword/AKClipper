@@ -7,11 +7,11 @@
         mc:Ignorable="d"
         Title="Amazing Kindly Clipper" Height="327" Width="525" WindowStartupLocation="CenterScreen" Background="#FFE4E4E4"
         MinHeight="425" MinWidth="525">
-    <Grid Margin="10,10,10,2" >
+    <Grid Margin="10,10,10,2">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Rectangle Grid.Column="0"
@@ -29,21 +29,18 @@
                Stroke="Gray"
                Fill="Transparent" Margin="0,0,0,10" />
 
-
-
-
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="16" Margin="10,5,0,0" Width="477">
             <TextBlock.Background>
-                <ImageBrush/>
-            </TextBlock.Background><Run Text="Type or browse "/><Run Text="the location of your 'My Clippings - Kindle.txt"/><Run Text="'"/><Run Text=" file"/><Run Text=" to open it"/><Run Text=".                    "/></TextBlock>
-        <RadioButton x:Name="radioButtonA" Content="English" Margin="0,11,117,48" Checked="radioButtonA_Checked" Grid.Row="2" HorizontalAlignment="Right" Width="65"/>
-        <RadioButton x:Name="radioButtonB" Content="Spanish" Margin="0,31,117,28" Checked="radioButtonB_Checked" Grid.Row="2" HorizontalAlignment="Right" Width="65"/>
-        <Button x:Name="browseButton" Content="Browse file" Margin="0,28,10,0" Click="browseButton_Click" RenderTransformOrigin="0.5,0.5" Background="White" Height="26" VerticalAlignment="Top" HorizontalAlignment="Right" Width="80"/>
-        <TextBox x:Name="pathBox" Margin="10,29,0,17" TextWrapping="Wrap" Text="" HorizontalAlignment="Left" Width="370"/>
-        <Label x:Name="label" Content="Select the language of your Kindle device &#xA;and click the &quot;Start Parsing&quot; button." Margin="10,6,0,10" Grid.Row="2" HorizontalAlignment="Left" Width="230"/>
-        <Button x:Name="buttonParse" Content="Start Parsing" Margin="0,11,7,28" Grid.Row="2" Click="buttonParse_Click" Background="White" HorizontalAlignment="Right" Width="80"/>
+                <ImageBrush />
+            </TextBlock.Background><Run Text="Type or browse " /><Run Text="the location of your 'My Clippings - Kindle.txt" /><Run Text="'" /><Run Text=" file" /><Run Text=" to open it" /><Run Text=".                    " /></TextBlock>
+        <RadioButton x:Name="radioButtonA" Content="English" Margin="0,11,117,48" Checked="radioButtonA_Checked" Grid.Row="2" HorizontalAlignment="Right" Width="65" />
+        <RadioButton x:Name="radioButtonB" Content="Spanish" Margin="0,31,117,28" Checked="radioButtonB_Checked" Grid.Row="2" HorizontalAlignment="Right" Width="65" />
+        <Button x:Name="browseButton" Content="Browse file" Margin="0,28,10,0" Click="browseButton_Click" RenderTransformOrigin="0.5,0.5" Background="White" Height="26" VerticalAlignment="Top" HorizontalAlignment="Right" Width="80" />
+        <TextBox x:Name="pathBox" Margin="10,29,0,17" TextWrapping="Wrap" Text="" HorizontalAlignment="Left" Width="370" />
+        <Label x:Name="label" Content="Select the language of your Kindle device &#xA;and click the &quot;Start Parsing&quot; button." Margin="10,6,0,10" Grid.Row="2" HorizontalAlignment="Left" Width="230" />
+        <Button x:Name="buttonParse" Content="Start Parsing" Margin="0,11,7,28" Grid.Row="2" Click="buttonParse_Click" Background="White" HorizontalAlignment="Right" Width="80" />
         <ScrollViewer x:Name="previewScroll" Margin="0,10" Background="White" Grid.Row="1">
-            <TextBox x:Name="filePreview" TextWrapping="Wrap" Text="A preview of your .txt will appear here." HorizontalAlignment="Left" Width="443" Opacity="0.75" Panel.ZIndex="-4" VerticalAlignment="Top" Background="White" IsReadOnly="True" BorderBrush="{x:Null}"/>
+            <TextBox x:Name="filePreview" TextWrapping="Wrap" Text="A preview of your .txt will appear here." HorizontalAlignment="Left" Width="443" Opacity="0.75" Panel.ZIndex="-4" VerticalAlignment="Top" Background="White" IsReadOnly="True" BorderBrush="{x:Null}" />
         </ScrollViewer>
     </Grid>
 </Window>
