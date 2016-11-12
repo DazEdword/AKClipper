@@ -54,7 +54,7 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>AmazingClip.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\AmazingClip.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>B4C9A989CB34636DB620A698C56F24F9208053E6</ManifestCertificateThumbprint>
@@ -96,19 +96,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="FormatType.cs" />
-    <Compile Include="FormatTypeDatabase.cs" />
-    <Compile Include="SortableClippingList.cs" />
+    <Compile Include="Clippings\FormatType.cs" />
+    <Compile Include="Clippings\FormatTypeDatabase.cs" />
+    <Compile Include="Clippings\SortableClippingList.cs" />
     <Compile Include="_unusedCode.cs" />
-    <Page Include="DatabaseWindow.xaml">
+    <Page Include="GUI\DatabaseWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LoadingWindow.xaml">
+    <Page Include="GUI\LoadingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="GUI\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -116,24 +116,24 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Clipping.cs" />
-    <Compile Include="ClippingDatabase.cs" />
-    <Compile Include="ClippingTypeEnum.cs" />
-    <Compile Include="DatabaseWindow.xaml.cs">
+    <Compile Include="Clippings\Clipping.cs" />
+    <Compile Include="Clippings\ClippingDatabase.cs" />
+    <Compile Include="Clippings\ClippingTypeEnum.cs" />
+    <Compile Include="GUI\DatabaseWindow.xaml.cs">
       <DependentUpon>DatabaseWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LoadingWindow.xaml.cs">
+    <Compile Include="GUI\LoadingWindow.xaml.cs">
       <DependentUpon>LoadingWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="GUI\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyClippingsParser.cs" />
-    <Compile Include="MyClippingsParserENG.cs" />
-    <Compile Include="MyClippingsParserSPA.cs" />
+    <Compile Include="Parsers\MyClippingsParser.cs" />
+    <Compile Include="Parsers\MyClippingsParserENG.cs" />
+    <Compile Include="Parsers\MyClippingsParserSPA.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -176,7 +176,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="AmazingClip.ico" />
+    <Resource Include="Resources\AmazingClip.ico" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="IWshRuntimeLibrary">
