@@ -22,8 +22,9 @@ namespace ClippingManager {
 
         private MyClippingsParserENG parserENG;
         private MyClippingsParserSPA parserSPA;
-        private MyClippingsParser parserToUse;
-        private FormatType formatToUse;
+        private MyClippingsParser setParser;
+        private FormatType setFormat;
+        private ParserController parserController;
         private Encoding encoding; //Using UTF8 encoding by default here as defined in Options, but that can be changed.
 
         private string textSample;  //Text sample only stores critical second line of text.
@@ -36,15 +37,17 @@ namespace ClippingManager {
         private LoadingWindow LW;
 
         public MainWindow() {
-            parserENG = MyClippingsParserENG.MyParserENG; //Thread-safe, singleton instantiation of the two parsers implemented through the two subclasses.
-            parserSPA = MyClippingsParserSPA.MyParserSPA;
+            parserController = new ParserController();
+            //TODO Deprecate after refactoring
+            parserENG = parserController.parserENG;
+            parserSPA = parserController.parserSPA; 
 
             FormatTypeDatabase.PopulateFormatList(parserENG.engFormats);
             FormatTypeDatabase.PopulateFormatList(parserSPA.spaFormats);
             FormatTypeDatabase.GenerateFormatTypeDatabase(); //Methods generating a Dictionary of FormatTypes on execution.
 
-            parserToUse = null;
-            formatToUse = null; //For debugging purposes you can manually change this to point to a given type, using parserInstance.Type.
+            setParser = parserController.setParser;
+            setFormat = parserController.setFormat; //For debugging purposes you can manually change this to point to a given type, using parserInstance.Type.
 
             encoding = Options.FileEncoding;
 
@@ -55,13 +58,12 @@ namespace ClippingManager {
             InitializeComponent();
         }
 
-        private bool CheckParserLanguageAndType(MyClippingsParser parser, string sample, string preview)
+        //Hard one, lots of interdependencies. 
+        private bool CheckParserLanguageAndType(MyClippingsParser parser, string sample, string preview) {
 
-        /// <summary> All parsers inherit from abstract class MyClippingsParser. Inheriting parsers need to be instantiated prior to use. At
-        /// the moment only ENG and SPA parsers are recognized and used, but the system should be easily extendable to other languages if needed.
-        /// </summary>
-
-        {
+            /// <summary> All parsers inherit from abstract class MyClippingsParser. Inheriting parsers need to be instantiated prior to use. At
+            /// the moment only ENG and SPA parsers are recognized and used, but the system should be easily extendable to other languages if needed.
+            /// </summary>
             try {
                 if (Options.Language != null) {
                     string textSample = sample;
@@ -74,17 +76,17 @@ namespace ClippingManager {
 
                     string textPreview = preview;
 
-                    PickFormatType(textPreview, languageToDetect);
+                    parserController.PickFormatType(textPreview, languageToDetect);
 
-                    formatToUse = Options.FormatInUse;
+                    setFormat = Options.FormatInUse;
 
                     //A last check that guarantees compatibility.
 
-                    if ((languageToDetect == "Spanish") && (parserToUse == parserSPA) && (formatToUse != null)) {
+                    if ((languageToDetect == "Spanish") && (setParser == parserSPA) && (setFormat != null)) {
                         return true;
                     }
 
-                    if ((languageToDetect == "English") && (parserToUse == parserENG) && (formatToUse != null)) {
+                    if ((languageToDetect == "English") && (setParser == parserENG) && (setFormat != null)) {
                         return true;
                     }
                     else {
@@ -102,59 +104,13 @@ namespace ClippingManager {
             }
         }
 
-        private void PickFormatType(string preview, string language) {
-            /// <summary>
-            /// FormatType detection that reads the .TXT preview (input is a text sample with a small number of clippings, separated by line jumps "\n"),
-            /// search for keywords, compare to formats in a dictionary and sets formatInUse accordingly. Note that said keywords are defined in each FormatType as
-            /// (a) Page, Location keyword arrays and (b) critical Keywords/Position/Language custom object. You get it once per .TXT file, and set the correct format
-            /// in Options, the same that will be later sent to Parser Line 2. Said format is standardized and its values taken from nice and neat parser types instances.
-            /// Parser in use is static, managed in options. Also note that both in Spanish and English formats there are two types defined by omission
-            /// (KeyValue <"Something", 1>) which signals base types (unsafe), and subtypes defined by the word in position 2, that are safe once recognized.
-            /// </summary>
-
-            int maxLineCounter = preview.Split('\n').Length;
-
-            using (var lineReader = new StringReader(preview)) {
-                lineReader.ReadLine(); //Skip first line, starts directly in line 1 where the critical keywords are.
-
-                string line = lineReader.ReadLine();
-                var split = line.Split(' ');
-                string keyWordPos1 = split[1];
-                string keyWordPos2 = split[2];
-                string detectedLanguage = language;
-                FormatType format = null;
-
-                FormatType.KeyPositionLang KeyPosition1 = new FormatType.KeyPositionLang(keyWordPos1, 1, language);
-                FormatType.KeyPositionLang KeyPosition2 = new FormatType.KeyPositionLang(keyWordPos2, 2, language);
-                FormatType.KeyPositionLang[] FormatKeyPosRead = new FormatType.KeyPositionLang[] { KeyPosition1, KeyPosition2 };
-
-                foreach (var KeyPos in FormatKeyPosRead) {
-                    bool isSafe = false;
-                    format = FormatTypeDatabase.GetFormat(KeyPos, out isSafe);
-
-                    if (format != null) {
-                        if (!isSafe) {
-                            Options.FormatInUse = format;
-                        }
-
-                        if (isSafe) {
-                            Options.FormatInUse = format;
-                            break;
-                        }
-                    }
-
-                    /* IMPORTANT: On its current state, the program just checks the second line and infers FormatType from there.
-                     * Code here is easily modifiable so that in case of the first recognition try failing the second line of next clipping
-                     * or successive lines are read. See use of line++, separator and Readline() in parser for inspiration.  */
-                }
-            }
-        }
-
+        //TODO OMG, THE HORROR. Extract many methods here, separate UI from logic. Cry.
         private void browseButton_Click(object sender, RoutedEventArgs e) {
             /// <summary>
             /// Browsing folders to find formats, different options depending on current culture.
             /// </summary>
 
+            //A) Fire off OFD, configure depending on culture.
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.DefaultExt = ".txt";
             ofd.Filter = "TXT Files (*.txt)|*.txt";
@@ -231,6 +187,17 @@ namespace ClippingManager {
             }
         }
 
+        //TODO refactor: Abstract browsing and checking logic, separate from parse button logic. 
+        /* What is this guy really doing? 
+         *  Are the option controls checked?
+         *  Confirm parser
+         *  Launch parser
+         *  Launch loading window
+         *  Do parse shit
+         *  Close loading window
+         *  Launch database window
+         */
+           
         private async void buttonParse_Click(object sender, RoutedEventArgs e) {
             /// <summary>
             /// Parse button that kicks off the parsing process, carrying away a few compatibility test first. It checks for a general language configuration
@@ -239,24 +206,19 @@ namespace ClippingManager {
             /// </summary>
 
             if (Options.TextToParsePath != null && Options.Language != null) {
+
                 string path = Options.TextToParsePath;
                 string language = Options.Language;
                 bool correctParserConfirmed = false;
 
-                switch (language) {
-                    case "English":
-                        parserToUse = parserENG;
-                        break;
+                parserController.SetParser(language);
 
-                    case "Spanish":
-                        parserToUse = parserSPA;
-                        break;
-                }
+                
 
                 /* Checking .TXT language vs parser language and picking correct FormatType file. It offers the user some help to avoid exceptions
                  * and allows new parsers to be added easily for full compatibility, even with custom or irregular .TXT files, on the dev side. */
 
-                correctParserConfirmed = CheckParserLanguageAndType(parserToUse, textSample, textPreview);
+                correctParserConfirmed = CheckParserLanguageAndType(setParser, textSample, textPreview);
 
                 try {
                     if (correctParserConfirmed == false) {
@@ -272,8 +234,9 @@ namespace ClippingManager {
                 }
 
                 if (correctParserConfirmed) {
-                    parserToUse.Parse(path);
+                    setParser.Parse(path);
 
+                    //TODO This is nuts, change the way the window is handled completely. 
                     //Start the process (method), show pre-instantiated load window, wait for the task to finish and close the window.
 
                     LW = new LoadingWindow();
@@ -303,10 +266,9 @@ namespace ClippingManager {
         }
 
         private void RunParser(string path) {
-            string _path = path;
 
             try {
-                var clippings = parserToUse.Parse(path);
+                var clippings = setParser.Parse(path);
 
                 classwideRawCount = 0;
                 foreach (var item in clippings) {

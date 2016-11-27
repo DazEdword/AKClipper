@@ -99,6 +99,7 @@
     <Compile Include="Clippings\FormatType.cs" />
     <Compile Include="Clippings\FormatTypeDatabase.cs" />
     <Compile Include="Clippings\SortableClippingList.cs" />
+    <Compile Include="Controllers\ParserController.cs" />
     <Compile Include="_unusedCode.cs" />
     <Page Include="GUI\DatabaseWindow.xaml">
       <SubType>Designer</SubType>
