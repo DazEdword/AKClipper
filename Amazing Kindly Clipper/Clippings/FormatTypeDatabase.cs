@@ -36,9 +36,9 @@ namespace ClippingManager {
         }
 
         public static FormatType GetFormat(FormatType.KeyPositionLang KeyPosition, out bool isSafe) {
-            /* This method compares they keyword and positions of a KeyPosition objects with the Keys (keyword + position)
+            /* This method compares the keyword and positions of a KeyPosition objects with the Keys (keyword + position)
              * in FormatDictionary. When it finds two coinciding keys (both values in each key are equal to both values in dict
-             * it returns the correct FormatType. Otherwise returns null. Currently Called from MainWindow. */
+             * it returns the correct FormatType. Otherwise returns null. */
 
             var importedKeyPos = KeyPosition;
             var importedKeyword = KeyPosition.Keyword;

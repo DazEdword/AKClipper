@@ -31,7 +31,6 @@ namespace ClippingManager {
         private string textPreview; //Text preview gets up to n lines, as defined in var maxLineCounter.
         private string defaultDirectory; //Variables to keep track of the directory in which the .txt are.
         private string lastUsedDirectory;
-        private string languageToDetect; //Additional language detection.
         private int classwideRawCount; //Variable keeping count of raw clippings, declared on the class scope so that it can be used by several methods.
 
         private LoadingWindow LW;
@@ -53,55 +52,9 @@ namespace ClippingManager {
 
             defaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             lastUsedDirectory = null;
-            languageToDetect = "NotALanguage";
+            parserController.languageToDetect = "NotALanguage";
 
             InitializeComponent();
-        }
-
-        //Hard one, lots of interdependencies. 
-        private bool CheckParserLanguageAndType(MyClippingsParser parser, string sample, string preview) {
-
-            /// <summary> All parsers inherit from abstract class MyClippingsParser. Inheriting parsers need to be instantiated prior to use. At
-            /// the moment only ENG and SPA parsers are recognized and used, but the system should be easily extendable to other languages if needed.
-            /// </summary>
-            try {
-                if (Options.Language != null) {
-                    string textSample = sample;
-
-                    List<string> engKeywords = new List<string>();
-                    List<string> spaKeywords = new List<string>();
-
-                    /* This lines hunt down an additional keywords (independent of the ones that will be
-                     * carried away later) to confirm language. */
-
-                    string textPreview = preview;
-
-                    parserController.PickFormatType(textPreview, languageToDetect);
-
-                    setFormat = Options.FormatInUse;
-
-                    //A last check that guarantees compatibility.
-
-                    if ((languageToDetect == "Spanish") && (setParser == parserSPA) && (setFormat != null)) {
-                        return true;
-                    }
-
-                    if ((languageToDetect == "English") && (setParser == parserENG) && (setFormat != null)) {
-                        return true;
-                    }
-                    else {
-                        return false;
-                    }
-                }
-                else {
-                    MessageBox.Show("Unable to find language. Have you selected your language?");
-                    return false;
-                }
-            }
-            catch (Exception ex) {
-                MessageBox.Show(ex.Message, "Parser detection problem");
-                return false;
-            }
         }
 
         //TODO OMG, THE HORROR. Extract many methods here, separate UI from logic. Cry.
@@ -161,12 +114,12 @@ namespace ClippingManager {
 
                     try {
                         if (textSample.Contains("Añadido")) {
-                            languageToDetect = "Spanish";
+                            parserController.languageToDetect = "Spanish";
                             radioButtonB.IsChecked = true;
                         }
 
                         if (textSample.Contains("Added")) {
-                            languageToDetect = "English";
+                            parserController.languageToDetect = "English";
                             radioButtonA.IsChecked = true;
                         }
                     }
@@ -212,13 +165,15 @@ namespace ClippingManager {
                 bool correctParserConfirmed = false;
 
                 parserController.SetParser(language);
+                setParser = parserController.setParser;
 
-                
+
 
                 /* Checking .TXT language vs parser language and picking correct FormatType file. It offers the user some help to avoid exceptions
                  * and allows new parsers to be added easily for full compatibility, even with custom or irregular .TXT files, on the dev side. */
 
-                correctParserConfirmed = CheckParserLanguageAndType(setParser, textSample, textPreview);
+                correctParserConfirmed = parserController.CheckParserLanguageAndType(setParser, textSample, textPreview);
+                //correctParserConfirmed = CheckParserLanguageAndType(setParser, textSample, textPreview);
 
                 try {
                     if (correctParserConfirmed == false) {
@@ -236,8 +191,9 @@ namespace ClippingManager {
                 if (correctParserConfirmed) {
                     setParser.Parse(path);
 
-                    //TODO This is nuts, change the way the window is handled completely. 
+
                     //Start the process (method), show pre-instantiated load window, wait for the task to finish and close the window.
+                    //TODO This is nuts, change the way the window is handled completely. 
 
                     LW = new LoadingWindow();
 
