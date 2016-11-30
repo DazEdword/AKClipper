@@ -64,6 +64,17 @@
       <DependentUpon>Clippings.feature</DependentUpon>
     </Compile>
     <Compile Include="ClippingTests\Clippings.cs" />
+    <Compile Include="ClippingTests\Parsing_EntrySteps.cs" />
+    <Compile Include="parser_language.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>parser_language.feature</DependentUpon>
+    </Compile>
+    <Compile Include="parsing_entry.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>parsing_entry.feature</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -74,6 +85,14 @@
       <LastGenOutput>Clippings.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <None Include="parser_language.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>parser_language.feature.cs</LastGenOutput>
+    </None>
+    <None Include="parsing_entry.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>parsing_entry.feature.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Amazing Kindly Clipper\Amazing Kindly Clipper.csproj">
