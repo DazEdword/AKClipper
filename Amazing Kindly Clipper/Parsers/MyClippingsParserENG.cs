@@ -18,6 +18,7 @@ namespace ClippingManager {
         /* First three methods below: simple, thread safe singleton implementation. */
 
         private MyClippingsParserENG() {
+            //TODO Separate in different initialization methods. 
             defaultBookName = "Unknown book";
             defaultAuthor = "Unknown author";
             defaultLocation = "";

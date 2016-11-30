@@ -167,8 +167,6 @@ namespace ClippingManager {
                 parserController.SetParser(language);
                 setParser = parserController.setParser;
 
-
-
                 /* Checking .TXT language vs parser language and picking correct FormatType file. It offers the user some help to avoid exceptions
                  * and allows new parsers to be added easily for full compatibility, even with custom or irregular .TXT files, on the dev side. */
 
