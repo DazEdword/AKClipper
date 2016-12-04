@@ -68,15 +68,13 @@ namespace ClippingManager {
             dataGrid.ItemContainerGenerator.StatusChanged += new EventHandler(CloseLoadingWindow); //Event handler that
         }
 
-        private void GetMainWindow()
+        private void GetMainWindow() {
+            /// <summary>
+            /// Gets MainWindow, so other classes can use their variables and methods. It was used to recycle instance and methods
+            /// controlling LoadingWindow (progress bar) when it was in MainWindow (not anymore), but since it can be helpful to access
+            /// other particular methods I'll leave this here.
+            /// </summary>
 
-        /// <summary>
-        /// Gets MainWindow, so other classes can use their variables and methods. It was used to recycle instance and methods
-        /// controlling LoadingWindow (progress bar) when it was in MainWindow (not anymore), but since it can be helpful to access
-        /// other particular methods I'll leave this here.
-        /// </summary>
-
-        {
             MainWindow MW = null;
 
             foreach (Window window in Application.Current.Windows) {

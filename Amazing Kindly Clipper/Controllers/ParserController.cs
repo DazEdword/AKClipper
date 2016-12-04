@@ -26,10 +26,15 @@ namespace ClippingManager {
 
         //private Encoding encoding; //Using UTF8 encoding by default here as defined in Options, but that can be changed.
 
-        //private string textSample;  //Text sample only stores critical second line of text.
-        //private string textPreview; //Text preview gets up to n lines, as defined in var maxLineCounter.
+
+        //Hmmmm... bad smell
+        public string textSample;  //Text sample only stores critical second line of text.
+        public string textPreview; //Text preview gets up to n lines, as defined in var maxLineCounter.
         //private string defaultDirectory; //Variables to keep track of the directory in which the .txt are.
         //private string lastUsedDirectory;
+
+        //TODO Temporary var for refactor. 
+        public string path;
         public string languageToDetect; //Additional language detection.
         //Variable keeping count of raw clippings, declared on the class scope so that it can be used by several methods.
         public int rawClippingCount; 
@@ -38,6 +43,12 @@ namespace ClippingManager {
             //Thread-safe, singleton instantiation of the two parsers implemented through the two subclasses.
             parserENG = MyClippingsParserENG.MyParserENG; 
             parserSPA = MyClippingsParserSPA.MyParserSPA;
+            path = ""; //TEMP
+
+            //Methods generating a Dictionary of FormatTypes on execution.
+            FormatTypeDatabase.PopulateFormatList(parserENG.engFormats);
+            FormatTypeDatabase.PopulateFormatList(parserSPA.spaFormats);
+            FormatTypeDatabase.GenerateFormatTypeDatabase();
         }
 
         //TODO This method passes a string. Overload to pass any other? Parser instance?
@@ -203,6 +214,30 @@ namespace ClippingManager {
             }
         }
 
+        public bool ConfirmParserCompatibility() {
+            //TODO method is very dependant of options, are we sure of this?
+            string path = Options.TextToParsePath;
+            string language = Options.Language;
+            bool correctParserConfirmed = false;
+            //TODO setting parser just before confirmation? just doesn't feel right anymore
+            SetParser(language);
 
+            /* Checking .TXT language vs parser language and picking correct FormatType file. It offers the user some help to avoid exceptions
+             * and allows new parsers to be added easily for full compatibility, even with custom or irregular .TXT files, on the dev side. */
+
+            return correctParserConfirmed = CheckParserLanguageAndType(setParser, textSample, textPreview);
+        }
+
+        public void RunParsingSequence(){
+            /// <summary>
+            /// Method running the whole parsing process, carrying away a few compatibility test first and
+            /// running the parser only if check results are OK. It checks for a general language configuration
+            /// setup, then confirms compatibility format/language/FormatType, selects correct instances of 
+            /// parser and only then starts with parsing itself.
+            /// </summary>
+
+
+
+        }
     }
 }

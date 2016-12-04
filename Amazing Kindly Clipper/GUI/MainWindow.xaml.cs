@@ -15,10 +15,6 @@ namespace ClippingManager {
 
     public partial class MainWindow : Window {
 
-        private MyClippingsParserENG parserENG;
-        private MyClippingsParserSPA parserSPA;
-        private MyClippingsParser setParser;
-        private FormatType setFormat;
         private ParserController parserController;
         private Encoding encoding; //Using UTF8 encoding by default here as defined in Options, but that can be changed.
 
@@ -31,17 +27,9 @@ namespace ClippingManager {
 
         public MainWindow() {
             parserController = new ParserController();
-            //TODO Deprecate after refactoring
-            parserENG = parserController.parserENG;
-            parserSPA = parserController.parserSPA; 
 
-            FormatTypeDatabase.PopulateFormatList(parserENG.engFormats);
-            FormatTypeDatabase.PopulateFormatList(parserSPA.spaFormats);
-            //Methods generating a Dictionary of FormatTypes on execution.
-            FormatTypeDatabase.GenerateFormatTypeDatabase(); 
-
-            setParser = parserController.setParser;
-            setFormat = parserController.setFormat; //For debugging purposes you can manually change this to point to a given type, using parserInstance.Type.
+            //setParser = parserController.setParser;
+            //setFormat = parserController.setFormat; //For debugging purposes you can manually change this to point to a given type, using parserInstance.Type.
 
             encoding = Options.FileEncoding;
 
@@ -53,6 +41,9 @@ namespace ClippingManager {
         }
 
         private void BrowseFile() {
+            /// <summary>
+            /// Browsing folders to find formats, different options depending on current culture.
+            /// </summary>
             // A) Fire off OFD, configure depending on culture.
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.DefaultExt = ".txt";
@@ -95,7 +86,7 @@ namespace ClippingManager {
 
                             if (lineCounter == languageDetectionLine) //Critical line (usually second line) is a references to textSample to perform detection on it.
                             {
-                                textSample = line;
+                                parserController.textSample = line;
                             }
 
                             if (line == null) {
@@ -107,12 +98,12 @@ namespace ClippingManager {
                     }
 
                     try {
-                        if (textSample.Contains("Añadido")) {
+                        if (parserController.textSample.Contains("Añadido")) {
                             parserController.languageToDetect = "Spanish";
                             radioButtonB.IsChecked = true;
                         }
 
-                        if (textSample.Contains("Added")) {
+                        if (parserController.textSample.Contains("Added")) {
                             parserController.languageToDetect = "English";
                             radioButtonA.IsChecked = true;
                         }
@@ -124,23 +115,20 @@ namespace ClippingManager {
                     lastUsedDirectory = filePath; //Remembers last used directory for user convenience.
                     filePreview.Text = textPreview; //Updates preview of the file in text block.
 
+                    //TMP
+                    parserController.textPreview = textPreview;
+
                     Options.TextToParsePath = filePath; //References preview in general text to parse.
                     previewScroll.UpdateLayout();
+
                 } catch (IOException) {
                     MessageBox.Show("Sorry, file is not valid.");
                 }
             }
         }
         
-        //TODO OMG, THE HORROR. Extract many methods here, separate UI from logic. Cry.
         private void browseButton_Click(object sender, RoutedEventArgs e) {
-            /// <summary>
-            /// Browsing folders to find formats, different options depending on current culture.
-            /// </summary>
-            /// 
             BrowseFile();
-
-
         }
 
         //TODO refactor: Abstract browsing and checking logic, separate from parse button logic. 
@@ -155,26 +143,11 @@ namespace ClippingManager {
          */
            
         private async void buttonParse_Click(object sender, RoutedEventArgs e) {
-            /// <summary>
-            /// Parse button that kicks off the parsing process, carrying away a few compatibility test first. It checks for a general language configuration
-            /// setup, then confirms compatibility format/language/FormatType, selects correct instances of parser and then, once all tests are passed, starts
-            /// the process.
-            /// </summary>
+            //parserController.RunParsingSequence();
 
             if (Options.TextToParsePath != null && Options.Language != null) {
 
-                string path = Options.TextToParsePath;
-                string language = Options.Language;
-                bool correctParserConfirmed = false;
-
-                parserController.SetParser(language);
-                setParser = parserController.setParser;
-
-                /* Checking .TXT language vs parser language and picking correct FormatType file. It offers the user some help to avoid exceptions
-                 * and allows new parsers to be added easily for full compatibility, even with custom or irregular .TXT files, on the dev side. */
-
-                correctParserConfirmed = parserController.CheckParserLanguageAndType(setParser, textSample, textPreview);
-                //correctParserConfirmed = CheckParserLanguageAndType(setParser, textSample, textPreview);
+                bool correctParserConfirmed = parserController.ConfirmParserCompatibility();
 
                 try {
                     if (correctParserConfirmed == false) {
@@ -190,7 +163,9 @@ namespace ClippingManager {
                 }
 
                 if (correctParserConfirmed) {
-                    setParser.Parse(path);
+                    //Temp
+                    var path = parserController.path = Options.TextToParsePath;
+                    parserController.setParser.Parse(path);
 
 
                     //Start the process (method), show pre-instantiated load window, wait for the task to finish and close the window.
