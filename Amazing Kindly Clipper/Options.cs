@@ -26,6 +26,10 @@ namespace ClippingManager {
             formatInUse = null;
         }
 
+        public static void SetCulture() {
+
+        }
+
         public static string Language {
             get {
                 return language;

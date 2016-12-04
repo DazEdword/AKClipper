@@ -27,6 +27,8 @@ namespace ClippingManager {
         internal DateTime defaultDateAdded;
         internal string defaultText;
 
+
+        //TODO Overload this to accept text directly, thus skipping the reading part (which should be isolated btw)
         //Directly parse the stream matching the format of the .txt file.
         public virtual IEnumerable<Clipping> Parse(string path) {
             var stream = new FileStream(path, FileMode.Open); //Open stream via path to the .txt file.
@@ -50,7 +52,8 @@ namespace ClippingManager {
                     }
 
                     /*Calling to the different methods parsing the different lines.
-                    Line 3 is irrelevant (just white space acting as a separator) and thus is not included in the logic. */
+                    Line 3 is irrelevant (just white space acting as a separator) and thus is not included
+                    in the logic. */
 
                     try {
                         switch (clippingLineNumber) {

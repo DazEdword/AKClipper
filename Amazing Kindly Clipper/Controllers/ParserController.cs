@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Windows;
 
@@ -9,11 +10,15 @@ namespace ClippingManager {
     //levels later. 
 
     /// <summary>
-    /// Parser Controller logic, used in MainWindow. It's concerns include to get and store which file to use as a source for parsing, 
+    /// Parser Controller logic, used in MainWindow. Its concerns include to get and store which file to use as a source for parsing, 
     /// store the user selected language, initialise parsing process. It has several checks to prevent the user from using the wrong parser.
+    /// All parsers inherit from abstract class MyClippingsParserm and every inheriting parsers need to be instantiated prior to use
+    /// (due to the singleton pattern implementation only one instance of each parser can be instanced. At the moment only ENG and SPA parsers
+    /// are recognized and used, each one with various subtypes <seealso cref="FormatType"/> but the system should be easily extendable to other
+    /// subtypes and additional languages if needed.
     /// </summary>
-    public class ParserController {
 
+    public class ParserController {
         public MyClippingsParserENG parserENG;
         public MyClippingsParserSPA parserSPA;
         public MyClippingsParser setParser;
@@ -26,15 +31,16 @@ namespace ClippingManager {
         //private string defaultDirectory; //Variables to keep track of the directory in which the .txt are.
         //private string lastUsedDirectory;
         public string languageToDetect; //Additional language detection.
-        //private int classwideRawCount; //Variable keeping count of raw clippings, declared on the class scope so that it can be used by several methods.
+        //Variable keeping count of raw clippings, declared on the class scope so that it can be used by several methods.
+        public int rawClippingCount; 
 
         public ParserController() {
-            parserENG = MyClippingsParserENG.MyParserENG; //Thread-safe, singleton instantiation of the two parsers implemented through the two subclasses.
+            //Thread-safe, singleton instantiation of the two parsers implemented through the two subclasses.
+            parserENG = MyClippingsParserENG.MyParserENG; 
             parserSPA = MyClippingsParserSPA.MyParserSPA;
         }
 
         //TODO This method passes a string. Overload to pass any other? Parser instance?
-
         public void SetParser(string language) {
             //TODO Maybe replace this switch with something a bit more elegant?
             //TODO Improve defaulting and error handling here. What if the string is not in the switch?
@@ -46,6 +52,55 @@ namespace ClippingManager {
                 case "Spanish":
                     setParser = parserSPA;
                     break;
+            }
+        }
+
+        //TODO This method passes a path to the file. Modify it to accept a text chain directly. 
+        public void RunParser(string path) {
+            try {
+                var clippings = setParser.Parse(path);
+
+                rawClippingCount = 0;
+                foreach (var item in clippings) {
+                    //Adding clippings to the currently used, dictionary database.
+                    if (!Clipping.IsNullOrEmpty(item)) {
+                        ClippingDatabase.AddClipping(item);
+                    }
+                    ++rawClippingCount;
+                }
+
+                //Now adding clippings to the layout'ed, list database.
+                int numberOfClippings = ClippingDatabase.numberedClippings.Count;
+
+                for (int i = 0; i < numberOfClippings; i++) {
+                    Clipping clippingToAdd = ClippingDatabase.GetClipping(i);
+                    ClippingDatabase.finalClippingsList.Add(clippingToAdd);
+                }
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message, "Parsing Error");
+            }
+        }
+
+        public dynamic ReportParsingResult(bool consoleOnly){
+            dynamic result = new ExpandoObject();
+            result.clippingCount = rawClippingCount;
+            result.databaseEntries = ClippingDatabase.numberedClippings.Count;
+            result.removedClippings = result.clippingCount - result.databaseEntries;
+            if (consoleOnly) {
+                //TODO Write console interface (console project) to use this properly as a secondary 
+                //interface. For now, debug will do. 
+                System.Diagnostics.Debug.WriteLine(">> Parsed clippings: {0}", (object)result.clippingCount);
+                System.Diagnostics.Debug.WriteLine(">> Parsing successful");
+                System.Diagnostics.Debug.WriteLine(">> Removed clippings: {0}" ,(object)result.removedClippings.ToString());
+
+                //Console.WriteLine(">> " + result.clippingCount + " clippings parsed.");
+                //Console.WriteLine(">> Parsing successfull");
+                //Console.WriteLine(">> " + result.removedClippings.ToString() + 
+                //    " empty or null clippings removed weren't added to database.");
+
+                return null;
+            } else {
+                return result;
             }
         }
 
@@ -105,6 +160,8 @@ namespace ClippingManager {
             /// instantiated prior to use. At the moment only ENG and SPA parsers are recognized and used, but the 
             /// system should be easily extendable to other languages if needed.
             /// </summary>
+            /// 
+
             try {
                 if (Options.Language != null) {
                     string textSample = sample;

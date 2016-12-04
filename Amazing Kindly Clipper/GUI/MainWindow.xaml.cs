@@ -9,16 +9,11 @@ using System.Windows.Threading;
 
 namespace ClippingManager {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml. This Window handles which file to use as a source for parsing, and
-    /// lets the user select their language. It has several checks to prevent the user from using the wrong parser.
+    /// Interaction logic for MainWindow.xaml. This window lets the user select their clipping file language,
+    /// providing the GUI to fire off the parserController class, which handles parsing. 
     /// </summary>
 
     public partial class MainWindow : Window {
-        /// <summary> All parsers inherit from abstract class MyClippingsParserm and every inheriting parsers need to be instantiated prior to use
-        /// (due to the singleton pattern implementation only one instance of each parser can be instanced. At the moment only ENG and SPA parsers
-        /// are recognized and used, each one with various subtypes <seealso cref="FormatType"/> but the system should be easily extendable to other
-        /// subtypes and additional languages if needed.
-        /// </summary>
 
         private MyClippingsParserENG parserENG;
         private MyClippingsParserSPA parserSPA;
@@ -31,7 +26,6 @@ namespace ClippingManager {
         private string textPreview; //Text preview gets up to n lines, as defined in var maxLineCounter.
         private string defaultDirectory; //Variables to keep track of the directory in which the .txt are.
         private string lastUsedDirectory;
-        private int classwideRawCount; //Variable keeping count of raw clippings, declared on the class scope so that it can be used by several methods.
 
         private LoadingWindow LW;
 
@@ -43,7 +37,8 @@ namespace ClippingManager {
 
             FormatTypeDatabase.PopulateFormatList(parserENG.engFormats);
             FormatTypeDatabase.PopulateFormatList(parserSPA.spaFormats);
-            FormatTypeDatabase.GenerateFormatTypeDatabase(); //Methods generating a Dictionary of FormatTypes on execution.
+            //Methods generating a Dictionary of FormatTypes on execution.
+            FormatTypeDatabase.GenerateFormatTypeDatabase(); 
 
             setParser = parserController.setParser;
             setFormat = parserController.setFormat; //For debugging purposes you can manually change this to point to a given type, using parserInstance.Type.
@@ -57,28 +52,23 @@ namespace ClippingManager {
             InitializeComponent();
         }
 
-        //TODO OMG, THE HORROR. Extract many methods here, separate UI from logic. Cry.
-        private void browseButton_Click(object sender, RoutedEventArgs e) {
-            /// <summary>
-            /// Browsing folders to find formats, different options depending on current culture.
-            /// </summary>
-
-            //A) Fire off OFD, configure depending on culture.
+        private void BrowseFile() {
+            // A) Fire off OFD, configure depending on culture.
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.DefaultExt = ".txt";
             ofd.Filter = "TXT Files (*.txt)|*.txt";
 
+            //Check culture, set up default file names accordingly. 
             if (Options.CurrentCulture.Name == ("en-GB")) {
-                ofd.FileName = "My Clippings - Kindle.txt"; // Default ENG file name
-            }
-            else {
-                ofd.FileName = "Mis recortes.txt"; // Default SPA file name
+                ofd.FileName = "My Clippings - Kindle.txt"; 
+            } else {
+                ofd.FileName = "Mis recortes.txt"; 
             }
 
+            //Get initial directory. 
             if (String.IsNullOrEmpty(lastUsedDirectory)) {
                 ofd.InitialDirectory = defaultDirectory;
-            }
-            else {
+            } else {
                 ofd.InitialDirectory = lastUsedDirectory;
             }
 
@@ -86,6 +76,10 @@ namespace ClippingManager {
                 try {
                     string filePath = ofd.FileName;
                     string safeFilePath = ofd.SafeFileName;
+
+
+                    //TODO Extract a GeneratePreview method or, even better, extract the line reading algorithm 
+                    //to a method accepting number of lines and specify some values for the preview. 
                     textPreview = "";
 
                     var lineCounter = 0;
@@ -122,8 +116,7 @@ namespace ClippingManager {
                             parserController.languageToDetect = "English";
                             radioButtonA.IsChecked = true;
                         }
-                    }
-                    catch (Exception ex) {
+                    } catch (Exception ex) {
                         MessageBox.Show(ex.Message, "Unable to complete language check.");
                     }
 
@@ -133,11 +126,21 @@ namespace ClippingManager {
 
                     Options.TextToParsePath = filePath; //References preview in general text to parse.
                     previewScroll.UpdateLayout();
-                }
-                catch (IOException) {
+                } catch (IOException) {
                     MessageBox.Show("Sorry, file is not valid.");
                 }
             }
+        }
+        
+        //TODO OMG, THE HORROR. Extract many methods here, separate UI from logic. Cry.
+        private void browseButton_Click(object sender, RoutedEventArgs e) {
+            /// <summary>
+            /// Browsing folders to find formats, different options depending on current culture.
+            /// </summary>
+            /// 
+            BrowseFile();
+
+
         }
 
         //TODO refactor: Abstract browsing and checking logic, separate from parse button logic. 
@@ -195,13 +198,19 @@ namespace ClippingManager {
 
                     LW = new LoadingWindow();
 
-                    await Task.Run(() => RunParser(path));
+                    await Task.Run(() => parserController.RunParser(path));
 
                     LW.CloseLoadingWindow();
 
-                    MessageBox.Show(classwideRawCount + " clippings parsed.", "Parsing successful.");
-                    var result = MessageBox.Show(ClippingDatabase.numberedClippings.Count.ToString() + " clippings added to database. " +
-                        (classwideRawCount - ClippingDatabase.numberedClippings.Count).ToString() + " empty or null clippings removed.", "Database created.");
+                    dynamic result = parserController.ReportParsingResult(false);
+
+                    if (result != null) {
+                        //TODO Implement this in order to extract and encapsulate, capturing these messy lines. 
+                        //ShowParsingReport(result);
+                        MessageBox.Show(result.clippingCount + " clippings parsed.", "Parsing successful.");
+                        MessageBox.Show(result.databaseEntries.ToString() + " clippings added to database. " +
+                            result.removedClippings.ToString() + " empty or null clippings removed.", "Database created.");
+                    }
 
                     Dispatcher.Invoke((Action)delegate () //If you want to update UI from this task a dispatcher has to be used, since it has to be in the UI thread.
                     {
@@ -218,33 +227,7 @@ namespace ClippingManager {
                 MessageBox.Show("Problems detecting language, please select your language and try again.");
             }
         }
-
-        private void RunParser(string path) {
-
-            try {
-                var clippings = setParser.Parse(path);
-
-                classwideRawCount = 0;
-                foreach (var item in clippings) {
-                    //Adding clippings to the currently used, dictionary database.
-                    if (!Clipping.IsNullOrEmpty(item)) {
-                        ClippingDatabase.AddClipping(item);
-                    }
-                    ++classwideRawCount;
-                }
-
-                //Now adding clippings to the layout'ed, list database.
-                int numberOfClippings = ClippingDatabase.numberedClippings.Count;
-
-                for (int i = 0; i < numberOfClippings; i++) {
-                    Clipping clippingToAdd = ClippingDatabase.GetClipping(i);
-                    ClippingDatabase.finalClippingsList.Add(clippingToAdd);
-                }
-            }
-            catch (Exception ex) {
-                MessageBox.Show(ex.Message, "Parsing Error");
-            }
-        }
+            
 
         private void radioButtonA_Checked(object sender, RoutedEventArgs e) {
             Options.Language = "English";
