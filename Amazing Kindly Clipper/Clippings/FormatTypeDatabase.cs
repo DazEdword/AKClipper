@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ClippingManager {
+namespace AKCCore {
 
     public static class FormatTypeDatabase {
         public static List<FormatType> formatTypeList = new List<FormatType>();

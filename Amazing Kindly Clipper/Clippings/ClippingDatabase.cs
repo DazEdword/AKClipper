@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ClippingManager {
+namespace AKCCore {
 
     public static class ClippingDatabase {
         public static List<Clipping> finalClippingsList = new List<Clipping>();

@@ -95,9 +95,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Amazing Kindly Clipper\Amazing Kindly Clipper.csproj">
+    <ProjectReference Include="..\Amazing Kindly Clipper\AKCCore.csproj">
       <Project>{f23a33b4-1bee-46f1-88aa-06840f057c74}</Project>
-      <Name>Amazing Kindly Clipper</Name>
+      <Name>AKCCore</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

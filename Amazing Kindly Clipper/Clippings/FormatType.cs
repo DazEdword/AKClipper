@@ -1,4 +1,4 @@
-﻿namespace ClippingManager {
+﻿namespace AKCCore {
 
     public class FormatType {
         public string ID;

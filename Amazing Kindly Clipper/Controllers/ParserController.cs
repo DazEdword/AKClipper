@@ -4,7 +4,7 @@ using System.Dynamic;
 using System.IO;
 using System.Windows;
 
-namespace ClippingManager {
+namespace AKCCore {
 
     //TODO Refactor in progress, many public methods around in this public class. Reorganise and  change access 
     //levels later. 
@@ -148,11 +148,11 @@ namespace ClippingManager {
 
                     if (format != null) {
                         if (!isSafe) {
-                            Options.FormatInUse = format;
+                            OptionsDeprecate.FormatInUse = format;
                         }
 
                         if (isSafe) {
-                            Options.FormatInUse = format;
+                            OptionsDeprecate.FormatInUse = format;
                             break;
                         }
                     }
@@ -174,7 +174,7 @@ namespace ClippingManager {
             /// 
 
             try {
-                if (Options.Language != null) {
+               if (OptionsDeprecate.Language != null) {
                     string textSample = sample;
 
                     List<string> engKeywords = new List<string>();
@@ -188,10 +188,9 @@ namespace ClippingManager {
                     //TODO After refactor, well, set parsing is setting it only in the controller, so redundant
                     //referencing has to occur here too. Should be solved when refactor is complete. *Sighs*
                     PickFormatType(textPreview, languageToDetect);
-                    setFormat = Options.FormatInUse;
+                    setFormat = OptionsDeprecate.FormatInUse;
 
                     //A last check that guarantees compatibility.
-
                     if ((languageToDetect == "Spanish") && (setParser == parserSPA) && (setFormat != null)) {
                         return true;
                     }
@@ -202,12 +201,12 @@ namespace ClippingManager {
                     else {
                         return false;
                     }
-                }
-                else {
+                } else {
                     MessageBox.Show("Unable to find language. Have you selected your language?");
                     return false;
                 }
             }
+
             catch (Exception ex) {
                 MessageBox.Show(ex.Message, "Parser detection problem");
                 return false;
@@ -216,8 +215,8 @@ namespace ClippingManager {
 
         public bool ConfirmParserCompatibility() {
             //TODO method is very dependant of options, are we sure of this?
-            string path = Options.TextToParsePath;
-            string language = Options.Language;
+            string path = OptionsDeprecate.TextToParsePath;
+            string language = OptionsDeprecate.Language;
             bool correctParserConfirmed = false;
             //TODO setting parser just before confirmation? just doesn't feel right anymore
             SetParser(language);
@@ -235,9 +234,6 @@ namespace ClippingManager {
             /// setup, then confirms compatibility format/language/FormatType, selects correct instances of 
             /// parser and only then starts with parsing itself.
             /// </summary>
-
-
-
         }
     }
 }

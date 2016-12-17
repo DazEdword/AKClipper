@@ -1,6 +1,6 @@
 ﻿using System;
 using TechTalk.SpecFlow;
-using ClippingManager;
+using AKCCore;
 
 namespace AKCTests.ClippingTests
 {
