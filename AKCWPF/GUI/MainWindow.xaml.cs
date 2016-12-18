@@ -18,6 +18,7 @@ namespace AKCWPF {
 
         private ParserController parserController;
         private Encoding encoding; //Using UTF8 encoding by default here as defined in OptionsDeprecate, but that can be changed.
+        private string textSample;
         private string textPreview; //Text preview gets up to n lines, as defined in var maxLineCounter.
         private string defaultDirectory; //Variables to keep track of the directory in which the .txt are.
         private string lastUsedDirectory;
@@ -85,7 +86,7 @@ namespace AKCWPF {
 
                             if (lineCounter == languageDetectionLine) //Critical line (usually second line) is a references to textSample to perform detection on it.
                             {
-                                parserController.textSample = line;
+                                textSample = line;
                             }
 
                             if (line == null) {
@@ -97,12 +98,12 @@ namespace AKCWPF {
                     }
 
                     try {
-                        if (parserController.textSample.Contains("Añadido")) {
+                        if (textSample.Contains("Añadido")) {
                             parserController.options.Language = "Spanish";
                             radioButtonB.IsChecked = true;
                         }
 
-                        if (parserController.textSample.Contains("Added")) {
+                        if (textSample.Contains("Added")) {
                             parserController.options.Language = "English";
                             radioButtonA.IsChecked = true;
                         }
@@ -113,9 +114,6 @@ namespace AKCWPF {
                     pathBox.Text = filePath; //Updates path in path textbox.
                     lastUsedDirectory = filePath; //Remembers last used directory for user convenience.
                     filePreview.Text = textPreview; //Updates preview of the file in text block.
-
-                    //TMP
-                    parserController.textPreview = textPreview;
 
                     parserController.options.TextToParsePath = filePath; //References preview in general text to parse.
                     previewScroll.UpdateLayout();
@@ -146,7 +144,7 @@ namespace AKCWPF {
 
             if (parserController.options.TextToParsePath != null && parserController.options.Language != null) {
 
-                bool correctParserConfirmed = parserController.ConfirmParserCompatibility();
+                bool correctParserConfirmed = parserController.ConfirmParserCompatibility(textSample, textPreview);
 
                 try {
                     if (correctParserConfirmed == false) {

@@ -24,8 +24,8 @@ namespace AKCCore {
         public ParserOptions options; 
 
         //Hmmmm... bad smell
-        public string textSample;  //Text sample only stores critical second line of text.
-        public string textPreview; //Text preview gets up to n lines, as defined in var maxLineCounter.
+        //public string textSample;  //Text sample only stores critical second line of text.
+        //public string textPreview; //Text preview gets up to n lines, as defined in var maxLineCounter.
 
         //TODO Temporary var for refactor. 
         public string path;
@@ -213,7 +213,7 @@ namespace AKCCore {
             }
         }
 
-        public bool ConfirmParserCompatibility() {
+        public bool ConfirmParserCompatibility(string textSample, string textPreview) {
             //TODO method is very dependant of options, are we sure of this?
             string path = options.TextToParsePath;
             string language = options.Language;
