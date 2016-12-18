@@ -6,7 +6,7 @@ namespace AKCCore {
     /// Global options belong here.
     /// </summary>
 
-    public static class OptionsDeprecate {
+    public class ParserOptions {
         private static string language = null;
         private static CultureInfo currentCulture;
         private static CultureInfo engCulture;
@@ -14,8 +14,9 @@ namespace AKCCore {
         private static string textToParsePath;
         private static Encoding fileEncoding;
         private static FormatType formatInUse;
+        private static MyClippingsParser parserInUse;
 
-        static OptionsDeprecate() {
+        public ParserOptions() {
             language = null;
             engCulture = new CultureInfo("en-GB");
             spaCulture = new CultureInfo("es-ES");
@@ -24,11 +25,11 @@ namespace AKCCore {
             formatInUse = null;
         }
 
-        public static void SetCulture() {
+        public void SetCulture() {
 
         }
 
-        public static string Language {
+        public string Language {
             get {
                 return language;
             }
@@ -37,7 +38,7 @@ namespace AKCCore {
             }
         }
 
-        public static CultureInfo CurrentCulture {
+        public CultureInfo CurrentCulture {
             get {
                 return currentCulture;
             }
@@ -46,7 +47,7 @@ namespace AKCCore {
             }
         }
 
-        public static CultureInfo SpaCulture {
+        public CultureInfo SpaCulture {
             get {
                 return spaCulture;
             }
@@ -55,7 +56,7 @@ namespace AKCCore {
             }
         }
 
-        public static CultureInfo EngCulture {
+        public CultureInfo EngCulture {
             get {
                 return engCulture;
             }
@@ -64,7 +65,7 @@ namespace AKCCore {
             }
         }
 
-        public static string TextToParsePath {
+        public string TextToParsePath {
             get {
                 return textToParsePath;
             }
@@ -73,7 +74,7 @@ namespace AKCCore {
             }
         }
 
-        public static Encoding FileEncoding {
+        public Encoding FileEncoding {
             get {
                 return fileEncoding;
             }
@@ -82,8 +83,7 @@ namespace AKCCore {
             }
         }
 
-
-        public static FormatType FormatInUse {
+        public FormatType FormatInUse {
             get {
                 return formatInUse;
             }

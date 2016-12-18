@@ -18,8 +18,6 @@ namespace AKCWPF {
 
         private ParserController parserController;
         private Encoding encoding; //Using UTF8 encoding by default here as defined in OptionsDeprecate, but that can be changed.
-
-        private string textSample;  //Text sample only stores critical second line of text.
         private string textPreview; //Text preview gets up to n lines, as defined in var maxLineCounter.
         private string defaultDirectory; //Variables to keep track of the directory in which the .txt are.
         private string lastUsedDirectory;

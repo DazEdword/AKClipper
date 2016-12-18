@@ -6,7 +6,7 @@ using System.Windows;
 
 namespace AKCCore {
 
-    //TODO Refactor in progress, many public methods around in this public class. Reorganise and  change access 
+    //TODO Refactor in progress, many public methods around in this public class. Reorganise and change access 
     //levels later. 
 
     /// <summary>
@@ -19,10 +19,10 @@ namespace AKCCore {
     /// </summary>
 
     public class ParserController {
-        public MyClippingsParserENG parserENG;
-        public MyClippingsParserSPA parserSPA;
+        private MyClippingsParserENG parserENG;
+        private MyClippingsParserSPA parserSPA;
         public MyClippingsParser setParser;
-        public FormatType setFormat;
+        public ParserOptions options; 
 
         //private Encoding encoding; //Using UTF8 encoding by default here as defined in Options, but that can be changed.
 
@@ -188,14 +188,13 @@ namespace AKCCore {
                     //TODO After refactor, well, set parsing is setting it only in the controller, so redundant
                     //referencing has to occur here too. Should be solved when refactor is complete. *Sighs*
                     PickFormatType(textPreview, languageToDetect);
-                    setFormat = OptionsDeprecate.FormatInUse;
 
                     //A last check that guarantees compatibility.
-                    if ((languageToDetect == "Spanish") && (setParser == parserSPA) && (setFormat != null)) {
+                    if ((languageToDetect == "Spanish") && (setParser == parserSPA) && (OptionsDeprecate.FormatInUse != null)) {
                         return true;
                     }
 
-                    if ((languageToDetect == "English") && (setParser == parserENG) && (setFormat != null)) {
+                    if ((languageToDetect == "English") && (setParser == parserENG) && (OptionsDeprecate.FormatInUse != null)) {
                         return true;
                     }
                     else {

@@ -28,7 +28,6 @@ namespace AKCWPF {
             get { return updateableItemList; }
         }
 
-        private bool filtersActive = OptionsDeprecate.FiltersActive;
         private string query;
         private string category;
         private string defaultSearch;
