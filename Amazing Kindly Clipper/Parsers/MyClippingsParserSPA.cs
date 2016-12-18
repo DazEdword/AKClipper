@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows;
 
-namespace ClippingManager {
+namespace AKCCore {
 
     public class MyClippingsParserSPA : MyClippingsParser {
         public string[] typeEdPageKeys;
@@ -148,7 +148,7 @@ namespace ClippingManager {
                  *the proper format is added to the formats array.  */
 
                 DateTime dt;
-                if (DateTime.TryParseExact(input, formats, Options.SpaCulture, DateTimeStyles.None, out dt)) {
+                if (DateTime.TryParseExact(input, formats, OptionsDeprecate.SpaCulture, DateTimeStyles.None, out dt)) {
                     if (dt < DateTime.Now) {
                         clipping.DateAdded = dt;
                     }

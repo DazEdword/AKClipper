@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace ClippingManager {
+namespace AKCCore {
 
     public abstract class MyClippingsParser {
         /// <summary>
@@ -37,7 +37,7 @@ namespace ClippingManager {
                 string line = null;
                 int clippingLineNumber = 0;
                 Clipping clipping = new Clipping();
-                FormatType format = Options.FormatInUse;
+                FormatType format = OptionsDeprecate.FormatInUse;
 
                 while ((line = sr.ReadLine()) != null) {
                     lineNumber++;

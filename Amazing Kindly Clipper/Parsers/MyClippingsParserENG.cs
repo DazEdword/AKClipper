@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows;
 
-namespace ClippingManager {
+namespace AKCCore {
 
     public sealed class MyClippingsParserENG : MyClippingsParser {
         public string[] typeBasePageKeys;

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows;
 
-namespace ClippingManager {
+namespace AKCCore {
 
     public class Clipping {
         public string BookName { get; set; }

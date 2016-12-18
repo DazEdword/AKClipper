@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClippingManager{
+namespace AKCCore{
     public class ParserENG:MyClippingsParser{
         public string Sample { get; set; }
 

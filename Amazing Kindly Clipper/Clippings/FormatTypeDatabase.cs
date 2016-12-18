@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ClippingManager {
+namespace AKCCore {
 
     public static class FormatTypeDatabase {
         public static List<FormatType> formatTypeList = new List<FormatType>();
@@ -10,7 +10,7 @@ namespace ClippingManager {
         /// <summary>
         /// This static class populates and returns formatTypes from a database. A format list is populated when the program launches
         /// by the instances of each parser (one per language), which creates formatTypes with a set of properties. After that, the
-        /// generateFormatTypeDatabase() creates a Dictionary KeyPosition/FormatTypes Key/Value pairs, iterating
+        /// GenerateFormatTypeDatabase() method creates a Dictionary KeyPosition/FormatTypes Key/Value pairs, iterating
         /// through the List and adding a number of entries to the dictionary. Single formats can be added manually using AddFormat().
         /// </summary>
         /// <param name="formatType">The formatType to add to the database</param>
@@ -22,6 +22,9 @@ namespace ClippingManager {
         }
 
         public static void GenerateFormatTypeDatabase() {
+            //Reset
+            FormatDictionary.Clear();
+            //Repopulation from
             foreach (FormatType formatType in formatTypeList) {
                 foreach (var keypair in formatType.keyPositions) {
                     FormatDictionary.Add(keypair, formatType);
