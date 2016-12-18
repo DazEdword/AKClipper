@@ -17,7 +17,7 @@ How to use the program
 ----------------------
  * Copy your Kindle clippings file: Connect the Kindle to your computer via USB, find the device on the explorer, and then navigate to the Documents folder. There you should find a  ‘My Clippings.txt’ file (or, as stated, ‘Mis recortes.txt’ for Spanish models). Copy this file, and paste it on your desktop or any other folder at hand. 
 
- * Click the browse file button, and select your clipping’s file. You should be able to see a preview of your file in the preview text block if you picked a TXT file (even if it’s not a Clippings file, but I’d rather wouldn’t do that!).
+ * Click the browse file button, and select your clipping’s file. You should be able to see a preview of your file in the preview text block if you picked a TXT file (even if it’s not a Clippings file, but I’d rather not do that!).
 
  * Your language should have been automatically selected, after browsing, my if it hasn't please select the language of your Kindle device. This step is very important: Spanish and English parsers are very different, and choosing the wrong parser might lead to errors and exceptions (AKA program crashing).
 
