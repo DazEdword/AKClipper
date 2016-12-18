@@ -17,8 +17,10 @@ namespace AKCCore {
         private const string ClippingSeparator = "==========";
         private const string Line1RegexPattern = @"^(.+?)(?: \(([^)]+?)\))?$";
 
+        
+        //TODO Modify parser so as to have them receive format type and anything else important to them that is in options,
+        //they should not be interested on options or not even in ParserController, but ParserController interested on parsers
         //Clipping type defaults variables.
-
         internal string defaultBookName;
         internal string defaultAuthor;
         internal ClippingTypeEnum defaultClippingType;
@@ -26,18 +28,18 @@ namespace AKCCore {
         internal string defaultLocation;
         internal DateTime defaultDateAdded;
         internal string defaultText;
+        internal ParserOptions options;
 
 
         //TODO Overload this to accept text directly, thus skipping the reading part (which should be isolated btw)
         //Directly parse the stream matching the format of the .txt file.
-        public virtual IEnumerable<Clipping> Parse(string path) {
+        public virtual IEnumerable<Clipping> Parse(string path, FormatType format) {
             var stream = new FileStream(path, FileMode.Open); //Open stream via path to the .txt file.
             using (var sr = new StreamReader(stream)) {
                 int lineNumber = 0;
                 string line = null;
                 int clippingLineNumber = 0;
                 Clipping clipping = new Clipping();
-                FormatType format = OptionsDeprecate.FormatInUse;
 
                 while ((line = sr.ReadLine()) != null) {
                     lineNumber++;

@@ -34,6 +34,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>AmazingClip.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -111,13 +118,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Amazing Kindly Clipper\AKCCore.csproj">
+    <Resource Include="Resources\AmazingClip.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="AmazingClip.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AKCCore\AKCCore.csproj">
       <Project>{f23a33b4-1bee-46f1-88aa-06840f057c74}</Project>
       <Name>AKCCore</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\AmazingClip.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

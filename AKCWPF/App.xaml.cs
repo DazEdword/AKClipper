@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace AKCCore {
+namespace AKCWPF {
 
     /// <summary>
     /// Interaction logic for App.xaml
