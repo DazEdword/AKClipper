@@ -7,14 +7,15 @@ namespace AKCCore {
     /// </summary>
 
     public class ParserOptions {
-        private static string language = null;
-        private static CultureInfo currentCulture;
-        private static CultureInfo engCulture;
-        private static CultureInfo spaCulture;
-        private static string textToParsePath;
-        private static Encoding fileEncoding;
-        private static FormatType formatInUse;
-        private static MyClippingsParser parserInUse;
+        //TODO perhaps Language/Culture/SthElse should be grouped into an object??
+        private string language = null;
+        private CultureInfo currentCulture;
+        private CultureInfo engCulture;
+        private CultureInfo spaCulture;
+        private string textToParsePath;
+        private Encoding fileEncoding;
+        private FormatType formatInUse;
+        private MyClippingsParser parserInUse;
 
         public ParserOptions() {
             language = null;
@@ -23,10 +24,7 @@ namespace AKCCore {
             currentCulture = engCulture;
             fileEncoding = Encoding.UTF8;
             formatInUse = null;
-        }
-
-        public void SetCulture() {
-
+            parserInUse = null;
         }
 
         public string Language {
@@ -35,15 +33,6 @@ namespace AKCCore {
             }
             set {
                 language = value;
-            }
-        }
-
-        public CultureInfo CurrentCulture {
-            get {
-                return currentCulture;
-            }
-            set {
-                currentCulture = value;
             }
         }
 
@@ -83,7 +72,16 @@ namespace AKCCore {
             }
         }
 
-        public FormatType FormatInUse {
+        public MyClippingsParser SelectedParser {
+            get {
+                return parserInUse;
+            }
+            set {
+                parserInUse = value;
+            }
+        }
+
+        public FormatType SelectedFormat {
             get {
                 return formatInUse;
             }
@@ -91,5 +89,15 @@ namespace AKCCore {
                 formatInUse = value;
             }
         }
+
+        public CultureInfo SelectedCulture {
+            get {
+                return currentCulture;
+            }
+            set {
+                currentCulture = value;
+            }
+        }
+
     }
 }

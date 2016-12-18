@@ -21,17 +21,11 @@ namespace AKCCore {
     public class ParserController {
         private MyClippingsParserENG parserENG;
         private MyClippingsParserSPA parserSPA;
-        public MyClippingsParser setParser;
         public ParserOptions options; 
-
-        //private Encoding encoding; //Using UTF8 encoding by default here as defined in Options, but that can be changed.
-
 
         //Hmmmm... bad smell
         public string textSample;  //Text sample only stores critical second line of text.
         public string textPreview; //Text preview gets up to n lines, as defined in var maxLineCounter.
-        //private string defaultDirectory; //Variables to keep track of the directory in which the .txt are.
-        //private string lastUsedDirectory;
 
         //TODO Temporary var for refactor. 
         public string path;
@@ -40,36 +34,48 @@ namespace AKCCore {
         public int rawClippingCount; 
 
         public ParserController() {
-            //Thread-safe, singleton instantiation of the two parsers implemented through the two subclasses.
             parserENG = MyClippingsParserENG.MyParserENG; 
             parserSPA = MyClippingsParserSPA.MyParserSPA;
             path = ""; //TEMP
+            options = new ParserOptions();
 
-            //Methods generating a Dictionary of FormatTypes on execution.
+            //Methods generating a Dictionary of FormatTypes on instantiation.
             FormatTypeDatabase.PopulateFormatList(parserENG.engFormats);
             FormatTypeDatabase.PopulateFormatList(parserSPA.spaFormats);
             FormatTypeDatabase.GenerateFormatTypeDatabase();
         }
 
-        //TODO This method passes a string. Overload to pass any other? Parser instance?
         public void SetParser(string language) {
-            //TODO Maybe replace this switch with something a bit more elegant?
-            //TODO Improve defaulting and error handling here. What if the string is not in the switch?
             switch (language) {
                 case "English":
-                    setParser = parserENG;
+                    options.SelectedParser = parserENG;
                     break;
-
                 case "Spanish":
-                    setParser = parserSPA;
+                    options.SelectedParser = parserSPA;
                     break;
+                default:
+                    System.Diagnostics.Debug.WriteLine("Parser not recognised: unable to set parser");
+                    break;
+            }
+        }
+
+        //Instance type override, in case a parser instance is passed instead of a string with parser name
+        public void SetParser(MyClippingsParser parser) {
+            string t = parser.GetType().ToString();
+
+            if (t == "MyClippingsParserENG") {
+                options.SelectedParser = parserENG;
+            } else if (t == "MyClippingsParserSPA") {
+                options.SelectedParser = parserSPA;
+            } else {
+                System.Diagnostics.Debug.WriteLine("Parser instance not recognised: unable to set parser");
             }
         }
 
         //TODO This method passes a path to the file. Modify it to accept a text chain directly. 
         public void RunParser(string path) {
             try {
-                var clippings = setParser.Parse(path);
+                var clippings = options.SelectedParser.Parse(path, options.SelectedFormat);
 
                 rawClippingCount = 0;
                 foreach (var item in clippings) {
@@ -148,11 +154,11 @@ namespace AKCCore {
 
                     if (format != null) {
                         if (!isSafe) {
-                            OptionsDeprecate.FormatInUse = format;
+                            options.SelectedFormat = format;
                         }
 
                         if (isSafe) {
-                            OptionsDeprecate.FormatInUse = format;
+                            options.SelectedFormat = format;
                             break;
                         }
                     }
@@ -174,27 +180,22 @@ namespace AKCCore {
             /// 
 
             try {
-               if (OptionsDeprecate.Language != null) {
+               if (options.Language != null) {
                     string textSample = sample;
-
                     List<string> engKeywords = new List<string>();
                     List<string> spaKeywords = new List<string>();
 
                     /* This lines hunt down an additional keywords (independent of the ones that will be
                      * carried away later) to confirm language. */
 
-                    string textPreview = preview;
-
-                    //TODO After refactor, well, set parsing is setting it only in the controller, so redundant
-                    //referencing has to occur here too. Should be solved when refactor is complete. *Sighs*
-                    PickFormatType(textPreview, languageToDetect);
+                    PickFormatType(preview, options.Language);
 
                     //A last check that guarantees compatibility.
-                    if ((languageToDetect == "Spanish") && (setParser == parserSPA) && (OptionsDeprecate.FormatInUse != null)) {
+                    if ((options.Language == "Spanish") && (parser == parserSPA) && (options.SelectedFormat != null)) {
                         return true;
                     }
 
-                    if ((languageToDetect == "English") && (setParser == parserENG) && (OptionsDeprecate.FormatInUse != null)) {
+                    if ((options.Language == "English") && (parser == parserENG) && (options.SelectedFormat != null)) {
                         return true;
                     }
                     else {
@@ -214,8 +215,8 @@ namespace AKCCore {
 
         public bool ConfirmParserCompatibility() {
             //TODO method is very dependant of options, are we sure of this?
-            string path = OptionsDeprecate.TextToParsePath;
-            string language = OptionsDeprecate.Language;
+            string path = options.TextToParsePath;
+            string language = options.Language;
             bool correctParserConfirmed = false;
             //TODO setting parser just before confirmation? just doesn't feel right anymore
             SetParser(language);
@@ -223,7 +224,7 @@ namespace AKCCore {
             /* Checking .TXT language vs parser language and picking correct FormatType file. It offers the user some help to avoid exceptions
              * and allows new parsers to be added easily for full compatibility, even with custom or irregular .TXT files, on the dev side. */
 
-            return correctParserConfirmed = CheckParserLanguageAndType(setParser, textSample, textPreview);
+            return correctParserConfirmed = CheckParserLanguageAndType(options.SelectedParser, textSample, textPreview);
         }
 
         public void RunParsingSequence(){

@@ -19,6 +19,8 @@ namespace AKCCore {
 
         private MyClippingsParserENG() {
             //TODO Separate in different initialization methods. 
+            //options =
+
             defaultBookName = "Unknown book";
             defaultAuthor = "Unknown author";
             defaultLocation = "";

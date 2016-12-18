@@ -99,7 +99,6 @@
     <Compile Include="Clippings\SortableClippingList.cs" />
     <Compile Include="Controllers\ParserOptions.cs" />
     <Compile Include="Controllers\ParserController.cs" />
-    <Compile Include="OptionsDeprecate.cs" />
     <Compile Include="Parsers\ParserENG.cs" />
     <Compile Include="Clippings\Clipping.cs" />
     <Compile Include="Clippings\ClippingDatabase.cs" />

@@ -30,11 +30,11 @@ namespace AKCWPF {
             //setParser = parserController.setParser;
             //setFormat = parserController.setFormat; //For debugging purposes you can manually change this to point to a given type, using parserInstance.Type.
 
-            encoding = OptionsDeprecate.FileEncoding;
+            encoding = parserController.options.FileEncoding;
 
             defaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             lastUsedDirectory = null;
-            parserController.languageToDetect = "NotALanguage";
+            parserController.options.Language = "NotALanguage";
 
             InitializeComponent();
         }
@@ -49,7 +49,7 @@ namespace AKCWPF {
             ofd.Filter = "TXT Files (*.txt)|*.txt";
 
             //Check culture, set up default file names accordingly. 
-            if (OptionsDeprecate.CurrentCulture.Name == ("en-GB")) {
+            if (parserController.options.SelectedCulture.Name == ("en-GB")) {
                 ofd.FileName = "My Clippings - Kindle.txt"; 
             } else {
                 ofd.FileName = "Mis recortes.txt"; 
@@ -98,12 +98,12 @@ namespace AKCWPF {
 
                     try {
                         if (parserController.textSample.Contains("Añadido")) {
-                            parserController.languageToDetect = "Spanish";
+                            parserController.options.Language = "Spanish";
                             radioButtonB.IsChecked = true;
                         }
 
                         if (parserController.textSample.Contains("Added")) {
-                            parserController.languageToDetect = "English";
+                            parserController.options.Language = "English";
                             radioButtonA.IsChecked = true;
                         }
                     } catch (Exception ex) {
@@ -117,7 +117,7 @@ namespace AKCWPF {
                     //TMP
                     parserController.textPreview = textPreview;
 
-                    OptionsDeprecate.TextToParsePath = filePath; //References preview in general text to parse.
+                    parserController.options.TextToParsePath = filePath; //References preview in general text to parse.
                     previewScroll.UpdateLayout();
 
                 } catch (IOException) {
@@ -144,7 +144,7 @@ namespace AKCWPF {
         private async void buttonParse_Click(object sender, RoutedEventArgs e) {
             //parserController.RunParsingSequence();
 
-            if (OptionsDeprecate.TextToParsePath != null && OptionsDeprecate.Language != null) {
+            if (parserController.options.TextToParsePath != null && parserController.options.Language != null) {
 
                 bool correctParserConfirmed = parserController.ConfirmParserCompatibility();
 
@@ -163,8 +163,8 @@ namespace AKCWPF {
 
                 if (correctParserConfirmed) {
                     //Temp
-                    var path = parserController.path = OptionsDeprecate.TextToParsePath;
-                    parserController.setParser.Parse(path);
+                    var path = parserController.path = parserController.options.TextToParsePath;
+                    parserController.options.SelectedParser.Parse(path, parserController.options.SelectedFormat);
 
 
                     //Start the process (method), insstantiate (and show) window, wait for the task to finish and close 
@@ -194,25 +194,25 @@ namespace AKCWPF {
                 }
             }
 
-            if (OptionsDeprecate.TextToParsePath == null) {
+            if (parserController.options.TextToParsePath == null) {
                 MessageBox.Show("No path to .txt found, please select your Kindle clipping file and try again.");
             }
 
-            if (OptionsDeprecate.Language == null) {
+            if (parserController.options.Language == null) {
                 MessageBox.Show("Problems detecting language, please select your language and try again.");
             }
         }
             
 
         private void radioButtonA_Checked(object sender, RoutedEventArgs e) {
-            OptionsDeprecate.Language = "English";
-            OptionsDeprecate.CurrentCulture = OptionsDeprecate.EngCulture;
+            parserController.options.Language = "English";
+            parserController.options.SelectedCulture = parserController.options.EngCulture;
         }
 
         private void radioButtonB_Checked(object sender, RoutedEventArgs e) {
             //radioButtonB.IsChecked = true; //Uncomment this option if you want English to be marked by default.
-            OptionsDeprecate.Language = "Spanish";
-            OptionsDeprecate.CurrentCulture = OptionsDeprecate.SpaCulture;
+            parserController.options.Language = "Spanish";
+            parserController.options.SelectedCulture = parserController.options.SpaCulture;
         }
 
         private void LaunchDatabaseWindow() {

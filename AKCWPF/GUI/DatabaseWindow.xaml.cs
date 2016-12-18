@@ -20,10 +20,8 @@ namespace AKCWPF {
     public partial class DatabaseWindow : Window {
         public static Dictionary<int, Clipping> numberedClippings = ClippingDatabase.numberedClippings;
         private List<Clipping> finalClippingsList = ClippingDatabase.finalClippingsList;
-        private CultureInfo currentCulture = OptionsDeprecate.CurrentCulture;
 
         private ICollectionView updateableItemList { get; set; }
-
         public ICollectionView PublicUpdateableItemList {
             get { return updateableItemList; }
         }
@@ -35,6 +33,7 @@ namespace AKCWPF {
         private bool exportingToTXT;
         private bool exportingToCSV;
         private bool exportingToHTML;
+
         private LoadingWindow LW;
         private MainWindow mainWindow;
 
@@ -99,10 +98,8 @@ namespace AKCWPF {
             myCollectionView.Filter = FilterByCategory;
         }
 
-        private bool FilterByCategory(object item)
-
         //Apply the filter & refresh collection.
-        {
+        private bool FilterByCategory(object item) {
             Clipping clipping = item as Clipping;
             string filterString = query;
             string filterField = "";
@@ -130,7 +127,7 @@ namespace AKCWPF {
                     break;
             }
 
-            bool contains = currentCulture.CompareInfo.IndexOf(filterField, filterString, CompareOptions.IgnoreCase) >= 0;
+            bool contains = filterField.IndexOf(filterString, StringComparison.OrdinalIgnoreCase) >= 0;
 
             if (contains) {
                 return true;

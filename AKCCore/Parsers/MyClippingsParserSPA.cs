@@ -13,6 +13,7 @@ namespace AKCCore {
         public FormatType typeEd;
         public FormatType typeRub;
         public FormatType[] spaFormats;
+        private CultureInfo spaCulture;
 
         private static readonly MyClippingsParserSPA myParserSPA = new MyClippingsParserSPA(); //Singleton instantiation.
 
@@ -25,6 +26,7 @@ namespace AKCCore {
             defaultLocation = "";
             defaultPage = "";
             defaultDateAdded = new DateTime();
+            spaCulture = new CultureInfo("es-ES");
 
             typeEdPageKeys = new string[] { " en la página " };   //Manually instancing an array of keys per type to be added to struct constructor. Modifyable.
             typeEdLocationKeys = new string[] { " Posición " };
@@ -148,7 +150,7 @@ namespace AKCCore {
                  *the proper format is added to the formats array.  */
 
                 DateTime dt;
-                if (DateTime.TryParseExact(input, formats, OptionsDeprecate.SpaCulture, DateTimeStyles.None, out dt)) {
+                if (DateTime.TryParseExact(input, formats, spaCulture, DateTimeStyles.None, out dt)) {
                     if (dt < DateTime.Now) {
                         clipping.DateAdded = dt;
                     }
