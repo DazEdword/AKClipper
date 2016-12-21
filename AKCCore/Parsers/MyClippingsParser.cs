@@ -33,6 +33,8 @@ namespace AKCCore {
 
         //TODO Overload this to accept text directly, thus skipping the reading part (which should be isolated btw)
         //Directly parse the stream matching the format of the .txt file.
+        //It might help to differentiate path pathToContent/string Content 
+        // https://msdn.microsoft.com/en-us/library/system.io.path(v=vs.110).aspx
         public virtual IEnumerable<Clipping> Parse(string path, FormatType format) {
             var stream = new FileStream(path, FileMode.Open); //Open stream via path to the .txt file.
             using (var sr = new StreamReader(stream)) {

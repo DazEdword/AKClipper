@@ -1,6 +1,5 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +17,7 @@ namespace AKCWPF {
 
         private ParserController parserController;
         private Encoding encoding; //Using UTF8 encoding by default here as defined in OptionsDeprecate, but that can be changed.
+        private string textSample;
         private string textPreview; //Text preview gets up to n lines, as defined in var maxLineCounter.
         private string defaultDirectory; //Variables to keep track of the directory in which the .txt are.
         private string lastUsedDirectory;
@@ -27,11 +27,8 @@ namespace AKCWPF {
         public MainWindow() {
             parserController = new ParserController();
 
-            //setParser = parserController.setParser;
-            //setFormat = parserController.setFormat; //For debugging purposes you can manually change this to point to a given type, using parserInstance.Type.
-
+            //GUI simple options and persistence
             encoding = parserController.options.FileEncoding;
-
             defaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             lastUsedDirectory = null;
             parserController.options.Language = "NotALanguage";
@@ -67,42 +64,20 @@ namespace AKCWPF {
                     string filePath = ofd.FileName;
                     string safeFilePath = ofd.SafeFileName;
 
+                    
+                    textPreview = parserController.GeneratePreviewFromPath(filePath);
+                    //Get critical line from textPreview, hardcoded here as first line. 
+                    //Safe, since min. number lines is 4
+                    textSample = textPreview.Replace("\r", "").Split('\n')[1];
 
-                    //TODO Extract a GeneratePreview method or, even better, extract the line reading algorithm 
-                    //to a method accepting number of lines and specify some values for the preview. 
-                    textPreview = "";
-
-                    var lineCounter = 0;
-                    var maxLineCounter = 39; //A magic number here, number of lines that makes five clippings for most formats, but not necessarily.
-                    var languageDetectionLine = 1; //Line that contains the critical word used for language detection.
-
-                    /* Code generating a preview of the first lines of the document. Used for previewing purposes and for finding out language
-                    of the file, using indicators in the second line*/
-
-                    using (var reader = new StreamReader(ofd.FileName)) {
-                        while (lineCounter < maxLineCounter) {
-                            string line = reader.ReadLine();
-
-                            if (lineCounter == languageDetectionLine) //Critical line (usually second line) is a references to textSample to perform detection on it.
-                            {
-                                parserController.textSample = line;
-                            }
-
-                            if (line == null) {
-                                break;
-                            }
-                            textPreview += line + " \n "; // Add line and jumps to a new line in preview.
-                            lineCounter++;
-                        }
-                    }
-
+                    //TODO if we add translation support in a future, this needs to be better.
                     try {
-                        if (parserController.textSample.Contains("Añadido")) {
+                        if (textSample.Contains("Añadido")) {
                             parserController.options.Language = "Spanish";
                             radioButtonB.IsChecked = true;
                         }
 
-                        if (parserController.textSample.Contains("Added")) {
+                        if (textSample.Contains("Added")) {
                             parserController.options.Language = "English";
                             radioButtonA.IsChecked = true;
                         }
@@ -113,9 +88,6 @@ namespace AKCWPF {
                     pathBox.Text = filePath; //Updates path in path textbox.
                     lastUsedDirectory = filePath; //Remembers last used directory for user convenience.
                     filePreview.Text = textPreview; //Updates preview of the file in text block.
-
-                    //TMP
-                    parserController.textPreview = textPreview;
 
                     parserController.options.TextToParsePath = filePath; //References preview in general text to parse.
                     previewScroll.UpdateLayout();
@@ -140,13 +112,16 @@ namespace AKCWPF {
          *  Close loading window
          *  Launch database window
          */
-           
+
+        private void Parse() {
+        }
+
         private async void buttonParse_Click(object sender, RoutedEventArgs e) {
             //parserController.RunParsingSequence();
 
             if (parserController.options.TextToParsePath != null && parserController.options.Language != null) {
 
-                bool correctParserConfirmed = parserController.ConfirmParserCompatibility();
+                bool correctParserConfirmed = parserController.ConfirmParserCompatibility(textSample, textPreview);
 
                 try {
                     if (correctParserConfirmed == false) {
@@ -187,8 +162,7 @@ namespace AKCWPF {
                     }
 
                     //If you want to update UI from this task a dispatcher has to be used, since it has to be in the UI thread.
-                    Dispatcher.Invoke((Action)delegate() 
-                    {
+                    Dispatcher.Invoke((Action)delegate() {
                         LaunchDatabaseWindow();
                     });
                 }

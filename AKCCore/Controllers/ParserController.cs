@@ -23,10 +23,6 @@ namespace AKCCore {
         private MyClippingsParserSPA parserSPA;
         public ParserOptions options; 
 
-        //Hmmmm... bad smell
-        public string textSample;  //Text sample only stores critical second line of text.
-        public string textPreview; //Text preview gets up to n lines, as defined in var maxLineCounter.
-
         //TODO Temporary var for refactor. 
         public string path;
         public string languageToDetect; //Additional language detection.
@@ -72,7 +68,7 @@ namespace AKCCore {
             }
         }
 
-        //TODO This method passes a path to the file. Modify it to accept a text chain directly. 
+        //TODO This method passes a path to the file. Overload it to accept a text chain directly. 
         public void RunParser(string path) {
             try {
                 var clippings = options.SelectedParser.Parse(path, options.SelectedFormat);
@@ -103,17 +99,13 @@ namespace AKCCore {
             result.clippingCount = rawClippingCount;
             result.databaseEntries = ClippingDatabase.numberedClippings.Count;
             result.removedClippings = result.clippingCount - result.databaseEntries;
+
             if (consoleOnly) {
-                //TODO Write console interface (console project) to use this properly as a secondary 
-                //interface. For now, debug will do. 
+                //Perhaps we want to create a console project in the future to have a command-line AKC. 
+                //But for today's debugging and testing this is more than enough.  
                 System.Diagnostics.Debug.WriteLine(">> Parsed clippings: {0}", (object)result.clippingCount);
                 System.Diagnostics.Debug.WriteLine(">> Parsing successful");
                 System.Diagnostics.Debug.WriteLine(">> Removed clippings: {0}" ,(object)result.removedClippings.ToString());
-
-                //Console.WriteLine(">> " + result.clippingCount + " clippings parsed.");
-                //Console.WriteLine(">> Parsing successfull");
-                //Console.WriteLine(">> " + result.removedClippings.ToString() + 
-                //    " empty or null clippings removed weren't added to database.");
 
                 return null;
             } else {
@@ -213,7 +205,7 @@ namespace AKCCore {
             }
         }
 
-        public bool ConfirmParserCompatibility() {
+        public bool ConfirmParserCompatibility(string textSample, string textPreview) {
             //TODO method is very dependant of options, are we sure of this?
             string path = options.TextToParsePath;
             string language = options.Language;
@@ -225,6 +217,32 @@ namespace AKCCore {
              * and allows new parsers to be added easily for full compatibility, even with custom or irregular .TXT files, on the dev side. */
 
             return correctParserConfirmed = CheckParserLanguageAndType(options.SelectedParser, textSample, textPreview);
+        }
+
+
+        public string GeneratePreviewFromPath(string path, int lines = 39) {
+            //Second parameter is optional, change it if a bigger or smaller preview is needed.
+            int currentLine = 0;
+            string preview = "";
+
+            //Min 4 lines(1 clipping)
+            if (lines < 3) {
+                lines = 3;
+            }
+
+            using (var reader = new StreamReader(path)) {
+                while (currentLine < lines) {
+                    string line = reader.ReadLine();
+
+                    if (line == null) {
+                        break;
+                    }
+                    // Add line and jumps to a new line in preview.
+                    preview += line + " \n "; 
+                    currentLine++;
+                }
+            }
+            return preview;
         }
 
         public void RunParsingSequence(){

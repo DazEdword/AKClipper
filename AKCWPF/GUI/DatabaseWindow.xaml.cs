@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
@@ -58,7 +57,7 @@ namespace AKCWPF {
             });
 
             //Call to slow code here.
-            ICollectionView filterData = await Task.Run(() => InitializeFilter()); // Get the plain data on a background thread.
+            ICollectionView filterData = await Task.Run(() => InitializeFilter());
 
             Dispatcher.Invoke((Action)delegate () {
                 OnLoadFinished(filterData);

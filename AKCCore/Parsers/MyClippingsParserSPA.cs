@@ -28,7 +28,8 @@ namespace AKCCore {
             defaultDateAdded = new DateTime();
             spaCulture = new CultureInfo("es-ES");
 
-            typeEdPageKeys = new string[] { " en la página " };   //Manually instancing an array of keys per type to be added to struct constructor. Modifyable.
+            //Manually instancing an array of keys per type to be added to struct constructor. Modifyable.
+            typeEdPageKeys = new string[] { " en la página " };   
             typeEdLocationKeys = new string[] { " Posición " };
 
             typeRubPageKeys = new string[] { " en la página " };
