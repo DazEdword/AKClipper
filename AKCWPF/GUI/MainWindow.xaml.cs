@@ -1,6 +1,5 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,11 +27,8 @@ namespace AKCWPF {
         public MainWindow() {
             parserController = new ParserController();
 
-            //setParser = parserController.setParser;
-            //setFormat = parserController.setFormat; //For debugging purposes you can manually change this to point to a given type, using parserInstance.Type.
-
+            //GUI simple options and persistence
             encoding = parserController.options.FileEncoding;
-
             defaultDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             lastUsedDirectory = null;
             parserController.options.Language = "NotALanguage";
@@ -74,6 +70,7 @@ namespace AKCWPF {
                     //Safe, since min. number lines is 4
                     textSample = textPreview.Replace("\r", "").Split('\n')[1];
 
+                    //TODO if we add translation support in a future, this needs to be better.
                     try {
                         if (textSample.Contains("Añadido")) {
                             parserController.options.Language = "Spanish";
@@ -115,7 +112,10 @@ namespace AKCWPF {
          *  Close loading window
          *  Launch database window
          */
-           
+
+        private void Parse() {
+        }
+
         private async void buttonParse_Click(object sender, RoutedEventArgs e) {
             //parserController.RunParsingSequence();
 
@@ -162,8 +162,7 @@ namespace AKCWPF {
                     }
 
                     //If you want to update UI from this task a dispatcher has to be used, since it has to be in the UI thread.
-                    Dispatcher.Invoke((Action)delegate() 
-                    {
+                    Dispatcher.Invoke((Action)delegate() {
                         LaunchDatabaseWindow();
                     });
                 }
