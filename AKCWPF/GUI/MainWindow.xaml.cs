@@ -68,34 +68,11 @@ namespace AKCWPF {
                     string filePath = ofd.FileName;
                     string safeFilePath = ofd.SafeFileName;
 
-
-                    //TODO Extract a GeneratePreview method or, even better, extract the line reading algorithm 
-                    //to a method accepting number of lines and specify some values for the preview. 
-                    textPreview = "";
-
-                    var lineCounter = 0;
-                    var maxLineCounter = 39; //A magic number here, number of lines that makes five clippings for most formats, but not necessarily.
-                    var languageDetectionLine = 1; //Line that contains the critical word used for language detection.
-
-                    /* Code generating a preview of the first lines of the document. Used for previewing purposes and for finding out language
-                    of the file, using indicators in the second line*/
-
-                    using (var reader = new StreamReader(ofd.FileName)) {
-                        while (lineCounter < maxLineCounter) {
-                            string line = reader.ReadLine();
-
-                            if (lineCounter == languageDetectionLine) //Critical line (usually second line) is a references to textSample to perform detection on it.
-                            {
-                                textSample = line;
-                            }
-
-                            if (line == null) {
-                                break;
-                            }
-                            textPreview += line + " \n "; // Add line and jumps to a new line in preview.
-                            lineCounter++;
-                        }
-                    }
+                    
+                    textPreview = parserController.GeneratePreviewFromPath(filePath);
+                    //Get critical line from textPreview, hardcoded here as first line. 
+                    //Safe, since min. number lines is 4
+                    textSample = textPreview.Replace("\r", "").Split('\n')[1];
 
                     try {
                         if (textSample.Contains("Añadido")) {
