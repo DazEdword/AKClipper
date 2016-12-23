@@ -94,6 +94,12 @@
       <LastGenOutput>parsing_entry.feature.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AKCCore\AKCCore.csproj">
+      <Project>{f23a33b4-1bee-46f1-88aa-06840f057c74}</Project>
+      <Name>AKCCore</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
