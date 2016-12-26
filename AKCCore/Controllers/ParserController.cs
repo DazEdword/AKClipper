@@ -21,18 +21,15 @@ namespace AKCCore {
     public class ParserController {
         private MyClippingsParserENG parserENG;
         private MyClippingsParserSPA parserSPA;
-        public ParserOptions options; 
+        public ParserOptions options;
 
-        //TODO Temporary var for refactor. 
-        public string path;
-        public string languageToDetect; //Additional language detection.
-        //Variable keeping count of raw clippings, declared on the class scope so that it can be used by several methods.
+        //Variable keeping count of raw clippings, declared on the class scope so that 
+        //it can be used by several methods.
         public int rawClippingCount; 
 
         public ParserController() {
             parserENG = MyClippingsParserENG.MyParserENG; 
             parserSPA = MyClippingsParserSPA.MyParserSPA;
-            path = ""; //TEMP
             options = new ParserOptions();
 
             //Methods generating a Dictionary of FormatTypes on instantiation.
@@ -41,8 +38,8 @@ namespace AKCCore {
             FormatTypeDatabase.GenerateFormatTypeDatabase();
         }
 
-        public void SetParser(string language) {
-            switch (language) {
+        public void SetParser(string id) {
+            switch (id) {
                 case "English":
                     options.SelectedParser = parserENG;
                     break;
@@ -67,7 +64,7 @@ namespace AKCCore {
                 System.Diagnostics.Debug.WriteLine("Parser instance not recognised: unable to set parser");
             }
         }
-
+        
         //TODO This method passes a path to the file. Overload it to accept a text chain directly. 
         public void RunParser(string path) {
             try {
@@ -90,7 +87,8 @@ namespace AKCCore {
                     ClippingDatabase.finalClippingsList.Add(clippingToAdd);
                 }
             } catch (Exception ex) {
-                MessageBox.Show(ex.Message, "Parsing Error");
+                System.Diagnostics.Debug.WriteLine("Parsing Error: " + ex.Message);
+                //MessageBox.Show(ex.Message, "Parsing Error");
             }
         }
 
@@ -169,7 +167,6 @@ namespace AKCCore {
             /// instantiated prior to use. At the moment only ENG and SPA parsers are recognized and used, but the 
             /// system should be easily extendable to other languages if needed.
             /// </summary>
-            /// 
 
             try {
                if (options.Language != null) {
@@ -194,13 +191,15 @@ namespace AKCCore {
                         return false;
                     }
                 } else {
-                    MessageBox.Show("Unable to find language. Have you selected your language?");
+                    System.Diagnostics.Debug.WriteLine("Unable to find language. Have you selected your language?");
+                    //MessageBox.Show("Unable to find language. Have you selected your language?");
                     return false;
                 }
             }
 
             catch (Exception ex) {
-                MessageBox.Show(ex.Message, "Parser detection problem");
+                //MessageBox.Show(ex.Message, "Parser detection problem");
+                System.Diagnostics.Debug.WriteLine("Unable to find language. Have you selected your language?" + ex.Message);
                 return false;
             }
         }

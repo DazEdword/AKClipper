@@ -63,7 +63,7 @@ namespace AKCWPF {
                 OnLoadFinished(filterData);
             });
 
-            dataGrid.ItemContainerGenerator.StatusChanged += new EventHandler(CloseLoadingWindow); //Event handler that
+            dataGrid.ItemContainerGenerator.StatusChanged += new EventHandler(CloseLoadingWindow);
         }
 
         private void GetMainWindow() {
