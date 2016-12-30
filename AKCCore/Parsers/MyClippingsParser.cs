@@ -18,8 +18,8 @@ namespace AKCCore {
         private const string Line1RegexPattern = @"^(.+?)(?: \(([^)]+?)\))?$";
 
 
-        //TODO Modify parser so as to have them receive format type and anything else important to them that is in options.
-        //Parsersshould not be interested on options or not even in ParserController, but ParserController interested on parsers
+        //TODO Modify parser so as to have them receive format type (and anything else vital to parse) that is in options.
+        //Parsers should not be interested on options or not even in ParserController, but ParserController interested on parsers
 
         internal Clipping Defaults;
         internal ParserOptions options;
@@ -30,13 +30,15 @@ namespace AKCCore {
         //http://stackoverflow.com/questions/19980112/how-to-do-progress-reporting-using-async-await
 
 
+        //Public interfaces, Parse ("default", from path) or DirectParse(string content).
+        //DirectParse can be tentatively used as an easy interface for the test framework.
         public virtual IEnumerable<Clipping> Parse(string path, FormatType format) {
             return ParseStreamFromPath(path, format);
         }
 
-
-        /*Calling to the different methods parsing the different lines. Line 3 is irrelevant 
-         * (just white space acting as a separator) and thus is not included in the logic. */
+        public virtual IEnumerable<Clipping> DirectParse(string content, FormatType format) {
+            return ParseFromString(content, format);
+        }
 
         protected virtual IEnumerable<Clipping> ParseStreamFromPath(string path, FormatType format) {
             //Open stream via path to the .txt file.
@@ -63,12 +65,45 @@ namespace AKCCore {
             }
         }
 
-        //TODO: Ready to implement ParseFromString.
-
-        /*
         protected virtual IEnumerable<Clipping> ParseFromString(string content, FormatType format) {
-        } */
+            Clipping clipping = new Clipping();
 
+            string[] result = content.Split(new string[] { "\n", "\r\n" }, StringSplitOptions.None);
+            string lines = null;
+
+            int lineNumber = 0;
+            int clippingLineNumber = 0;
+
+            while (lineNumber < result.Length) {
+
+                lineNumber++;
+                clippingLineNumber++;
+
+                if (result[lineNumber-1] == ClippingSeparator) {
+                    yield return clipping;
+                    clippingLineNumber = 0;
+                    clipping = new Clipping();
+                } else {
+                    //TODO Simplify this foul smelling conditional logic
+                    if (!(clippingLineNumber == 1 || clippingLineNumber == 2 || clippingLineNumber == 3) && result[lineNumber] != ClippingSeparator) {
+                        lines += result[lineNumber - 1];
+                    } else if (clippingLineNumber == 3) {
+                        lines = null;
+                    } else {
+                        if (lines == null) {
+                            lines = result[lineNumber - 1];
+                        }
+
+                        ParseClipping(clippingLineNumber, lines, clipping, format);
+                        lines = null;
+                    }
+                }
+            }
+        }
+
+
+        /*Calling to the different methods parsing the different lines. Line 3 is irrelevant 
+        * (just white space acting as a separator) and thus is not included in the logic. */
         public virtual void ParseClipping(int lineNumber, string line, Clipping clipping, FormatType format) {
             try {
                 switch (lineNumber) {
