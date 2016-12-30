@@ -161,6 +161,20 @@ namespace AKCCore {
             }
         }
 
+        public bool ConfirmParserCompatibility(string textSample, string textPreview) {
+            string path = options.TextToParsePath;
+            string language = options.Language;
+            bool correctParserConfirmed = false;
+
+            //Parser was added to options previously, is now set and then confirmed.
+            SetParser(language);
+
+            /* Checking .TXT language vs parser language and picking correct FormatType file. It offers the user some help to avoid exceptions
+             * and allows new parsers to be added easily for full compatibility, even with custom or irregular .TXT files. */
+
+            return correctParserConfirmed = CheckParserLanguageAndType(options.SelectedParser, textSample, textPreview);
+        }
+
         public bool CheckParserLanguageAndType(MyClippingsParser parser, string sample, string preview) {
 
             /// <summary> All parsers inherit from abstract class MyClippingsParser. Inheriting parsers need to be 
@@ -203,22 +217,7 @@ namespace AKCCore {
                 return false;
             }
         }
-
-        public bool ConfirmParserCompatibility(string textSample, string textPreview) {
-            //TODO method is very dependant of options, are we sure of this?
-            string path = options.TextToParsePath;
-            string language = options.Language;
-            bool correctParserConfirmed = false;
-            //TODO setting parser just before confirmation? just doesn't feel right anymore
-            SetParser(language);
-
-            /* Checking .TXT language vs parser language and picking correct FormatType file. It offers the user some help to avoid exceptions
-             * and allows new parsers to be added easily for full compatibility, even with custom or irregular .TXT files, on the dev side. */
-
-            return correctParserConfirmed = CheckParserLanguageAndType(options.SelectedParser, textSample, textPreview);
-        }
-
-
+ 
         public string GeneratePreviewFromPath(string path, int lines = 39) {
             //Second parameter is optional, change it if a bigger or smaller preview is needed.
             int currentLine = 0;

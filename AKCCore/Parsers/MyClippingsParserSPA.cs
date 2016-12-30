@@ -20,12 +20,15 @@ namespace AKCCore {
         /* Following three methods: simple, thread safe singleton implementation*/
 
         private MyClippingsParserSPA() {
-            defaultBookName = "Título desconocido";
-            defaultAuthor = "Autor desconocido";
-            defaultText = "";
-            defaultLocation = "";
-            defaultPage = "";
-            defaultDateAdded = new DateTime();
+
+            //TODO Separate in different initialization methods.
+            Defaults = new Clipping();
+            Defaults.BookName = "Título desconocido";
+            Defaults.Author = "Autor desconocido";
+            Defaults.Text = "";
+            Defaults.Location = "";
+            Defaults.Page = "";
+            Defaults.DateAdded = new DateTime();
             spaCulture = new CultureInfo("es-ES");
 
             //Manually instancing an array of keys per type to be added to struct constructor. Modifyable.
@@ -61,7 +64,7 @@ namespace AKCCore {
         static MyClippingsParserSPA() {
         }
 
-        public override void ParseLine2(string line, Clipping clipping, FormatType format) {
+        protected override void ParseLine2(string line, Clipping clipping, FormatType format) {
             var split = line.Split(' ');
             var fileType = "";
 
@@ -126,7 +129,7 @@ namespace AKCCore {
                 }
             }
             catch (Exception) {
-                clipping.Page = defaultPage;
+                clipping.Page = Defaults.Page;
             }
 
             try {
@@ -136,7 +139,7 @@ namespace AKCCore {
                 }
             }
             catch (Exception) {
-                clipping.Location = defaultLocation;
+                clipping.Location = Defaults.Location;
             }
 
             //Date detection.
@@ -158,7 +161,7 @@ namespace AKCCore {
                 }
             }
             catch (Exception ex) {
-                clipping.DateAdded = defaultDateAdded;
+                clipping.DateAdded = Defaults.DateAdded;
                 new Exception("Error encountered adding date: " + ex.Message, ex);
             }
         }

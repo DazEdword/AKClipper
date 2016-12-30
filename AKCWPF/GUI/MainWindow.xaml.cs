@@ -64,7 +64,6 @@ namespace AKCWPF {
                     string filePath = ofd.FileName;
                     string safeFilePath = ofd.SafeFileName;
 
-                    
                     textPreview = parserController.GeneratePreviewFromPath(filePath);
                     //Get critical line from textPreview, hardcoded here as first line. 
                     //Safe, since min. number lines is 4
