@@ -21,18 +21,15 @@ namespace AKCCore {
     public class ParserController {
         private MyClippingsParserENG parserENG;
         private MyClippingsParserSPA parserSPA;
-        public ParserOptions options; 
+        public ParserOptions options;
 
-        //TODO Temporary var for refactor. 
-        public string path;
-        public string languageToDetect; //Additional language detection.
-        //Variable keeping count of raw clippings, declared on the class scope so that it can be used by several methods.
+        //Variable keeping count of raw clippings, declared on the class scope so that 
+        //it can be used by several methods.
         public int rawClippingCount; 
 
         public ParserController() {
             parserENG = MyClippingsParserENG.MyParserENG; 
             parserSPA = MyClippingsParserSPA.MyParserSPA;
-            path = ""; //TEMP
             options = new ParserOptions();
 
             //Methods generating a Dictionary of FormatTypes on instantiation.
@@ -41,8 +38,8 @@ namespace AKCCore {
             FormatTypeDatabase.GenerateFormatTypeDatabase();
         }
 
-        public void SetParser(string language) {
-            switch (language) {
+        public void SetParser(string id) {
+            switch (id) {
                 case "English":
                     options.SelectedParser = parserENG;
                     break;
@@ -67,7 +64,7 @@ namespace AKCCore {
                 System.Diagnostics.Debug.WriteLine("Parser instance not recognised: unable to set parser");
             }
         }
-
+        
         //TODO This method passes a path to the file. Overload it to accept a text chain directly. 
         public void RunParser(string path) {
             try {
@@ -90,7 +87,8 @@ namespace AKCCore {
                     ClippingDatabase.finalClippingsList.Add(clippingToAdd);
                 }
             } catch (Exception ex) {
-                MessageBox.Show(ex.Message, "Parsing Error");
+                System.Diagnostics.Debug.WriteLine("Parsing Error: " + ex.Message);
+                //MessageBox.Show(ex.Message, "Parsing Error");
             }
         }
 
@@ -163,13 +161,26 @@ namespace AKCCore {
             }
         }
 
+        public bool ConfirmParserCompatibility(string textSample, string textPreview) {
+            string path = options.TextToParsePath;
+            string language = options.Language;
+            bool correctParserConfirmed = false;
+
+            //Parser was added to options previously, is now set and then confirmed.
+            SetParser(language);
+
+            /* Checking .TXT language vs parser language and picking correct FormatType file. It offers the user some help to avoid exceptions
+             * and allows new parsers to be added easily for full compatibility, even with custom or irregular .TXT files. */
+
+            return correctParserConfirmed = CheckParserLanguageAndType(options.SelectedParser, textSample, textPreview);
+        }
+
         public bool CheckParserLanguageAndType(MyClippingsParser parser, string sample, string preview) {
 
             /// <summary> All parsers inherit from abstract class MyClippingsParser. Inheriting parsers need to be 
             /// instantiated prior to use. At the moment only ENG and SPA parsers are recognized and used, but the 
             /// system should be easily extendable to other languages if needed.
             /// </summary>
-            /// 
 
             try {
                if (options.Language != null) {
@@ -194,32 +205,19 @@ namespace AKCCore {
                         return false;
                     }
                 } else {
-                    MessageBox.Show("Unable to find language. Have you selected your language?");
+                    System.Diagnostics.Debug.WriteLine("Unable to find language. Have you selected your language?");
+                    //MessageBox.Show("Unable to find language. Have you selected your language?");
                     return false;
                 }
             }
 
             catch (Exception ex) {
-                MessageBox.Show(ex.Message, "Parser detection problem");
+                //MessageBox.Show(ex.Message, "Parser detection problem");
+                System.Diagnostics.Debug.WriteLine("Unable to find language. Have you selected your language?" + ex.Message);
                 return false;
             }
         }
-
-        public bool ConfirmParserCompatibility(string textSample, string textPreview) {
-            //TODO method is very dependant of options, are we sure of this?
-            string path = options.TextToParsePath;
-            string language = options.Language;
-            bool correctParserConfirmed = false;
-            //TODO setting parser just before confirmation? just doesn't feel right anymore
-            SetParser(language);
-
-            /* Checking .TXT language vs parser language and picking correct FormatType file. It offers the user some help to avoid exceptions
-             * and allows new parsers to be added easily for full compatibility, even with custom or irregular .TXT files, on the dev side. */
-
-            return correctParserConfirmed = CheckParserLanguageAndType(options.SelectedParser, textSample, textPreview);
-        }
-
-
+ 
         public string GeneratePreviewFromPath(string path, int lines = 39) {
             //Second parameter is optional, change it if a bigger or smaller preview is needed.
             int currentLine = 0;

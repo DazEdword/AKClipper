@@ -4,7 +4,6 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Threading;
 using AKCCore;
 
 namespace AKCWPF {
@@ -40,6 +39,7 @@ namespace AKCWPF {
             /// <summary>
             /// Browsing folders to find formats, different options depending on current culture.
             /// </summary>
+
             // A) Fire off OFD, configure depending on culture.
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.DefaultExt = ".txt";
@@ -64,7 +64,6 @@ namespace AKCWPF {
                     string filePath = ofd.FileName;
                     string safeFilePath = ofd.SafeFileName;
 
-                    
                     textPreview = parserController.GeneratePreviewFromPath(filePath);
                     //Get critical line from textPreview, hardcoded here as first line. 
                     //Safe, since min. number lines is 4
@@ -102,23 +101,8 @@ namespace AKCWPF {
             BrowseFile();
         }
 
-        //TODO refactor: Abstract browsing and checking logic, separate from parse button logic. 
-        /* What is this guy really doing? 
-         *  Are the option controls checked?
-         *  Confirm parser
-         *  Launch parser
-         *  Launch loading window
-         *  Do parse shit
-         *  Close loading window
-         *  Launch database window
-         */
 
-        private void Parse() {
-        }
-
-        private async void buttonParse_Click(object sender, RoutedEventArgs e) {
-            //parserController.RunParsingSequence();
-
+        private async void Parse() {
             if (parserController.options.TextToParsePath != null && parserController.options.Language != null) {
 
                 bool correctParserConfirmed = parserController.ConfirmParserCompatibility(textSample, textPreview);
@@ -131,38 +115,27 @@ namespace AKCWPF {
                             correctParserConfirmed = true;
                         }
                     }
-                }
-                catch (Exception ex) {
+                } catch (Exception ex) {
                     MessageBox.Show(ex.Message, "Parsing problem");
                 }
 
                 if (correctParserConfirmed) {
-                    //Temp
-                    var path = parserController.path = parserController.options.TextToParsePath;
-                    parserController.options.SelectedParser.Parse(path, parserController.options.SelectedFormat);
-
-
-                    //Start the process (method), insstantiate (and show) window, wait for the task to finish and close 
-                    //the window.
-
+                    //Async parsing
                     LW = new LoadingWindow();
-
-                    await Task.Run(() => parserController.RunParser(path));
-
+                    await Task.Run(() => parserController.RunParser(parserController.options.TextToParsePath));
                     LW.CloseLoadingWindow();
 
+                    //Result generation
                     dynamic result = parserController.ReportParsingResult(false);
 
                     if (result != null) {
-                        //TODO Implement this in order to extract and encapsulate, capturing these messy lines. 
-                        //ShowParsingReport(result);
                         MessageBox.Show(result.clippingCount + " clippings parsed.", "Parsing successful.");
                         MessageBox.Show(result.databaseEntries.ToString() + " clippings added to database. " +
                             result.removedClippings.ToString() + " empty or null clippings removed.", "Database created.");
                     }
 
                     //If you want to update UI from this task a dispatcher has to be used, since it has to be in the UI thread.
-                    Dispatcher.Invoke((Action)delegate() {
+                    Dispatcher.Invoke((Action)delegate () {
                         LaunchDatabaseWindow();
                     });
                 }
@@ -176,6 +149,10 @@ namespace AKCWPF {
                 MessageBox.Show("Problems detecting language, please select your language and try again.");
             }
         }
+
+        private void buttonParse_Click(object sender, RoutedEventArgs e) {
+            Parse();
+        }
             
 
         private void radioButtonA_Checked(object sender, RoutedEventArgs e) {
@@ -184,7 +161,7 @@ namespace AKCWPF {
         }
 
         private void radioButtonB_Checked(object sender, RoutedEventArgs e) {
-            //radioButtonB.IsChecked = true; //Uncomment this option if you want English to be marked by default.
+            //radioButtonB.IsChecked = true;
             parserController.options.Language = "Spanish";
             parserController.options.SelectedCulture = parserController.options.SpaCulture;
         }
