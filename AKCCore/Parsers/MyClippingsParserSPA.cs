@@ -15,43 +15,24 @@ namespace AKCCore {
         public FormatType[] spaFormats;
         private CultureInfo spaCulture;
 
-        private static readonly MyClippingsParserSPA myParserSPA = new MyClippingsParserSPA(); //Singleton instantiation.
+        //Singleton instantiation.
+        private static readonly MyClippingsParserSPA myParserSPA = new MyClippingsParserSPA();
 
         /* Following three methods: simple, thread safe singleton implementation*/
 
+        // Note the two different initialisation methods. 
+        // We are using it to initialise the parser, but even if there's nothing to initialise
+        // the init method needs to exist if we want this singleton pattern to work properly 
+
         private MyClippingsParserSPA() {
-
-            //TODO Separate in different initialization methods.
-            Defaults = new Clipping();
-            Defaults.BookName = "Título desconocido";
-            Defaults.Author = "Autor desconocido";
-            Defaults.Text = "";
-            Defaults.Location = "";
-            Defaults.Page = "";
-            Defaults.DateAdded = new DateTime();
             spaCulture = new CultureInfo("es-ES");
+            InitDefaults();
+            InitFormats();
+        }
 
-            //Manually instancing an array of keys per type to be added to struct constructor. Modifyable.
-            typeEdPageKeys = new string[] { " en la página " };   
-            typeEdLocationKeys = new string[] { " Posición " };
+        // Explicit static constructor to tell C# compiler not to mark type as 'beforefieldinit'
+        static MyClippingsParserSPA() {
 
-            typeRubPageKeys = new string[] { " en la página " };
-            typeRubLocationKeys = new string[] { " Pos. " };
-
-            typeEd = new FormatType("typeEd", typeEdPageKeys, typeEdLocationKeys, 2,
-                new FormatType.KeyPositionLang[]
-                {
-                    new FormatType.KeyPositionLang("Mi", 2, "Spanish"),
-                    new FormatType.KeyPositionLang("Tu", 2, "Spanish")
-                }, 8, 4, 6, 6, 9, 13);
-
-            typeRub = new FormatType("typeRub", typeRubPageKeys, typeRubLocationKeys, 1,
-                new FormatType.KeyPositionLang[]
-                {
-                    new FormatType.KeyPositionLang("-", 1, "Spanish"),
-                }, 7, 3, 5, 5, 8, 13);
-
-            spaFormats = new FormatType[] { typeEd, typeRub };
         }
 
         public static MyClippingsParserSPA MyParserSPA {
@@ -60,10 +41,39 @@ namespace AKCCore {
             }
         }
 
-        // Explicit static constructor to tell C# compiler not to mark type as 'beforefieldinit'
-        static MyClippingsParserSPA() {
+        private void InitFormats(){
+            //Manually instancing an array of keys per type to be added to struct constructor. Modifyable.
+            typeEdPageKeys = new string[] { " en la página " };
+            typeEdLocationKeys = new string[] { " Posición " };
+
+            typeRubPageKeys = new string[] { " en la página " };
+            typeRubLocationKeys = new string[] { " Pos. " };
+
+            typeEd = new FormatType("typeEd", typeEdPageKeys, typeEdLocationKeys, 2,
+                new FormatType.KeyPositionLang[] {
+                    new FormatType.KeyPositionLang("Mi", 2, "Spanish"),
+                    new FormatType.KeyPositionLang("Tu", 2, "Spanish")
+                }, 8, 4, 6, 6, 9, 13);
+
+            typeRub = new FormatType("typeRub", typeRubPageKeys, typeRubLocationKeys, 1,
+                new FormatType.KeyPositionLang[] {
+                    new FormatType.KeyPositionLang("-", 1, "Spanish"),
+                }, 7, 3, 5, 5, 8, 13);
+
+            spaFormats = new FormatType[] { typeEd, typeRub };
         }
 
+        private void InitDefaults() {
+            Defaults = new Clipping();
+            Defaults.BookName = "Título desconocido";
+            Defaults.Author = "Autor desconocido";
+            Defaults.Text = "";
+            Defaults.Location = "";
+            Defaults.Page = "";
+            Defaults.DateAdded = new DateTime();
+        }
+
+        //TODO: Several different methods to be extracted here. 
         protected override void ParseLine2(string line, Clipping clipping, FormatType format) {
             var split = line.Split(' ');
             var fileType = "";
@@ -72,7 +82,6 @@ namespace AKCCore {
             bool hasLocation = false;
 
             //Detect type of file.
-
             try {
                 if (!String.IsNullOrEmpty(format.ID)) {
                     fileType = format.ID;

@@ -18,7 +18,8 @@ namespace AKCCore {
         /* First three methods below: simple, thread safe singleton implementation. */
 
         private MyClippingsParserENG() {
-            //TODO Separate in different initialization methods. 
+            //TODO Separate in different initialization methods, as seen in the Spanish parser.
+            //TODO In fact, move to a higher level anything that could be moved.  
 
             Defaults = new Clipping();
             Defaults.BookName = "Unknown book";
