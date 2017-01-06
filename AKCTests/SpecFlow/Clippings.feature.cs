@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace AKCTests
+namespace AKCTests.SpecFlow
 {
     using TechTalk.SpecFlow;
     

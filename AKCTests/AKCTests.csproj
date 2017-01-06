@@ -53,43 +53,46 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Clippings.feature.cs">
+    <Compile Include="SpecFlow\Clippings.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Clippings.feature</DependentUpon>
     </Compile>
-    <Compile Include="ClippingTests\Clippings.cs" />
-    <Compile Include="ClippingTests\Parsing_EntrySteps.cs" />
-    <Compile Include="parser_language.feature.cs">
+    <Compile Include="SpecFlow\ClippingTests\Clippings.cs" />
+    <Compile Include="SpecFlow\ClippingTests\Parsing_EntrySteps.cs" />
+    <Compile Include="SpecFlow\parser_language.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>parser_language.feature</DependentUpon>
     </Compile>
-    <Compile Include="parsing_entry.feature.cs">
+    <Compile Include="SpecFlow\parsing_entry.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>parsing_entry.feature</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MSTest\DirectParse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="ClassDiagram1.cd" />
-    <None Include="Clippings.feature">
+    <None Include="SpecFlow\Clippings.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Clippings.feature.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
-    <None Include="parser_language.feature">
+    <None Include="SpecFlow\parser_language.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>parser_language.feature.cs</LastGenOutput>
     </None>
-    <None Include="parsing_entry.feature">
+    <None Include="SpecFlow\parsing_entry.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>parsing_entry.feature.cs</LastGenOutput>
     </None>
