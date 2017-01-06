@@ -93,7 +93,6 @@ namespace AKCCore {
                         if (lines == null) {
                             lines = result[lineNumber - 1];
                         }
-
                         ParseClipping(clippingLineNumber, lines, clipping, format);
                         lines = null;
                     }
