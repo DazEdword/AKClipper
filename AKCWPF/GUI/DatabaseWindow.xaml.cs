@@ -144,7 +144,7 @@ namespace AKCWPF {
             LW.CloseLoadingWindow();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+        private void Window_Closing(object sender, CancelEventArgs e) {
             dataGrid.ItemsSource = null;
             dataGrid.Items.Clear();
             finalClippingsList.Clear(); //Empty list...

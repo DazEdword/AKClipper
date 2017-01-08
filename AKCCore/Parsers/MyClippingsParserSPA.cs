@@ -41,7 +41,7 @@ namespace AKCCore {
             }
         }
 
-        private void InitFormats(){
+        protected override void InitFormats(){
             //Manually instancing an array of keys per type to be added to struct constructor. Modifyable.
             typeEdPageKeys = new string[] { " en la página " };
             typeEdLocationKeys = new string[] { " Posición " };
@@ -63,7 +63,7 @@ namespace AKCCore {
             spaFormats = new FormatType[] { typeEd, typeRub };
         }
 
-        private void InitDefaults() {
+        protected override void InitDefaults() {
             Defaults = new Clipping();
             Defaults.BookName = "Título desconocido";
             Defaults.Author = "Autor desconocido";
@@ -151,25 +151,26 @@ namespace AKCCore {
                 clipping.Location = Defaults.Location;
             }
 
-            //Date detection.
+            ParseDate(split, clipping, dateIndex);
+        }
 
-            string[] formats = { "dddd d MMMM yyyy, HH:mm:ss", "dddd dd MMMM yyyy, HH:mm:ss", "dddd dd MMMM yyyy, hh:mm:ss", "dddd d MMMM yyyy, hh:mm:ss",
-                "dddd d MMMM yyyy HH'H'mm", "dddd dd MMMM yyyy HH'H'mm", "dddd, dd MMMM yyyy HH:mm:ss", "dddd, d MMMM yyyy HH:mm:ss", "dddd dd MMMM yyyy, H:mm:ss", "dddd dd MMMM yyyy, h:mm:ss" };
-            string dateAddedStringSPA = String.Join(" ", split[dateIndex], split[dateIndex + 1], split[dateIndex + 3], split[dateIndex + 5], split[dateIndex + 6]);
+        protected void ParseDate(string[] splitLine, Clipping clipping, int dateIndex) {
+            string[] formats = { "dddd d MMMM yyyy, HH:mm:ss", "dddd dd MMMM yyyy, HH:mm:ss", "dddd dd MMMM yyyy, hh:mm:ss",
+                "dddd d MMMM yyyy, hh:mm:ss", "dddd d MMMM yyyy HH'H'mm", "dddd dd MMMM yyyy HH'H'mm", "dddd, dd MMMM yyyy HH:mm:ss",
+                "dddd, d MMMM yyyy HH:mm:ss", "dddd dd MMMM yyyy, H:mm:ss", "dddd dd MMMM yyyy, h:mm:ss" };
+            string dateAddedStringSPA = String.Join(" ", splitLine[dateIndex], splitLine[dateIndex + 1], splitLine[dateIndex + 3], splitLine[dateIndex + 5], splitLine[dateIndex + 6]);
             string input = dateAddedStringSPA;  //domingo 2 septiembre 2012, 23:54:20 Case Edu //miércoles 29 abril 2015 15H08 case ruber
 
             try {
                 /*Dates have to be parsed and converted to a dateTime format. TryParseExact should do the trick as long as
-                 *the proper format is added to the formats array.  */
-
+                 * the proper format is added to the formats array.  */
                 DateTime dt;
                 if (DateTime.TryParseExact(input, formats, spaCulture, DateTimeStyles.None, out dt)) {
                     if (dt < DateTime.Now) {
                         clipping.DateAdded = dt;
                     }
                 }
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 clipping.DateAdded = Defaults.DateAdded;
                 new Exception("Error encountered adding date: " + ex.Message, ex);
             }

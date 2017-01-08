@@ -106,6 +106,7 @@ namespace AKCCore {
                 System.Diagnostics.Debug.WriteLine(">> Removed clippings: {0}" ,(object)result.removedClippings.ToString());
 
                 return null;
+
             } else {
                 return result;
             }

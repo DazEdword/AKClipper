@@ -15,7 +15,7 @@
 
         /// <summary>
         /// This class defines FormatType, an object that gathers all the properties of every different type. That includes
-        /// positions, indexes, keywords and others. A nested class KeyPositionLang is defined in order to store Keywords + Positions + Language
+        /// positions, indexes and keywords among others. A nested class KeyPositionLang is defined in order to store Keywords + Positions + Language
         /// objects, that will later be used to find entries in a dictionary. Each KeyPosition object must be unique, with an unique
         /// keyword + Position + Language combination.
         /// </summary>

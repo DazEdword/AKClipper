@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using AKCCore;
-using System.Linq;
 
 namespace AKCWPF {
     /// <summary>

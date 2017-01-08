@@ -13,23 +13,31 @@ namespace AKCCore {
         public FormatType typeRick;
         public FormatType[] engFormats;
 
-        public static readonly MyClippingsParserENG myParserENG = new MyClippingsParserENG(); //Singleton instantiation.
+        //Singleton instantiation.
+        public static readonly MyClippingsParserENG myParserENG = new MyClippingsParserENG();
 
         /* First three methods below: simple, thread safe singleton implementation. */
-
         private MyClippingsParserENG() {
-            //TODO Separate in different initialization methods, as seen in the Spanish parser.
-            //TODO In fact, move to a higher level anything that could be moved.  
+            InitDefaults();
+            InitFormats();
+        }
 
-            Defaults = new Clipping();
-            Defaults.BookName = "Unknown book";
-            Defaults.Author = "Unknown author";
-            Defaults.Location = "";
-            Defaults.Text = "";
-            Defaults.Page = "";
-            Defaults.DateAdded = new DateTime();
+        public static MyClippingsParserENG MyParserENG {
+            get {
+                return myParserENG;
+            }
+        }
 
-            typeBasePageKeys = new string[] { " on Page ", " on page " };   //Manually instancing an array of keys per type to be added to struct constructor. Modifyable.
+        // Explicit static constructor to tell C# compiler not to mark type as 'beforefieldinit'
+        static MyClippingsParserENG() {
+        }
+
+        protected override void InitFormats() {
+            //TODO If we keep using the FormatType approach to parsing, we have to create proper constructors for this.
+            //But perhaps we should move towards regexp and keep a really small database with the languages.
+
+            //Manually instancing an array of keys per type to be added to struct constructor. Modifyable.
+            typeBasePageKeys = new string[] { " on Page ", " on page " };
             typeBaseLocationKeys = new string[] { " Loc. ", " Location " };
 
             typeRickPageKeys = new string[] { " on page " };
@@ -49,14 +57,14 @@ namespace AKCCore {
             engFormats = new FormatType[] { typeBase, typeRick };  //Gathering all formats in an array, easy foreach iteration.
         }
 
-        public static MyClippingsParserENG MyParserENG {
-            get {
-                return myParserENG;
-            }
-        }
-
-        // Explicit static constructor to tell C# compiler not to mark type as 'beforefieldinit'
-        static MyClippingsParserENG() {
+        protected override void InitDefaults() {
+            Defaults = new Clipping();
+            Defaults.BookName = "Unknown book";
+            Defaults.Author = "Unknown author";
+            Defaults.Location = "";
+            Defaults.Text = "";
+            Defaults.Page = "";
+            Defaults.DateAdded = new DateTime();
         }
 
         protected override void ParseLine2(string line, Clipping clipping, FormatType format) {
@@ -71,8 +79,7 @@ namespace AKCCore {
                 if (!String.IsNullOrEmpty(format.ID)) {
                     fileType = format.ID;
                 }
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 MessageBox.Show(ex.Message, "Can't identify TXT format.");
             }
 
@@ -116,8 +123,7 @@ namespace AKCCore {
                     locationIndex = format.hasPageLocationIndex;
                     dateIndex = hasLocation ? format.hasPageHasLocationDateIndex : format.hasPageDateIndex;
                 }
-            }
-            catch (Exception) {
+            } catch (Exception) {
                 clipping.Page = Defaults.Page;
             }
 
@@ -126,8 +132,7 @@ namespace AKCCore {
                     var location = split[locationIndex];
                     clipping.Location = location;
                 }
-            }
-            catch (Exception) {
+            } catch (Exception) {
                 clipping.Location = Defaults.Location;
             }
 
@@ -136,8 +141,7 @@ namespace AKCCore {
                 string dateAddedString = String.Join(" ", split[dateIndex], split[dateIndex + 1], split[dateIndex + 2], split[dateIndex + 3], split[dateIndex + 4], split[dateIndex + 5]);
                 DateTime dateAdded = DateTime.Parse(dateAddedString);
                 clipping.DateAdded = dateAdded;
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 clipping.DateAdded = Defaults.DateAdded;
                 new Exception("Error encountered adding date: " + ex.Message, ex);
             }
