@@ -79,13 +79,6 @@ namespace AKCCore {
                         break;
                     }
                 }
-                /* Formerly used to detect last entry in dictionary, now unnecessary due to foreach loop breaks.
-                if (keywordPosLangKeyring.Equals(FormatDictionary.Last().Value) && (safeMatch == null))
-                {
-                    isLastFormatSafeMatch = false;
-                    return possibleMatch;
-                }
-                */
             }
 
             if (safeFormatFound == true) {

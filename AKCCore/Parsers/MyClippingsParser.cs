@@ -149,5 +149,13 @@ namespace AKCCore {
                 clipping.Text = Defaults.Text;
             }
         }
+
+        protected virtual void InitDefaults() {
+
+        }
+
+        protected virtual void InitFormats() {
+
+        }
     }
 }
