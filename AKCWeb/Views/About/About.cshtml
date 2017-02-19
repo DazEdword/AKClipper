@@ -1,0 +1,152 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="@Url.Content("~/AmazingClip.ico")" />
+    <title>@ViewData["Title"] - AKCWeb</title>
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/css/main.css" />
+    </environment>
+
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/css/main.css" />
+    </environment>
+</head>
+
+<body>
+    <!-- Scripts -->
+    @section Scripts {
+        <script type="text/javascript" src="/scripts/main.js"></script>
+        <script src="~/jquery.min.js"></script>
+        <script src="~/js/skel.min.js"></script>
+        <script src="~/js/skel-viewport.min.js"></script>
+        <script src="~/js/util.js"></script>
+        <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+        <script src="~/js/main.js"></script>
+    }
+
+    @section Styles {
+        <link href="@Url.Content("~/css/main.css")" rel="stylesheet" type="text/css" />
+    }
+    
+    <div id="page-wrapper">
+        <div id="header-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="12u">
+                        <header id="header">
+                            <h1><a href="#" id="logo">Amazing Kindly Clipper 0.3</a></h1>
+                            <nav id="nav">
+                                @Html.ActionLink("Home", "Index", "Home", null, null)
+                                @Html.ActionLink("About", "Index", "About", null, new { @class = "current-page-item" })
+                            </nav>
+                        </header>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="main">
+            <div class="container">
+                <div class="row main-row">
+                    <div class="12u">
+                        <section>
+                            <h2>About AKC</h2>
+                            <p>
+                                Organize the highlights, notes, and bookmarks from your Kindle with <strong>Amazing Kindly Clipper</strong> (AKC), a free and open source tool letting you sort, search and filter your clippings, with exporting capabilities to CSV, TXT and HTML. Use the web tool above or download AKC for Windows.
+                            </p>
+                            <footer class="controls">
+                                <a href="http://www.gottabegarabi.com/downloads/" class="button">Download</a>
+                            </footer>
+                        </section>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="8u 12u(mobile)">
+                        <section>
+                            <h2>How about a truckload of links?</h2>
+                            <div>
+                                <div class="row">
+                                    <div class="3u 12u(mobile)">
+                                        <ul class="link-list">
+                                            <li><a href="#">Sed neque nisi consequat</a></li>
+                                            <li><a href="#">Dapibus sed mattis blandit</a></li>
+                                            <li><a href="#">Quis accumsan lorem</a></li>
+                                            <li><a href="#">Suspendisse varius ipsum</a></li>
+                                            <li><a href="#">Eget et amet consequat</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="3u 12u(mobile)">
+                                        <ul class="link-list">
+                                            <li><a href="#">Quis accumsan lorem</a></li>
+                                            <li><a href="#">Sed neque nisi consequat</a></li>
+                                            <li><a href="#">Eget et amet consequat</a></li>
+                                            <li><a href="#">Dapibus sed mattis blandit</a></li>
+                                            <li><a href="#">Vitae magna sed dolore</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="3u 12u(mobile)">
+                                        <ul class="link-list">
+                                            <li><a href="#">Sed neque nisi consequat</a></li>
+                                            <li><a href="#">Dapibus sed mattis blandit</a></li>
+                                            <li><a href="#">Quis accumsan lorem</a></li>
+                                            <li><a href="#">Suspendisse varius ipsum</a></li>
+                                            <li><a href="#">Eget et amet consequat</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="3u 12u(mobile)">
+                                        <ul class="link-list">
+                                            <li><a href="#">Quis accumsan lorem</a></li>
+                                            <li><a href="#">Sed neque nisi consequat</a></li>
+                                            <li><a href="#">Eget et amet consequat</a></li>
+                                            <li><a href="#">Dapibus sed mattis blandit</a></li>
+                                            <li><a href="#">Vitae magna sed dolore</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
+                    <div class="4u 12u(mobile)">
+
+                        <section>
+                            <h2>Something of interest</h2>
+                            <p>
+                                Duis neque nisi, dapibus sed mattis quis, rutrum accumsan sed.
+                                Suspendisse eu varius nibh. Suspendisse vitae magna eget odio amet
+                                mollis justo facilisis quis. Sed sagittis mauris amet tellus gravida
+                                lorem ipsum dolor sit amet consequat blandit.
+                            </p>
+                            <footer class="controls">
+                                <a href="#" class="button">Oh, please continue ....</a>
+                            </footer>
+                        </section>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="12u">
+                        <div id="copyright">
+                            <div>AKC is free and unencumbered public domain software. For more information, see <a href="http://unlicense.org/">http://unlicense.org/</a> or the accompanying UNLICENSE file.</div>
+                            <div> Design: <a href="http://html5up.net">HTML5 UP</a> &amp; <a href="http://www.beatrizhc.com/">Beatriz HC</a></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -7,10 +7,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="@Url.Content("~/AmazingClip.ico")" />
     <title>@ViewData["Title"] - AKCWeb</title>
 
     <environment names="Development">
-
         <link rel="stylesheet" href="~/css/main.css" />
     </environment>
 
@@ -41,12 +41,11 @@
             <div class="container">
                 <div class="row">
                     <div class="12u">
-
                         <header id="header">
                             <h1><a href="#" id="logo">Amazing Kindly Clipper 0.3</a></h1>
-                            <nav id="nav">
-                                <a href="index.html" class="current-page-item">Homepage</a>
-                                <a href="onecolumn.html">One Column</a>
+                            <nav id="nav">  
+                                @Html.ActionLink("Home", "Index", "home", null, new { @class = "current-page-item"})
+                                @Html.ActionLink("About", "Index", "about", null, null)
                             </nav>
                         </header>
                     </div>
@@ -55,7 +54,6 @@
         </div>
         <div id="banner-wrapper">
             <div class="container">
-
                 <div id="banner">
                    @* HTML for the clipper itself will go in a different component here *@
                     <h2>Put something cool here!</h2>
@@ -69,12 +67,9 @@
                     <div class="4u 12u(mobile)">
 
                         <section>
-                            <h2>About AKC</h2>
-                            <p>Organize the highlights, notes, and bookmarks from your Kindle with <strong>Amazing Kindly Clipper</strong> (AKC), a free and open source tool letting you sort, search and filter your clippings, with exporting capabilities to CSV, TXT and HTML. Use the web tool above or download AKC for Windows. 
+                            <h2>Help</h2>
+                            <p>Click here and do that and bla blah instructions instructions. 
                             </p>
-                            <footer class="controls">
-                                <a href="http://www.gottabegarabi.com/downloads/" class="button">Download</a>
-                            </footer>
                         </section>
 
                     </div>
@@ -84,15 +79,10 @@
                             <h2>Contribute</h2>
                             <ul class="small-image-list">
                                 <li>
-                                    <a href="https://twitter.com/DazEdword"><img src="~/images/ed_Avatar.png" alt="" class="left" /></a>
-                                    <h4>Ed Garabito</h4>
-                                    <p><a href="http://gottabegarabi.com">gottabegarabi.com</a></p>
-                                </li>
-                                <li>
                                     <a href="https://github.com/DazEdword/AKClipper"><img src="~/images/github_logo.png" alt="" class="left" /></a>
                                     <h4>GitHub</h4>
-                                    <p>Fork the repo!</p>
-                                </li>
+                                    <p><a href="https://github.com/DazEdword/AKClipper">Fork the repo!</a></p>
+                                </li>                             
                             </ul>
                         </section>
 
@@ -100,21 +90,15 @@
                     <div class="4u 12u(mobile)">
 
                         <section>
-                            <h2>Links</h2>
-                            <div>
-                                <div class="row">
-                                    <div class="6u 12u(mobile)">
-                                        <ul class="link-list">
-                                            <li><a href="#">Sed neque nisi consequat</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="6u 12u(mobile)">
-                                        <ul class="link-list">
-                                            <li><a href="#">Quis accumsan lorem</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                            <h2>Get in touch</h2>
+                            <ul class="small-image-list">
+                                <li>
+                                    <a href="https://twitter.com/DazEdword"><img src="~/images/ed_Avatar.png" alt="" class="left" /></a>
+                                    <h4>Ed Garabito</h4>
+                                    <div><a href="http://gottabegarabi.com">gottabegarabi.com</a></div>
+                                    <div><a href="https://twitter.com/DazEdword">twitter.com/dazedword</a></div> 
+                                </li>
+                            </ul>
                         </section>
 
                     </div>
@@ -125,8 +109,8 @@
             <div class="container">
                 <div class="row">
                     <div id="copyright">
-                        &copy; 
-                        Ed Garabito. All rights reserved. | Design: <a href="http://html5up.net">HTML5 UP</a>
+                       <div>AKC is free and unencumbered public domain software. For more information, see <a href="http://unlicense.org/">http://unlicense.org/</a> or the accompanying UNLICENSE file.</div>
+                       <div>Design: <a href="http://html5up.net">HTML5 UP</a> &amp; <a href="http://www.beatrizhc.com/">Beatriz HC</a></div>    
                     </div>
                 </div>
             </div>
