@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    
+
     <!-- Scripts -->
     @section Scripts {
         <script type="text/javascript" src="/scripts/main.js"></script>
@@ -35,7 +35,7 @@
     @section Styles {
         <link href="@Url.Content("~/css/main.css")" rel="stylesheet" type="text/css" />
     }
-    
+
     <div id="page-wrapper">
         <div id="header-wrapper">
             <div class="container">
@@ -52,12 +52,19 @@
                 </div>
             </div>
         </div>
-        <div id="banner-wrapper">
+        <!-- <div id="banner-wrapper">
             <div class="container">
                 <div id="banner">
                     @* HTML for the clipper itself will go in a different component here *@
                     <h2>Put something cool here!</h2>
                     <span>And put something almost as cool here, but a bit longer ...</span>
+                </div>
+            </div>
+        </div> -->
+        <div id="akc-component-wrapper">
+            <div class="container">
+                <div class="akc-container">
+                    @Html.Partial("~/Views/Clipper/Main.cshtml")
                 </div>
             </div>
         </div>
@@ -72,10 +79,8 @@
                                 Click here and do that and bla blah instructions instructions.
                             </p>
                         </section>
-
                     </div>
                     <div class="4u 12u(mobile)">
-
                         <section>
                             <h2>Contribute</h2>
                             <ul class="small-image-list">
@@ -86,10 +91,8 @@
                                 </li>
                             </ul>
                         </section>
-
                     </div>
                     <div class="4u 12u(mobile)">
-
                         <section>
                             <h2>Get in touch</h2>
                             <ul class="small-image-list">
@@ -101,7 +104,6 @@
                                 </li>
                             </ul>
                         </section>
-
                     </div>
                 </div>
             </div>
@@ -118,6 +120,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </body>
 </html>
