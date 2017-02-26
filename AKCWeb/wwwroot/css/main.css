@@ -1204,14 +1204,14 @@
 		box-shadow: inset 0px 0px 0px 1px #18a8c8;
 	}
 
-		.button:hover {
-			background-image: -moz-linear-gradient(top, #1b9fbe, #118eb1);
-			background-image: -webkit-linear-gradient(top, #1b9fbe, #118eb1);
-			background-image: -ms-linear-gradient(top, #1b9fbe, #118eb1);
-			background-image: linear-gradient(top, #1b9fbe, #118eb1);
-			background-color: #118eb1;
-			box-shadow: inset 0px 0px 0px 1px #3ecceb;
-		}
+	    .button:hover {
+		    background-image: -moz-linear-gradient(top, #1b9fbe, #118eb1);
+		    background-image: -webkit-linear-gradient(top, #1b9fbe, #118eb1);
+		    background-image: -ms-linear-gradient(top, #1b9fbe, #118eb1);
+		    background-image: linear-gradient(top, #1b9fbe, #118eb1);
+		    background-color: #118eb1;
+		    box-shadow: inset 0px 0px 0px 1px #3ecceb;
+	    }
 
 /* Desktop + Tablet */
 
@@ -1337,7 +1337,96 @@
 							box-shadow: inset 0px 1px 5px 1px rgba(0, 0, 0, 0.05), 0px 0px 5px 1px rgba(255, 255, 255, 0.05);
 						}
 
-		/* Banner */
+        /* AKC Component */
+
+        .akc-grid {
+            box-sizing: border-box;
+        }
+
+        .col-1 {
+            width: 82.00%;
+        }
+
+        .col-2 {
+            width: 18.00%;
+        }
+
+        .col-3 {
+            width: 100.00%;
+            height: 250px;
+        }
+
+        [class*="col-"] {
+            float: left;
+            padding: 15px;
+            border: 1px solid red;
+        }
+
+        @media only screen and (max-width: 768px) {
+            /* For mobile phones: */
+            [class*="col-"] {
+                width: 100%;
+            }
+        }
+
+
+        .akc-row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+        
+        #akc-component-wrapper {
+            background: #c8d2bc url(../images/bg1.png);
+            /*background-color: white;*/
+			padding: 2em 0;
+		}
+        
+        #akc-component {
+				-moz-box-sizing: content-box;
+				-webkit-box-sizing: content-box;
+				-ms-box-sizing: content-box;
+				box-sizing: content-box;
+				position: relative;
+				width: 1160px;
+				height: auto;
+				box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+				border-radius: 10px;
+				padding: 20px;
+				background-size: 1160px 265px;
+                background-color: white;
+                min-height: 100%; /* Set to minimum height so overflow doesn't get hidden */
+                overflow-y: hidden; /* HIDE overflow; I know, it doesn't make much sense */
+                margin: 0 auto;
+			}
+
+        .dropdown {
+            border-radius: 10px;
+		    /*text-transform: lowercase;*/
+		    font-size: 1.2em;
+		    letter-spacing: -1px;
+		    border: solid 1px #006e8b;
+		    box-shadow: inset 0px 0px 0px 1px #18a8c8;
+        }
+
+        .urlArea {
+            vertical-align:middle
+            border-radius: 10px;
+            font:inherit;
+		    font-size: 1.2em;
+		    letter-spacing: -1px;
+		    border: solid 1px #006e8b;
+		    box-shadow: inset 0px 0px 0px 1px #18a8c8;
+            resize: none;
+        }
+
+        /* Custom file upload button styling */
+
+        input[type="file"] {
+            display: none;
+        }
+        
+         /* Banner */
 
 			#banner-wrapper {
 				background: #c8d2bc url(../images/bg1.png);
