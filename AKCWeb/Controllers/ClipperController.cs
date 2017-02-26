@@ -7,6 +7,8 @@ namespace AKCWeb.Controllers {
             return View("Main");
         }
 
-        
+        public ActionResult ReadFile(string path, int lines = 39) {
+            return null;
+        }
     }
 }
