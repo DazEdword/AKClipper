@@ -1,9 +1,5 @@
 ﻿{
   "dependencies": {
-    "Microsoft.NETCore.App": {
-      "version": "1.0.1",
-      "type": "platform"
-    },
     "Microsoft.AspNetCore.Diagnostics": "1.0.0",
     "Microsoft.AspNetCore.Mvc": "1.0.1",
     "Microsoft.AspNetCore.Razor.Tools": {
@@ -30,7 +26,19 @@
   },
 
   "frameworks": {
+    "net452": {
+      "dependencies": {
+        "AKCCore": {
+          "target": "project"
+        }
+
+      }
+    },
     "netcoreapp1.0": {
+      "Microsoft.NETCore.App": {
+        "version": "1.0.1",
+        "type": "platform"
+      },
       "imports": [
         "dotnet5.6",
         "portable-net45+win8"
@@ -41,6 +49,15 @@
   "buildOptions": {
     "emitEntryPoint": true,
     "preserveCompilationContext": true
+  },
+
+  "runtimes": {
+    "win7-x64": {},
+    "win8-x64": {},
+    "win81-x64": {},
+    "win10-x64": {},
+    "osx.10.11-x64": {},
+    "ubuntu.16.04-x64": {}
   },
 
   "runtimeOptions": {
