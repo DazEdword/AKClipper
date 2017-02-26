@@ -6,5 +6,7 @@ namespace AKCWeb.Controllers {
         public ViewResult Index() {
             return View("Main");
         }
+
+        
     }
 }
