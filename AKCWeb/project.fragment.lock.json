@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "exports": {
+    "AKCCore/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.6.2",
+      "compile": {
+        "bin/Debug/Amazing Kindly Clipper.dll": {}
+      },
+      "runtime": {
+        "bin/Debug/Amazing Kindly Clipper.dll": {}
+      },
+      "contentFiles": {
+        "bin/Debug/Amazing Kindly Clipper.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    }
+  }
+}

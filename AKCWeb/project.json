@@ -28,6 +28,9 @@
   "frameworks": {
     "net462": {
       "dependencies": {
+        "AKCCore": {
+          "target": "project"
+        }
       }
     }
   },

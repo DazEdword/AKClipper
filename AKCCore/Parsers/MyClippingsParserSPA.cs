@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
-using System.Windows;
 
 namespace AKCCore {
 
@@ -88,7 +87,7 @@ namespace AKCCore {
                 }
             }
             catch (Exception ex) {
-                MessageBox.Show(ex.Message, "Can't identify TXT format.");
+                System.Diagnostics.Debug.WriteLine(ex.Message, "Can't identify TXT format.");
             }
 
             var clippingType = split[format.clippingTypePosition];

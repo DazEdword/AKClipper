@@ -6,11 +6,11 @@ using System;
 namespace AKCWeb.Controllers {
     public class ClipperController : Controller {
 
-        private ParserController parserController;
+        //private ParserController parserController;
 
-        public void ConfigureServices(IServiceCollection services) {
-            services.AddTransient<ParserController>();
-        }
+        //public void ConfigureServices(IServiceCollection services) {
+        //    services.AddTransient<ParserController>();
+        //}
 
         //public ClipperController() {
         //    parserController =  new ParserController();
@@ -25,10 +25,9 @@ namespace AKCWeb.Controllers {
          * many other times, we'd better instantiate it with the ClipperController, on construction.
         */
 
-        public ActionResult BrowseFile(string path, int lines = 39) {
-            
-            return Content(parserController.GeneratePreviewFromPath(path, lines));
-        }
+        //public ActionResult BrowseFile(string path, int lines = 39) {
+        //    return Content(parserController.GeneratePreviewFromPath(path, lines));
+        //}
 
         public ParserController InitParserController() {
             return new ParserController();

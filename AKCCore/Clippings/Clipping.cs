@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Windows;
 
 namespace AKCCore {
 
@@ -13,9 +12,7 @@ namespace AKCCore {
         public DateTime DateAdded { get; set; }
         public string Text { get; set; }
 
-        public int? BeginningPage {
-            get { return GetBeginningOfRange(Page); }
-        }
+        public int? BeginningPage => GetBeginningOfRange(Page);
 
         public int? BeginningLocation {
             get { return GetBeginningOfRange(Location); }
@@ -34,7 +31,7 @@ namespace AKCCore {
 
             try { return int.Parse(first); }
             catch (Exception ex) {
-                MessageBox.Show(ex.Message, "Error parsing range.");
+                System.Diagnostics.Debug.WriteLine(ex.Message, "Error parsing range.");
                 return null;
             }
         }
