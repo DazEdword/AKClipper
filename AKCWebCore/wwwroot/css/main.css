@@ -1257,6 +1257,10 @@
 				width: 100%;
 			}
 
+            input[type="file"] {
+            display: none;
+            }
+
 		/* Header */
 
 			#header-wrapper {
@@ -1524,6 +1528,10 @@
 				width: 75px;
 			}
 
+            input[type="file"] {
+            display: none;
+            }
+
 		/* Header */
 
 			#header {
@@ -1640,9 +1648,15 @@
 				font-size: 1em;
 			}
 
+            input[type="file"] {
+            display: none;
+            }
+
 			.blog-post-image {
 				width: 100%;
 			}
+
+
 
 		/* Header */
 
