@@ -1,9 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using AKCCore;
+using System;
 
 namespace AKCWeb.Controllers {
-
     public class ClipperController : Controller {
+
+        private ParserController parserController;
+
+        public void ConfigureServices(IServiceCollection services) {
+            services.AddTransient<ParserController>();
+        }
+
+        //public ClipperController() {
+        //    parserController =  new ParserController();
+        //    System.Diagnostics.Debug.WriteLine("hello hello");
+        //}
+
         public ViewResult Index() {
             return View("Main");
         }
@@ -13,7 +26,7 @@ namespace AKCWeb.Controllers {
         */
 
         public ActionResult BrowseFile(string path, int lines = 39) {
-           ParserController parserController = InitParserController();
+            
             return Content(parserController.GeneratePreviewFromPath(path, lines));
         }
 

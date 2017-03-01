@@ -1,0 +1,126 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="@Url.Content("~/AmazingClip.ico")" />
+    <title>@ViewData["Title"] - AKCWeb</title>
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/css/main.css" />
+    </environment>
+
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/css/main.css" />
+    </environment>
+</head>
+
+<body>
+
+    <!-- Scripts -->
+    @section Scripts {
+        <script type="text/javascript" src="/scripts/main.js"></script>
+        <script src="~/jquery.min.js"></script>
+        <script src="~/js/skel.min.js"></script>
+        <script src="~/js/skel-viewport.min.js"></script>
+        <script src="~/js/util.js"></script>
+        <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+        <script src="~/js/main.js"></script>
+    }
+
+    @section Styles {
+        <link href="@Url.Content("~/css/main.css")" rel="stylesheet" type="text/css" />
+    }
+
+    <div id="page-wrapper">
+        <div id="header-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="12u">
+                        <header id="header">
+                            <h1><a href="#" id="logo">Amazing Kindly Clipper 0.3</a></h1>
+                            <nav id="nav">
+                                @Html.ActionLink("Home", "Index", "home", null, new { @class = "current-page-item" })
+                                @Html.ActionLink("About", "Index", "about", null, null)
+                            </nav>
+                        </header>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div id="banner-wrapper">
+            <div class="container">
+                <div id="banner">
+                    @* HTML for the clipper itself will go in a different component here *@
+                    <h2>Put something cool here!</h2>
+                    <span>And put something almost as cool here, but a bit longer ...</span>
+                </div>
+            </div>
+        </div> -->
+        <div id="akc-component-wrapper">
+            <div class="container">
+                <div class="akc-container">
+                    @Html.Partial("~/Views/Clipper/Main.cshtml")
+                </div>
+            </div>
+        </div>
+        <div id="main">
+            <div class="container">
+                <div class="row main-row">
+                    <div class="4u 12u(mobile)">
+
+                        <section>
+                            <h2>Help</h2>
+                            <p>
+                                Click here and do that and bla blah instructions instructions.
+                            </p>
+                        </section>
+                    </div>
+                    <div class="4u 12u(mobile)">
+                        <section>
+                            <h2>Contribute</h2>
+                            <ul class="small-image-list">
+                                <li>
+                                    <a href="https://github.com/DazEdword/AKClipper"><img src="~/images/github_logo.png" alt="" class="left" /></a>
+                                    <h4>GitHub</h4>
+                                    <p><a href="https://github.com/DazEdword/AKClipper">Fork the repo!</a></p>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                    <div class="4u 12u(mobile)">
+                        <section>
+                            <h2>Get in touch</h2>
+                            <ul class="small-image-list">
+                                <li>
+                                    <a href="https://twitter.com/DazEdword"><img src="~/images/ed_Avatar.png" alt="" class="left" /></a>
+                                    <h4>Ed Garabito</h4>
+                                    <div><a href="http://gottabegarabi.com">gottabegarabi.com</a></div>
+                                    <div><a href="https://twitter.com/DazEdword">twitter.com/dazedword</a></div>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer-wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="12u">
+                        <div id="copyright">
+                            <div>AKC is free and unencumbered public domain software. For more information, see <a href="http://unlicense.org/">http://unlicense.org/</a> or the accompanying UNLICENSE file.</div>
+                            <div>Design: <a href="http://html5up.net">HTML5 UP</a> &amp; <a href="http://www.beatrizhc.com/">Beatriz HC</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>
