@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AKCWPF", "AKCWPF\AKCWPF.csproj", "{C88370A2-09EC-43B1-A04E-A2DE59DEF36F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{52AD4A21-E88E-4E49-91FB-7C8B7BE68FB2} = {52AD4A21-E88E-4E49-91FB-7C8B7BE68FB2}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AKCTests", "AKCTests\AKCTests.csproj", "{A62D47DD-6685-41D0-91E3-672EE4B8E6A1}"
 EndProject
