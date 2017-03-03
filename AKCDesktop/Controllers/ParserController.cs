@@ -225,7 +225,9 @@ namespace AKCDesktop {
                 lines = 3;
             }
 
-            using (var reader = new StreamReader(path)) {
+            var stream = new FileStream(path, FileMode.Open);
+
+            using (var reader = new StreamReader(stream)) {
                 while (currentLine < lines) {
                     string line = reader.ReadLine();
 

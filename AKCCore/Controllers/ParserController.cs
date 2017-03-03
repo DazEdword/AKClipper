@@ -227,7 +227,9 @@ namespace AKCDesktop {
             }
 
             //EG March'2017 Changes here regarding streams, keep an eye if problems happen. 
-            using (var reader = new StringReader(path)) {
+            var stream = new FileStream(path, FileMode.Open);
+
+            using (var reader = new StreamReader(stream)) {
                 while (currentLine < lines) {
                     string line = reader.ReadLine();
 
