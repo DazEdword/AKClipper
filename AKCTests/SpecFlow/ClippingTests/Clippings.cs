@@ -1,6 +1,6 @@
-﻿using System;
+﻿using AKCDesktop;
+using System;
 using TechTalk.SpecFlow;
-using AKCDesktop;
 
 namespace AKCTests.ClippingTests
 {
