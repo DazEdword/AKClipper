@@ -1,5 +1,5 @@
 ﻿using System;
-using AKCCore;
+using AKCDesktop;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;

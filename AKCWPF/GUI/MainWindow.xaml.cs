@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using AKCCore;
+using AKCDesktop;
 
 namespace AKCWPF {
     /// <summary>

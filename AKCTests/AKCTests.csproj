@@ -99,9 +99,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AKCCore\AKCCore.csproj">
+    <ProjectReference Include="..\AKCDesktop\AKCDesktop.csproj">
       <Project>{f23a33b4-1bee-46f1-88aa-06840f057c74}</Project>
-      <Name>AKCCore</Name>
+      <Name>AKCDesktop</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

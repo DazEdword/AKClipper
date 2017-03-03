@@ -2,7 +2,7 @@
 using TechTalk.SpecFlow;
 using NUnit.Framework;
 
-using AKCCore;
+using AKCDesktop;
 
 namespace AKCTests.ClippingTests
 {

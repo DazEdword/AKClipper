@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.IO;
 
-
 namespace AKCDesktop {
 
     //TODO Refactor in progress, many public methods around in this public class. Reorganise and change access 
@@ -226,8 +225,7 @@ namespace AKCDesktop {
                 lines = 3;
             }
 
-            //EG March'2017 Changes here regarding streams, keep an eye if problems happen. 
-            using (var reader = new StringReader(path)) {
+            using (var reader = new StreamReader(path)) {
                 while (currentLine < lines) {
                     string line = reader.ReadLine();
 

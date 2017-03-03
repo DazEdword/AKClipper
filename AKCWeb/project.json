@@ -28,7 +28,7 @@
   "frameworks": {
     "net462": {
       "dependencies": {
-        "AKCCore": {
+        "AKCDesktop": {
           "target": "project"
         }
       }

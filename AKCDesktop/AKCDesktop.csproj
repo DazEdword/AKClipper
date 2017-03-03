@@ -7,7 +7,7 @@
     <ProjectGuid>{F23A33B4-1BEE-46F1-88AA-06840F057C74}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AKCCore</RootNamespace>
+    <RootNamespace>AKCDesktop</RootNamespace>
     <AssemblyName>Amazing Kindly Clipper</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

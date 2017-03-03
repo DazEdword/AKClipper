@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using AKCCore;
+using AKCDesktop;
 
 namespace AKCWPF {
     /// <summary>

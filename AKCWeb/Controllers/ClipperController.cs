@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using AKCCore;
-using System;
 
 namespace AKCWeb.Controllers {
     public class ClipperController : Controller {
@@ -29,8 +27,8 @@ namespace AKCWeb.Controllers {
         //    return Content(parserController.GeneratePreviewFromPath(path, lines));
         //}
 
-        public ParserController InitParserController() {
-            return new ParserController();
-        }
+        //public ParserController InitParserController() {
+        //    return new ParserController();
+        //}
     }
 }
