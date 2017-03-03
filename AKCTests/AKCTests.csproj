@@ -99,10 +99,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AKCCore\AKCCore.xproj">
-      <Project>{52ad4a21-e88e-4e49-91fb-7c8b7be68fb2}</Project>
-      <Name>AKCCore</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AKCDesktop\AKCDesktop_TO_DEPRECATE.csproj">
       <Project>{F23A33B4-1BEE-46F1-88AA-06840F057C74}</Project>
       <Name>AKCDesktop_TO_DEPRECATE</Name>
