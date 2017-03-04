@@ -1,13 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using AKCDesktop;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using AKCCore;
 
 /* TODO learn how to implement MSTest in .NET Core/ .NETStandard or swap to Xunit/Nunit*/
 
 namespace AKCTests {
     [TestClass]
-    public class DirectTest {
+    public class DirectParse {
 
         [TestMethod]
         public void TestDirectParse() {
