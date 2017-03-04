@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace AKCDesktop {
+namespace AKCCore {
 
     public sealed class MyClippingsParserENG : MyClippingsParser {
         public string[] typeBasePageKeys;

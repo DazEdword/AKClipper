@@ -4,7 +4,7 @@ using System.Dynamic;
 using System.IO;
 
 
-namespace AKCDesktop {
+namespace AKCCore {
 
     //TODO Refactor in progress, many public methods around in this public class. Reorganise and change access 
     //levels later. 

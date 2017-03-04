@@ -1,4 +1,4 @@
-﻿namespace AKCDesktop{
+﻿namespace AKCCore{
     public class ParserENG:MyClippingsParser{
         public string Sample { get; set; }
         public Clipping Result = new Clipping();

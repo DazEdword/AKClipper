@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AKCDesktop {
+namespace AKCCore {
 
     public static class FormatTypeDatabase {
         public static List<FormatType> formatTypeList = new List<FormatType>();

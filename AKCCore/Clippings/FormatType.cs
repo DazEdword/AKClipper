@@ -1,4 +1,4 @@
-﻿namespace AKCDesktop {
+﻿namespace AKCCore {
 
     public class FormatType {
         public string ID;

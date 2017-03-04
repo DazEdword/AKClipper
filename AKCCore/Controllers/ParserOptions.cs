@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Text;
 
-namespace AKCDesktop {
+namespace AKCCore {
     /// <summary>
     /// Global options belong here.
     /// </summary>

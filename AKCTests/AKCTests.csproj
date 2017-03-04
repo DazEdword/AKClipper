@@ -41,10 +41,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="TechTalk.SpecFlow, Version=2.1.0.0, Culture=neutral, PublicKeyToken=0778194805d6db41, processorArchitecture=MSIL">
-      <HintPath>..\packages\SpecFlow.2.1.0\lib\net45\TechTalk.SpecFlow.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -61,46 +57,20 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="SpecFlow\Clippings.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Clippings.feature</DependentUpon>
-    </Compile>
-    <Compile Include="SpecFlow\ClippingTests\Clippings.cs" />
-    <Compile Include="SpecFlow\ClippingTests\Parsing_EntrySteps.cs" />
-    <Compile Include="SpecFlow\parser_language.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>parser_language.feature</DependentUpon>
-    </Compile>
-    <Compile Include="SpecFlow\parsing_entry.feature.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>parsing_entry.feature</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MSTest\Parsers\DirectParse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="ClassDiagram1.cd" />
-    <None Include="SpecFlow\Clippings.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>Clippings.feature.cs</LastGenOutput>
-    </None>
     <None Include="packages.config" />
-    <None Include="SpecFlow\parser_language.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>parser_language.feature.cs</LastGenOutput>
-    </None>
-    <None Include="SpecFlow\parsing_entry.feature">
-      <Generator>SpecFlowSingleFileGenerator</Generator>
-      <LastGenOutput>parsing_entry.feature.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AKCCore\AKCCore.xproj">
+      <Project>{52ad4a21-e88e-4e49-91fb-7c8b7be68fb2}</Project>
+      <Name>AKCCore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AKCDesktop\AKCDesktop_TO_DEPRECATE.csproj">
-      <Project>{F23A33B4-1BEE-46F1-88AA-06840F057C74}</Project>
+      <Project>{f23a33b4-1bee-46f1-88aa-06840f057c74}</Project>
       <Name>AKCDesktop_TO_DEPRECATE</Name>
     </ProjectReference>
   </ItemGroup>

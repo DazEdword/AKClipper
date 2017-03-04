@@ -1,0 +1,33 @@
+{
+  "version": "1.0.0-*",
+  "buildOptions": {
+    "debugType": "portable"
+  },
+  "dependencies": {
+    "System.Runtime.Serialization.Primitives": "4.3.0",
+    "dotnet-test-mstest": "1.1.2-preview",
+    "MsTest.TestFramework": "1.0.4-preview",
+    "NETStandard.Library": "1.6.0"
+  },
+  "testRunner": "mstest",
+
+  "frameworks": {
+    "netstandard2.0": {
+      "dependencies": {
+        "Microsoft.CSharp": "4.3.0",
+        "System.Dynamic.Runtime": "4.3.0"
+      },
+      "imports": [
+        "dotnet5.4",
+        "portable-net451+win8",
+        "dnxcore50"
+      ]
+    },
+    "net462": {
+      "dependencies": {
+        "AKCCore": "1.0.0-*"
+      }
+    }
+  }
+ }
+

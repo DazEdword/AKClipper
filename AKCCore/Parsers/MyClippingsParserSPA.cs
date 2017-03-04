@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Linq;
 
-namespace AKCDesktop {
+namespace AKCCore {
 
     public class MyClippingsParserSPA : MyClippingsParser {
         public string[] typeEdPageKeys;

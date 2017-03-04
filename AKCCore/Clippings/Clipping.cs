@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace AKCDesktop {
+namespace AKCCore {
 
     public class Clipping {
         public string BookName { get; set; }

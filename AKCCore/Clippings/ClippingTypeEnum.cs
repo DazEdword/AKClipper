@@ -1,4 +1,4 @@
-﻿namespace AKCDesktop {
+﻿namespace AKCCore {
     /// <summary>
     /// These enums have to be modified whenever a new Clipping type has to be recognized.
     /// </summary>

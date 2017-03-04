@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using AKCCore;
 
 namespace AKCWeb.Controllers {
 
@@ -7,5 +8,8 @@ namespace AKCWeb.Controllers {
         public ViewResult Index() {
             return View("Main");
         }
+
+        //TODO Time to carry on with actual implementation, finally. 
+
     }
 }
