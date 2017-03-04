@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using AKCCore;
+using AKCDesktop;
 
 namespace AKCWPF {
     /// <summary>
@@ -21,9 +21,7 @@ namespace AKCWPF {
         private List<Clipping> finalClippingsList = ClippingDatabase.finalClippingsList;
 
         private ICollectionView updateableItemList { get; set; }
-        public ICollectionView PublicUpdateableItemList {
-            get { return updateableItemList; }
-        }
+        public ICollectionView PublicUpdateableItemList => updateableItemList;
 
         private string query;
         private string category;

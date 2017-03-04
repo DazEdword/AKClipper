@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Dynamic;
 using System.IO;
-using System.Windows;
+
 
 namespace AKCCore {
 
@@ -88,7 +88,6 @@ namespace AKCCore {
                 }
             } catch (Exception ex) {
                 System.Diagnostics.Debug.WriteLine("Parsing Error: " + ex.Message);
-                //MessageBox.Show(ex.Message, "Parsing Error");
             }
         }
 
@@ -207,13 +206,11 @@ namespace AKCCore {
                     }
                 } else {
                     System.Diagnostics.Debug.WriteLine("Unable to find language. Have you selected your language?");
-                    //MessageBox.Show("Unable to find language. Have you selected your language?");
                     return false;
                 }
             }
 
             catch (Exception ex) {
-                //MessageBox.Show(ex.Message, "Parser detection problem");
                 System.Diagnostics.Debug.WriteLine("Unable to find language. Have you selected your language?" + ex.Message);
                 return false;
             }
@@ -229,7 +226,10 @@ namespace AKCCore {
                 lines = 3;
             }
 
-            using (var reader = new StreamReader(path)) {
+            //EG March'2017 Changes here regarding streams, keep an eye if problems happen. 
+            var stream = new FileStream(path, FileMode.Open);
+
+            using (var reader = new StreamReader(stream)) {
                 while (currentLine < lines) {
                     string line = reader.ReadLine();
 

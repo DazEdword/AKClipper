@@ -1,8 +1,9 @@
-﻿using System;
-using AKCCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
+using AKCDesktop;
+
+/* TODO learn how to implement MSTest in .NET Core/ .NETStandard or swap to Xunit/Nunit*/
 
 namespace AKCTests {
     [TestClass]
