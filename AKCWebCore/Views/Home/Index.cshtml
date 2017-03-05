@@ -64,7 +64,8 @@
         <div id="akc-component-wrapper">
             <div class="container">
                 <div class="akc-container">
-                    @Html.Partial("~/Views/Clipper/Main.cshtml")
+                    @*@Html.Partial("~/Views/Clipper/Main.cshtml")*@
+                    @await Component.InvokeAsync("ParserController")
                 </div>
             </div>
         </div>
