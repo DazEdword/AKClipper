@@ -1,18 +1,41 @@
 ﻿@section Styles {
     <link href="@Url.Content("~/css/main.css")" rel="stylesheet" type="text/css" />
 }
+<script>
+    //WARNING: Unused code, just testing JS scripts here. 
+    function SelectFile() {
+        var selectedFile = document.getElementById('file-select').files[0];
+        var fileDisplayArea = document.getElementById("file-preview");
+        var textType = /text.*/;
+
+        if (selectedFile.type.match(textType)) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                //fileDisplayArea.innerHTML = reader.result;
+                var lines = this.result.split('\n');
+                for (var line = 0; line < 39; line++) {
+                    fileDisplayArea.innerHTML += (lines[line] + '\n');
+                }
+            }
+
+            reader.readAsText(selectedFile);
+        } else {
+            fileDisplayArea.innerHTML = "File not supported!"
+        }
+    }
+</script>
 
 <div id="akc-component">
     <div class="akc-row">
-        @*<div>Browse file</div>*@
-        <div class="col-1"><textarea class="urlArea" id="urlArea" style="width:100%;">C:\Users\User\Desktop</textarea></div>
-        <div class="col-2"><label for="file-upload" class="button" id="browseButton">Browse File</label>
-            <input type="file" id="file-upload"/>
+        <div class="col-1"><div style="width:100%; height:100%">Select your file and blah blah</div></div>
+        <div class="col-2"><label for="file-select" class="button" id="browseButton">Browse File</label>
+            <input type="file" id="file-select"/>
         </div>
     </div>
 
     <div class="akc-row">
-        <div class="col-3">
+        <div class="col-3" id="file-preview">
             A preview of your text will appear here.
         </div>
     </div>
