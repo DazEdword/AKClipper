@@ -8,8 +8,8 @@ Installation
 
 The program is available in two formats:
 
- * Installable, that also installs .NET 4.5 for you. Just install the file and look for a new Amazing Kindly Clipper entry in your Start Menu.
- * Executable, to be used only if you’re positive that you have .NET 4.5 installed. Unzip it into any folder of your choice and run it to go.
+ * Installable, that also installs .NET 4.6.2 for you. Just install the file and look for a new Amazing Kindly Clipper entry in your Start Menu.
+ * Executable, to be used only if you’re positive that you have .NET 4.6.2 installed. Unzip it into any folder of your choice and run it to go.
 
 In both cases, your antivirus software might stop the program due to a false positive. Feel free to mark the program as safe or halt your antivirus during the installation, Amazing Kindly Clipper does nothing to your computer at any level, apart from writing files to your desktop on export (and only if you want to do that). 
 
