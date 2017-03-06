@@ -14,9 +14,7 @@ namespace AKCDesktop {
 
         public int? BeginningPage => GetBeginningOfRange(Page);
 
-        public int? BeginningLocation {
-            get { return GetBeginningOfRange(Location); }
-        }
+        public int? BeginningLocation => GetBeginningOfRange(Location);
 
         private int? GetBeginningOfRange(string range) {
             if ((String.IsNullOrEmpty(range)) || (range.All(c => char.IsDigit(c))) == false) {

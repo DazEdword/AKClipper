@@ -52,19 +52,10 @@
                 </div>
             </div>
         </div>
-        <!-- <div id="banner-wrapper">
-            <div class="container">
-                <div id="banner">
-                    @* HTML for the clipper itself will go in a different component here *@
-                    <h2>Put something cool here!</h2>
-                    <span>And put something almost as cool here, but a bit longer ...</span>
-                </div>
-            </div>
-        </div> -->
         <div id="akc-component-wrapper">
             <div class="container">
                 <div class="akc-container">
-                    @Html.Partial("~/Views/Clipper/Main.cshtml")
+                    @await Component.InvokeAsync("ParserController")
                 </div>
             </div>
         </div>
@@ -72,7 +63,6 @@
             <div class="container">
                 <div class="row main-row">
                     <div class="4u 12u(mobile)">
-
                         <section>
                             <h2>Help</h2>
                             <p>
@@ -120,7 +110,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </body>
 </html>

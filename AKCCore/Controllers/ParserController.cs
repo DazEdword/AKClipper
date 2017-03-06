@@ -10,7 +10,7 @@ namespace AKCCore {
     //levels later. 
 
     /// <summary>
-    /// Parser Controller logic, used in MainWindow. Its concerns include to get and store which file to use as a source for parsing, 
+    /// Parser Controller logic. Its concerns include to get and store which file to use as a source for parsing, 
     /// store the user selected language, initialise parsing process. It has several checks to prevent the user from using the wrong parser.
     /// All parsers inherit from abstract class MyClippingsParserm and every inheriting parsers need to be instantiated prior to use
     /// (due to the singleton pattern implementation only one instance of each parser can be instanced. At the moment only ENG and SPA parsers
