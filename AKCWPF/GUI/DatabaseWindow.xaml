@@ -19,7 +19,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <DataGrid x:Name="dataGrid" Margin="10,15,10,10" CanUserReorderColumns="True" CanUserResizeColumns="True" CanUserSortColumns="True" IsReadOnly="True" IsTextSearchCaseSensitive="True" SelectionUnit ="CellOrRowHeader" CanUserResizeRows="False" AlternatingRowBackground="Gainsboro"  AlternationCount="2" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn" Grid.Row="1" Grid.ColumnSpan="2">
+        <DataGrid x:Name="dataGrid" HeadersVisibility="Column"  Margin="10,15,10,10" CanUserReorderColumns="True" CanUserResizeColumns="True" CanUserSortColumns="True" IsReadOnly="True" IsTextSearchCaseSensitive="True" SelectionUnit ="CellOrRowHeader" CanUserResizeRows="False" AlternatingRowBackground="Gainsboro"  AlternationCount="2" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn" Grid.Row="1" Grid.ColumnSpan="2">
 
             <DataGrid.ContextMenu>
                 <ContextMenu>
@@ -33,29 +33,7 @@
                 </DataTemplate>
             </DataGrid.Resources>
 
-            <DataGrid.GroupStyle>
-                <GroupStyle>
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}" />
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
-
-                    <GroupStyle.ContainerStyle>
-                        <Style TargetType="{x:Type GroupItem}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate>
-                                        <Expander Header="{Binding Name}" IsExpanded="True">
-                                            <ItemsPresenter />
-                                        </Expander>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </GroupStyle.ContainerStyle>
-                </GroupStyle>
-            </DataGrid.GroupStyle>
+           
         </DataGrid>
         <Grid Margin="10,10,0,0" HorizontalAlignment="Left" Width="360" Height="85" VerticalAlignment="Top">
             <Grid.RowDefinitions>

@@ -50,7 +50,7 @@ namespace AKCWPF {
         }
 
         private async Task StartLoad() {
-            Dispatcher.Invoke((Action)delegate () {
+            Dispatcher.Invoke((Action) delegate () {
                 filterTextBox.Text = defaultSearch;
             });
 
@@ -179,6 +179,7 @@ namespace AKCWPF {
             category = selectedValue.ToString();
         }
 
+        /* Exports */
         private void ExportTXTBox_Checked(object sender, RoutedEventArgs e) {
             exportingToTXT = true;
         }
@@ -274,8 +275,9 @@ namespace AKCWPF {
             DataGrid grid = sender as DataGrid;
             if (grid == null) { return; }
 
-            //Manually fixing rows header names to a more friendly format.
+            
 
+            //Manually fixing rows header names to a more friendly format.
             if (e.PropertyName.StartsWith("BookName")) {
                 e.Column.Header = "Book name";
             }
