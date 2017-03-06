@@ -32,8 +32,6 @@
                     <TextBlock Text="{Binding}" TextWrapping="WrapWithOverflow" HorizontalAlignment="Center" />
                 </DataTemplate>
             </DataGrid.Resources>
-
-           
         </DataGrid>
         <Grid Margin="10,10,0,0" HorizontalAlignment="Left" Width="360" Height="85" VerticalAlignment="Top">
             <Grid.RowDefinitions>
