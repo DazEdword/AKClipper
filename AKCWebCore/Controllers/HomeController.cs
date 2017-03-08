@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using AKCWebCore.Models;
 
 namespace AKCWeb.Controllers {
 
