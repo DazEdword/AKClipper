@@ -11,8 +11,7 @@ namespace AKCWebCore.ViewComponents {
 
     public class ParserControllerViewComponent : ViewComponent {
 
-        //Parser controller dependency injection
-
+        //TODO Parser controller dependency injection instead of direct instantiation.
         private ParserController parserController;
         private ParserWebHelper helper;
 
@@ -20,22 +19,6 @@ namespace AKCWebCore.ViewComponents {
             parserController = new ParserController();
             helper = new ParserWebHelper();
         }
-
-        //[HttpPost]
-        //public IActionResult UploadFile(IFormFile file) {
-        //    //long size = file.Length;
-
-        //    // full path to file in temp location
-        //    var filePath = Path.GetTempFileName();
-
-        //    if (file.Length > 0) {
-        //        using (var stream = new FileStream(filePath, FileMode.Create)) {
-        //            //await file.CopyToAsync(stream);
-        //        }
-        //    }
-        //    return Ok();
-        //    //return Content("Miau");
-        //}
 
         //ViewComponent
 

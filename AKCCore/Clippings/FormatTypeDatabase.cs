@@ -16,6 +16,8 @@ namespace AKCCore {
         /// <param name="formatType">The formatType to add to the database</param>
 
         public static void PopulateFormatList(FormatType[] formatLanguagePack) {
+            //Reset
+            formatTypeList.Clear();
             foreach (FormatType formatInstance in formatLanguagePack) {
                 formatTypeList.Add(formatInstance);
             }
