@@ -14,7 +14,7 @@ namespace AKCWebCore.Models {
 
         //Sync
         public ParserWebHelper() {
-            this.preview = "Test test test I am your hardcoded preview";
+            this.preview = "A preview of your text will appear here.";
             this.language = "English";
         }
 

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace AKCWebCore.ViewComponents {
 
     public class ParserControllerViewComponent : ViewComponent {
+
         //Parser controller dependency injection
 
         private ParserController parserController;
