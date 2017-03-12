@@ -25,7 +25,7 @@ namespace AKCWebCore.ViewComponents {
         //Sync
         //Only one active at any given time. 
         public IViewComponentResult Invoke() {
-            return View("~/Views/Shared/Components/Clipper/Main.cshtml", new {model = helper}.ToExpando());
+            return InvokeMain();
         }
 
         //Async
@@ -38,5 +38,13 @@ namespace AKCWebCore.ViewComponents {
         //        return View("~/Views/Clipper/Main.cshtml");
         //    }
         //}    
+
+        public IViewComponentResult InvokeMain() {
+            return View("~/Views/Shared/Components/Clipper/Main.cshtml", new { model = helper }.ToExpando());
+        }
+
+        public IViewComponentResult InvokeResults() {
+            return View("~/Views/Shared/Components/Clipper/Results.cshtml", new { model = helper }.ToExpando());
+        }
     }
 }
