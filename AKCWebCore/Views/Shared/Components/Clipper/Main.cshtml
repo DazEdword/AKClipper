@@ -16,8 +16,15 @@
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                //fileDisplayArea.innerHTML = reader.result;
+
                 var lines = this.result.split('\n');
+
+                //Saving in local storage
+                var ls;
+                ls = localStorage;
+                ls.setItem("AKCContent", this.result);
+
+                //Generating preview
                 for (var line = 0; line < 39; line++) {
                     if(lines[line] == undefined) break;
                     var newLine = document.createElement("span");
@@ -29,7 +36,15 @@
                 }
             }
 
-            reader.readAsText(selectedFile);
+            //Testing local storage
+            try { var storTest = window['localStorage'];
+                storTest.setItem("", ".");
+                storTest.removeItem(""); }
+            catch(e) { alert("Failed to save content on local storage."); }
+
+            //Getting parse content and preview
+            reader.readAsText(selectedFile);  
+
         } else {
             fileDisplayArea.innerHTML = "File not supported!"
         }
@@ -50,7 +65,6 @@
                   enctype="multipart/form-data">
                 <label for="file-select" class="button" id="browseButton">Browse File</label>
                 <input type="file" id="file-select" onchange="SelectFile()" />
-                @*<input type="submit" value="Upload" />*@
             </form>        
         </div>
     </div>
@@ -80,6 +94,20 @@
                 </select>
             </span>
         </div>
-        <div class="col-2"><button class="button">Start Parsing</button> </div>
+        <div class="col-2">
+        <form>
+            <button class="button"
+                    asp-controller="Home" asp-action="Index"
+                    asp-route-parsed="true">
+                Start Parsing
+            </button>
+
+            @*<button class="button"
+                    asp-controller="Home" asp-action="Index"
+                    asp-route-parsed="true">
+                Start Parsing
+            </button>*@
+        </form>
+         </div>
     </div>
 </div>

@@ -12,6 +12,7 @@ namespace AKCWebCore.Models {
         public string preview { get; set; }
         public string language { get; set; }
 
+
         //Sync
         public ParserWebHelper() {
             this.preview = "A preview of your text will appear here.";

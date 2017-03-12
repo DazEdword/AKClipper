@@ -12,20 +12,26 @@ namespace AKCWebCore.ViewComponents {
     public class ParserControllerViewComponent : ViewComponent {
 
         //TODO Parser controller dependency injection instead of direct instantiation.
-        private ParserController parserController;
-        private ParserWebHelper helper;
+        private ParserController ParserController;
+        private ParserWebHelper Helper;
 
-        public ParserControllerViewComponent() {
-            parserController = new ParserController();
-            helper = new ParserWebHelper();
+        public ParserControllerViewComponent(ParserController parserController,
+            ParserWebHelper helper) {
+
+            ParserController = parserController;
+            Helper = helper;
         }
 
         //ViewComponent
 
         //Sync
         //Only one active at any given time. 
-        public IViewComponentResult Invoke() {
-            return InvokeMain();
+        public IViewComponentResult Invoke(bool parsed = false) {
+            if (parsed) {
+                return InvokeResults();
+            } else {
+                return InvokeMain();
+            }    
         }
 
         //Async
@@ -40,11 +46,11 @@ namespace AKCWebCore.ViewComponents {
         //}    
 
         public IViewComponentResult InvokeMain() {
-            return View("~/Views/Shared/Components/Clipper/Main.cshtml", new { model = helper }.ToExpando());
+            return View("~/Views/Shared/Components/Clipper/Main.cshtml", new { model = Helper }.ToExpando());
         }
 
         public IViewComponentResult InvokeResults() {
-            return View("~/Views/Shared/Components/Clipper/Results.cshtml", new { model = helper }.ToExpando());
+            return View("~/Views/Shared/Components/Clipper/Results.cshtml", new { model = Helper }.ToExpando());
         }
     }
 }

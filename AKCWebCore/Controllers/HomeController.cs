@@ -11,5 +11,10 @@ namespace AKCWeb.Controllers {
             ViewData["Title"] = "Home";
             return View("Index");
         }
+
+        //AJAX-friendly component refresh logic
+        public IActionResult GetParserComponent(bool parsed = false) {
+            return ViewComponent("ParserController", new {parsed = parsed});
+        }
     }
 }
