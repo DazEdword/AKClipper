@@ -10,7 +10,9 @@ namespace AKCWebCore.Models {
     public class ParserWebHelper : IParserWeb {
 
         public string preview { get; set; }
+        public string textSample { get; set; }
         public string language { get; set; }
+        public string content { get; set; }
 
 
         //Sync
