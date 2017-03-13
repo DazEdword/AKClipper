@@ -244,6 +244,32 @@ namespace AKCCore {
             return preview;
         }
 
+        public string GeneratePreviewFromContent(string content, int lines = 39) {
+            int currentLine = 0;
+            string preview = "";
+
+            //Min 4 lines(1 clipping)
+            if (lines < 3) {
+                lines = 3;
+            }
+
+            while (currentLine < lines) {
+                string[] lineArray = content.Split(new string[] {"\r\n", "\n" }, StringSplitOptions.None);
+                int maxLength = lineArray.Length;
+
+                if (currentLine >= maxLength) {
+                    break;
+                } else {
+
+                }
+                // Add line and jumps to a new line in preview.
+                preview += lineArray[currentLine] + " \n ";
+                currentLine++;
+            }
+
+            return preview;
+        }
+
         public void RunParsingSequence(){
             /// <summary>
             /// Method running the whole parsing process, carrying away a few compatibility test first and
