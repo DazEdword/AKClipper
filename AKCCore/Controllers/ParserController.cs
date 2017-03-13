@@ -215,7 +215,9 @@ namespace AKCCore {
                 return false;
             }
         }
- 
+
+
+        //TODO duplication happening in the two methods below, candidates for future refactor.
         public string GeneratePreviewFromPath(string path, int lines = 39) {
             //Second parameter is optional, change it if a bigger or smaller preview is needed.
             int currentLine = 0;
