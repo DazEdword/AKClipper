@@ -16,13 +16,12 @@
             var reader = new FileReader();
 
             reader.onload = function (e) {
-
                 var lines = this.result.split('\n');
 
                 //Saving in local storage
-                var ls;
-                ls = localStorage;
-                ls.setItem("AKCContent", this.result);
+                var st;
+                st = sessionStorage;
+                st.setItem("AKCContent", this.result);
 
                 //Generating preview
                 for (var line = 0; line < 39; line++) {
@@ -37,7 +36,7 @@
             }
 
             //Testing local storage
-            try { var storTest = window['localStorage'];
+            try { var storTest = window['sessionStorage'];
                 storTest.setItem("", ".");
                 storTest.removeItem(""); }
             catch(e) { alert("Failed to save content on local storage."); }
@@ -70,7 +69,7 @@
     </div>
 
     <div class="akc-row">
-        <div class="col-3" id="file-preview" style="overflow:scroll">
+        <div class="col-3" id="file-preview" style="overflow-y:scroll">
             @{
                 //Added extension to avoid binding runtime error.
                 //http://stackoverflow.com/questions/5120317/dynamic-anonymous-type-in-razor-causes-runtimebinderexception
