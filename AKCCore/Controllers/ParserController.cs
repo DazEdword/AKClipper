@@ -64,30 +64,36 @@ namespace AKCCore {
                 System.Diagnostics.Debug.WriteLine("Parser instance not recognised: unable to set parser");
             }
         }
-        
-        //TODO This method passes a path to the file. Overload it to accept a text chain directly. 
+
+        //TODO This method passes a path ONLY to the file, uses parser.Parse to get clippings.
+        //We can use content directly on parser.DirectParse, and create the clipping database normally. 
+        //Changes have to be made. 
         public void RunParser(string path) {
             try {
                 var clippings = options.SelectedParser.Parse(path, options.SelectedFormat);
-
-                rawClippingCount = 0;
-                foreach (var item in clippings) {
-                    //Adding clippings to the currently used, dictionary database.
-                    if (!Clipping.IsNullOrEmpty(item)) {
-                        ClippingDatabase.AddClipping(item);
-                    }
-                    ++rawClippingCount;
-                }
-
-                //Now adding clippings to the layout'ed, list database.
-                int numberOfClippings = ClippingDatabase.numberedClippings.Count;
-
-                for (int i = 0; i < numberOfClippings; i++) {
-                    Clipping clippingToAdd = ClippingDatabase.GetClipping(i);
-                    ClippingDatabase.finalClippingsList.Add(clippingToAdd);
-                }
+                GenerateClippingList(clippings);
+                
             } catch (Exception ex) {
                 System.Diagnostics.Debug.WriteLine("Parsing Error: " + ex.Message);
+            }
+        }
+
+        public void GenerateClippingList(IEnumerable<Clipping> clippings) {
+            rawClippingCount = 0;
+            foreach (var item in clippings) {
+                //Adding clippings to the currently used, dictionary database.
+                if (!Clipping.IsNullOrEmpty(item)) {
+                    ClippingDatabase.AddClipping(item);
+                }
+                ++rawClippingCount;
+            }
+
+            //Now adding clippings to the layout'ed, list database.
+            int numberOfClippings = ClippingDatabase.numberedClippings.Count;
+
+            for (int i = 0; i < numberOfClippings; i++) {
+                Clipping clippingToAdd = ClippingDatabase.GetClipping(i);
+                ClippingDatabase.finalClippingsList.Add(clippingToAdd);
             }
         }
 
