@@ -68,6 +68,13 @@ namespace AKCCore {
         //TODO This method passes a path ONLY to the file, uses parser.Parse to get clippings.
         //We can use content directly on parser.DirectParse, and create the clipping database normally. 
         //Changes have to be made. 
+
+        /// <summary>
+        /// Method running the whole parsing process, carrying away a few compatibility test first and
+        /// running the parser only if check results are OK. It checks for a general language configuration
+        /// setup, then confirms compatibility format/language/FormatType, selects correct instances of 
+        /// parser and only then starts with parsing itself.
+        /// </summary>
         public void RunParser(string path) {
             try {
                 var clippings = options.SelectedParser.Parse(path, options.SelectedFormat);
@@ -276,15 +283,6 @@ namespace AKCCore {
             }
 
             return preview;
-        }
-
-        public void RunParsingSequence(){
-            /// <summary>
-            /// Method running the whole parsing process, carrying away a few compatibility test first and
-            /// running the parser only if check results are OK. It checks for a general language configuration
-            /// setup, then confirms compatibility format/language/FormatType, selects correct instances of 
-            /// parser and only then starts with parsing itself.
-            /// </summary>
         }
     }
 }
