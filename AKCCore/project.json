@@ -12,8 +12,6 @@
         "System.Dynamic.Runtime": "4.3.0",
         "NETStandard.Library": "1.6.0"
       }
-    },
-
-    "net462": {}
+    }
   }
 }

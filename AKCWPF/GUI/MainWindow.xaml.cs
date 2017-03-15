@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using AKCCore;
 
+
 namespace AKCWPF {
     /// <summary>
     /// Interaction logic for MainWindow.xaml. This window lets the user select their clipping file language,

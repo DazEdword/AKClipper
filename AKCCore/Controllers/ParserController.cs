@@ -257,7 +257,7 @@ namespace AKCCore {
                         break;
                     }
                     // Add line and jumps to a new line in preview.
-                    preview += line + " \n "; 
+                    preview += line + "\n"; 
                     currentLine++;
                 }
             }
