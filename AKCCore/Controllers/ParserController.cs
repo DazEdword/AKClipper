@@ -98,10 +98,15 @@ namespace AKCCore {
             //Now adding clippings to the layout'ed, list database.
             int numberOfClippings = ClippingDatabase.numberedClippings.Count;
 
-            for (int i = 0; i < numberOfClippings; i++) {
-                Clipping clippingToAdd = ClippingDatabase.GetClipping(i);
-                ClippingDatabase.finalClippingsList.Add(clippingToAdd);
+            if (numberOfClippings > 0) {
+                for (int i = 0; i < numberOfClippings; i++) {
+                    Clipping clippingToAdd = ClippingDatabase.GetClipping(i);
+                    ClippingDatabase.finalClippingsList.Add(clippingToAdd);
+                }
+            } else {
+                //TODO What if there is no valid clippings at all?
             }
+            
         }
 
         public dynamic ReportParsingResult(bool consoleOnly){

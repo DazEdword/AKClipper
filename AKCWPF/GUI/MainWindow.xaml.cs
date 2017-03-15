@@ -141,13 +141,18 @@ namespace AKCWPF {
                     if (result != null) {
                         MessageBox.Show(result.clippingCount + " clippings parsed.", "Parsing successful.");
                         MessageBox.Show(result.databaseEntries.ToString() + " clippings added to database. " +
-                            result.removedClippings.ToString() + " empty or null clippings removed.", "Database created.");
+                        result.removedClippings.ToString() + " empty or null clippings removed.", "Database created.");
+                        if (result.databaseEntries <= 0) {
+                            MessageBox.Show("No clippings added to database, please try again with a different file.");
+                        } else {
+                            //If you want to update UI from this task a dispatcher has to be used, since it has to be in the UI thread.
+                            Dispatcher.Invoke((Action)delegate () {
+                                LaunchDatabaseWindow();
+                            });
+                        }
+                    } else {
+                        MessageBox.Show("Parsing failed");
                     }
-
-                    //If you want to update UI from this task a dispatcher has to be used, since it has to be in the UI thread.
-                    Dispatcher.Invoke((Action)delegate () {
-                        LaunchDatabaseWindow();
-                    });
                 }
             }
 
