@@ -1,0 +1,27 @@
+﻿using AKCCore;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace AKCTests.ParserController {
+
+    [TestClass]
+    public class PreviewGeneration {
+
+        AKCCore.ParserController parserController = new AKCCore.ParserController();
+
+        [TestMethod]
+        public void TestPreviewFromContentDefaultLines() {
+            string input = "Calibre: Hands - Down, The Best eBook Manager Available(makeuseof.com)\r\n - Your Highlight on Location 394 - 396 | Added on Thursday, July 9, 2015 9:55:09 PM\r\nI’m not sure about reinstating the library from metadata, but you can create a calalog of books through the Convert function. There’s a great guide here: http://www.mobileread.com/forums/showthread.php?t=118556\r\n==========\r\nThe Filter Bubble: How the New Personalized Web Is Changing What We Read and How We Think (Pariser, Eli)\r\n- Your Highlight on page 108 | Location 1366-1367 | Added on Saturday, January 30, 2016 8:14:54 AM\r\nBecause personalized filters usually have no Zoom Out function, it’s easy to lose your bearings, to believe the world is a narrow island when in fact it’s an immense, varied continent.\r\n==========\r\nThe Immortal Life of Henrietta Lacks (Skloot, Rebecca)\r\n- Your Highlight on page 20 | Location 498-499 | Added on Saturday, September 19, 2015 1:08:14 PM\r\nthe town of South Boston—\r\n==========\r\nThe Immortal Life of Henrietta Lacks (Skloot, Rebecca)\r\n- Your Highlight on page 25 | Location 576-576 | Added on Saturday, September 19, 2015 1:15:55 PM\r\nSparrows Point was rapidly becoming the largest steel plant in the world.\r\n==========\r\nThe Immortal Life of Henrietta Lacks (Skloot, Rebecca)\r\n- Your Highlight on page 25 | Location 578-578 | Added on Saturday, September 19, 2015 1:16:01 PM\r\nBethlehem Steel\r\n==========\r\n";
+            string preview = parserController.GeneratePreviewFromContent(input);
+            Assert.AreEqual(preview, "Calibre: Hands - Down, The Best eBook Manager Available(makeuseof.com) \n  - Your Highlight on Location 394 - 396 | Added on Thursday, July 9, 2015 9:55:09 PM \n I’m not sure about reinstating the library from metadata, but you can create a calalog of books through the Convert function. There’s a great guide here: http://www.mobileread.com/forums/showthread.php?t=118556 \n ========== \n The Filter Bubble: How the New Personalized Web Is Changing What We Read and How We Think (Pariser, Eli) \n - Your Highlight on page 108 | Location 1366-1367 | Added on Saturday, January 30, 2016 8:14:54 AM \n Because personalized filters usually have no Zoom Out function, it’s easy to lose your bearings, to believe the world is a narrow island when in fact it’s an immense, varied continent. \n ========== \n The Immortal Life of Henrietta Lacks (Skloot, Rebecca) \n - Your Highlight on page 20 | Location 498-499 | Added on Saturday, September 19, 2015 1:08:14 PM \n the town of South Boston— \n ========== \n The Immortal Life of Henrietta Lacks (Skloot, Rebecca) \n - Your Highlight on page 25 | Location 576-576 | Added on Saturday, September 19, 2015 1:15:55 PM \n Sparrows Point was rapidly becoming the largest steel plant in the world. \n ========== \n The Immortal Life of Henrietta Lacks (Skloot, Rebecca) \n - Your Highlight on page 25 | Location 578-578 | Added on Saturday, September 19, 2015 1:16:01 PM \n Bethlehem Steel \n ========== \n  \n ");
+        }
+
+        [TestMethod]
+        public void TestPreviewFromContentSingleClipping() {
+            string input = "Calibre: Hands - Down, The Best eBook Manager Available(makeuseof.com)\r\n - Your Highlight on Location 394 - 396 | Added on Thursday, July 9, 2015 9:55:09 PM\r\nI’m not sure about reinstating the library from metadata, but you can create a calalog of books through the Convert function. There’s a great guide here: http://www.mobileread.com/forums/showthread.php?t=118556\r\n==========\r\nThe Filter Bubble: How the New Personalized Web Is Changing What We Read and How We Think (Pariser, Eli)\r\n- Your Highlight on page 108 | Location 1366-1367 | Added on Saturday, January 30, 2016 8:14:54 AM\r\nBecause personalized filters usually have no Zoom Out function, it’s easy to lose your bearings, to believe the world is a narrow island when in fact it’s an immense, varied continent.\r\n==========\r\nThe Immortal Life of Henrietta Lacks (Skloot, Rebecca)\r\n- Your Highlight on page 20 | Location 498-499 | Added on Saturday, September 19, 2015 1:08:14 PM\r\nthe town of South Boston—\r\n==========\r\nThe Immortal Life of Henrietta Lacks (Skloot, Rebecca)\r\n- Your Highlight on page 25 | Location 576-576 | Added on Saturday, September 19, 2015 1:15:55 PM\r\nSparrows Point was rapidly becoming the largest steel plant in the world.\r\n==========\r\nThe Immortal Life of Henrietta Lacks (Skloot, Rebecca)\r\n- Your Highlight on page 25 | Location 578-578 | Added on Saturday, September 19, 2015 1:16:01 PM\r\nBethlehem Steel\r\n==========\r\n";
+            string preview = parserController.GeneratePreviewFromContent(input, 4);
+            Assert.AreEqual(preview, "Calibre: Hands - Down, The Best eBook Manager Available(makeuseof.com) \n  - Your Highlight on Location 394 - 396 | Added on Thursday, July 9, 2015 9:55:09 PM \n I’m not sure about reinstating the library from metadata, but you can create a calalog of books through the Convert function. There’s a great guide here: http://www.mobileread.com/forums/showthread.php?t=118556 \n ========== \n ");
+        }
+    }
+}

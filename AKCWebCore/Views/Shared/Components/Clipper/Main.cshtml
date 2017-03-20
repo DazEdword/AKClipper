@@ -3,24 +3,47 @@
 }
 
 <script>
-    //WARNING: Unused code, just testing JS scripts here. 
+    //TODO Save preview variables in Session Storage?
+
+    //JS alternative for file "upload".
     function SelectFile() {
         var selectedFile = document.getElementById('file-select').files[0];
         var fileDisplayArea = document.getElementById("file-preview");
+        fileDisplayArea.innerHTML = "";
         var textType = /text.*/;
 
         if (selectedFile.type.match(textType)) {
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                //fileDisplayArea.innerHTML = reader.result;
                 var lines = this.result.split('\n');
+
+                //Saving in local storage
+                var st;
+                st = sessionStorage;
+                st.setItem("AKCContent", this.result);
+
+                //Generating preview
                 for (var line = 0; line < 39; line++) {
-                    fileDisplayArea.innerHTML += (lines[line] + '\n');
+                    if(lines[line] == undefined) break;
+                    var newLine = document.createElement("span");
+                    var lineBreak = document.createElement("br");
+                    newLine.innerHTML = lines[line];
+                    fileDisplayArea.appendChild(newLine);
+                    fileDisplayArea.appendChild(lineBreak);
+                    //fileDisplayArea.innerHTML += (lines[line] + '\n');
                 }
             }
 
-            reader.readAsText(selectedFile);
+            //Testing local storage
+            try { var storTest = window['sessionStorage'];
+                storTest.setItem("", ".");
+                storTest.removeItem(""); }
+            catch(e) { alert("Failed to save content on local storage."); }
+
+            //Getting parse content and preview
+            reader.readAsText(selectedFile);  
+
         } else {
             fileDisplayArea.innerHTML = "File not supported!"
         }
@@ -29,25 +52,32 @@
 
 <div id="akc-component">
     <div class="akc-row">
-        <div class="col-1"><div style="width:100%; height:100%; font-weight: bold; font-size: 1.1em">Click "Browse File" button and 
-            navigate to the folder with your Kindle text file, click file and then "Open" to upload your file.
-             If you need help locating your file, find more information <a href="#">here</a> </div></div>
-        <div class="col-2"><label for="file-select" class="button" id="browseButton">Browse File</label>
-            <input type="file" id="file-select"/>
+        <div class="col-1">
+            <div style="width:100%; height:100%; font-weight: bold; font-size: 1.1em">
+                Click "Browse File" button and
+                navigate to the folder with your Kindle text file, click file and then "Open" to upload your file.
+                If you need help locating your file, find more information <a href="#">here</a>
+            </div>
+        </div>
+        <div class="col-2">
+            <form  method="post" asp-action="UploadFile" asp-controller="Home" 
+                  enctype="multipart/form-data">
+                <label for="file-select" class="button" id="browseButton">Browse File</label>
+                <input type="file" id="file-select" onchange="SelectFile()" />
+            </form>        
         </div>
     </div>
 
     <div class="akc-row">
- 
-        <div class="col-3" id="file-preview">
-            A preview of your text will appear here.
+        <div class="col-3" id="file-preview" style="overflow-y:scroll">
             @{
-                //TODO this has to be fixed
+                //Added extension to avoid binding runtime error.
                 //http://stackoverflow.com/questions/5120317/dynamic-anonymous-type-in-razor-causes-runtimebinderexception
+                //TODO robustness checks can be added
                 foreach (var item in Model) {
-                    <div>@item</div>
+                    <div>@item.Value.preview</div>
                 }
-            } 
+            }
         </div>
     </div>
     <div class="akc-row">
@@ -63,6 +93,20 @@
                 </select>
             </span>
         </div>
-        <div class="col-2"><button class="button">Start Parsing</button> </div>
+        <div class="col-2">
+        <form>
+            <button class="button"
+                    asp-controller="Home" asp-action="Index"
+                    asp-route-parsed="true">
+                Start Parsing
+            </button>
+
+            @*<button class="button"
+                    asp-controller="Home" asp-action="Index"
+                    asp-route-parsed="true">
+                Start Parsing
+            </button>*@
+        </form>
+         </div>
     </div>
 </div>

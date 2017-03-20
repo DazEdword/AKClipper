@@ -64,31 +64,49 @@ namespace AKCCore {
                 System.Diagnostics.Debug.WriteLine("Parser instance not recognised: unable to set parser");
             }
         }
-        
-        //TODO This method passes a path to the file. Overload it to accept a text chain directly. 
+
+        //TODO This method passes a path ONLY to the file, uses parser.Parse to get clippings.
+        //We can use content directly on parser.DirectParse, and create the clipping database normally. 
+        //Changes have to be made. 
+
+        /// <summary>
+        /// Method running the whole parsing process, carrying away a few compatibility test first and
+        /// running the parser only if check results are OK. It checks for a general language configuration
+        /// setup, then confirms compatibility format/language/FormatType, selects correct instances of 
+        /// parser and only then starts with parsing itself.
+        /// </summary>
         public void RunParser(string path) {
             try {
                 var clippings = options.SelectedParser.Parse(path, options.SelectedFormat);
+                GenerateClippingList(clippings);
+                
+            } catch (Exception ex) {
+                System.Diagnostics.Debug.WriteLine("Parsing Error: " + ex.Message);
+            }
+        }
 
-                rawClippingCount = 0;
-                foreach (var item in clippings) {
-                    //Adding clippings to the currently used, dictionary database.
-                    if (!Clipping.IsNullOrEmpty(item)) {
-                        ClippingDatabase.AddClipping(item);
-                    }
-                    ++rawClippingCount;
+        public void GenerateClippingList(IEnumerable<Clipping> clippings) {
+            rawClippingCount = 0;
+            foreach (var item in clippings) {
+                //Adding clippings to the currently used, dictionary database.
+                if (!Clipping.IsNullOrEmpty(item)) {
+                    ClippingDatabase.AddClipping(item);
                 }
+                ++rawClippingCount;
+            }
 
-                //Now adding clippings to the layout'ed, list database.
-                int numberOfClippings = ClippingDatabase.numberedClippings.Count;
+            //Now adding clippings to the layout'ed, list database.
+            int numberOfClippings = ClippingDatabase.numberedClippings.Count;
 
+            if (numberOfClippings > 0) {
                 for (int i = 0; i < numberOfClippings; i++) {
                     Clipping clippingToAdd = ClippingDatabase.GetClipping(i);
                     ClippingDatabase.finalClippingsList.Add(clippingToAdd);
                 }
-            } catch (Exception ex) {
-                System.Diagnostics.Debug.WriteLine("Parsing Error: " + ex.Message);
+            } else {
+                //TODO What if there is no valid clippings at all?
             }
+            
         }
 
         public dynamic ReportParsingResult(bool consoleOnly){
@@ -215,7 +233,9 @@ namespace AKCCore {
                 return false;
             }
         }
- 
+
+
+        //TODO duplication happening in the two methods below, candidates for future refactor.
         public string GeneratePreviewFromPath(string path, int lines = 39) {
             //Second parameter is optional, change it if a bigger or smaller preview is needed.
             int currentLine = 0;
@@ -237,20 +257,37 @@ namespace AKCCore {
                         break;
                     }
                     // Add line and jumps to a new line in preview.
-                    preview += line + " \n "; 
+                    preview += line + "\n"; 
                     currentLine++;
                 }
             }
             return preview;
         }
 
-        public void RunParsingSequence(){
-            /// <summary>
-            /// Method running the whole parsing process, carrying away a few compatibility test first and
-            /// running the parser only if check results are OK. It checks for a general language configuration
-            /// setup, then confirms compatibility format/language/FormatType, selects correct instances of 
-            /// parser and only then starts with parsing itself.
-            /// </summary>
+        public string GeneratePreviewFromContent(string content, int lines = 39) {
+            int currentLine = 0;
+            string preview = "";
+
+            //Min 4 lines(1 clipping)
+            if (lines < 3) {
+                lines = 3;
+            }
+
+            while (currentLine < lines) {
+                string[] lineArray = content.Split(new string[] {"\r\n", "\n" }, StringSplitOptions.None);
+                int maxLength = lineArray.Length;
+
+                if (currentLine >= maxLength) {
+                    break;
+                } else {
+
+                }
+                // Add line and jumps to a new line in preview.
+                preview += lineArray[currentLine] + " \n ";
+                currentLine++;
+            }
+
+            return preview;
         }
     }
 }

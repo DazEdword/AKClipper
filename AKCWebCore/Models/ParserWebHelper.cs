@@ -10,11 +10,14 @@ namespace AKCWebCore.Models {
     public class ParserWebHelper : IParserWeb {
 
         public string preview { get; set; }
+        public string textSample { get; set; }
         public string language { get; set; }
+        public string content { get; set; }
+
 
         //Sync
         public ParserWebHelper() {
-            this.preview = "Test test test I am your hardcoded preview";
+            this.preview = "A preview of your text will appear here.";
             this.language = "English";
         }
 
