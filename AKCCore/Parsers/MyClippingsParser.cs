@@ -68,6 +68,7 @@ namespace AKCCore {
         protected virtual IEnumerable<Clipping> ParseFromString(string content, FormatType format) {
             Clipping clipping = new Clipping();
 
+            //TODO Hardcoded line break to solve?
             string[] result = content.Split(new string[] { "\n", "\r\n" }, StringSplitOptions.None);
             string lines = null;
 

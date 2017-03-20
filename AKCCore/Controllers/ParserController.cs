@@ -256,8 +256,11 @@ namespace AKCCore {
                     if (line == null) {
                         break;
                     }
+                    //TODO This line break addition a) is ugly b) can mess up with FileFormat keyword's position. 
+                    //TODO We must standardise line breaks for multiplatform happiness, remove any linebreak hard-
+                    //coded addition, and, if necessary, modify keyword's positions for better recognisement. 
                     // Add line and jumps to a new line in preview.
-                    preview += line + "\n"; 
+                    preview += line + " \n "; 
                     currentLine++;
                 }
             }
