@@ -9,6 +9,11 @@ namespace AKCCore {
     //TODO Refactor in progress, many public methods around in this public class. Reorganise and change access 
     //levels later. 
 
+    //TODO Dependency AKCCore (.netStandard) - AKCWPF (.net framework 462) is carried away via local NuGet package.
+    //We should automate this process so that every time we rebuild AKCCore, AKCCore library in WPF is updated with the
+    //new library. What we want is an alternative to "dotnet pack" in AKCCore, followed by install/update via NuGet console.
+
+
     /// <summary>
     /// Parser Controller logic. Its concerns include to get and store which file to use as a source for parsing, 
     /// store the user selected language, initialise parsing process. It has several checks to prevent the user from using the wrong parser.
@@ -64,31 +69,49 @@ namespace AKCCore {
                 System.Diagnostics.Debug.WriteLine("Parser instance not recognised: unable to set parser");
             }
         }
-        
-        //TODO This method passes a path to the file. Overload it to accept a text chain directly. 
+
+        //TODO This method passes a path ONLY to the file, uses parser.Parse to get clippings.
+        //We can use content directly on parser.DirectParse, and create the clipping database normally. 
+        //Changes have to be made. 
+
+        /// <summary>
+        /// Method running the whole parsing process, carrying away a few compatibility test first and
+        /// running the parser only if check results are OK. It checks for a general language configuration
+        /// setup, then confirms compatibility format/language/FormatType, selects correct instances of 
+        /// parser and only then starts with parsing itself.
+        /// </summary>
         public void RunParser(string path) {
             try {
                 var clippings = options.SelectedParser.Parse(path, options.SelectedFormat);
+                GenerateClippingList(clippings);
+                
+            } catch (Exception ex) {
+                System.Diagnostics.Debug.WriteLine("Parsing Error: " + ex.Message);
+            }
+        }
 
-                rawClippingCount = 0;
-                foreach (var item in clippings) {
-                    //Adding clippings to the currently used, dictionary database.
-                    if (!Clipping.IsNullOrEmpty(item)) {
-                        ClippingDatabase.AddClipping(item);
-                    }
-                    ++rawClippingCount;
+        public void GenerateClippingList(IEnumerable<Clipping> clippings) {
+            rawClippingCount = 0;
+            foreach (var item in clippings) {
+                //Adding clippings to the currently used, dictionary database.
+                if (!Clipping.IsNullOrEmpty(item)) {
+                    ClippingDatabase.AddClipping(item);
                 }
+                ++rawClippingCount;
+            }
 
-                //Now adding clippings to the layout'ed, list database.
-                int numberOfClippings = ClippingDatabase.numberedClippings.Count;
+            //Now adding clippings to the layout'ed, list database.
+            int numberOfClippings = ClippingDatabase.numberedClippings.Count;
 
+            if (numberOfClippings > 0) {
                 for (int i = 0; i < numberOfClippings; i++) {
                     Clipping clippingToAdd = ClippingDatabase.GetClipping(i);
                     ClippingDatabase.finalClippingsList.Add(clippingToAdd);
                 }
-            } catch (Exception ex) {
-                System.Diagnostics.Debug.WriteLine("Parsing Error: " + ex.Message);
+            } else {
+                //TODO What if there is no valid clippings at all?
             }
+            
         }
 
         public dynamic ReportParsingResult(bool consoleOnly){
@@ -215,7 +238,9 @@ namespace AKCCore {
                 return false;
             }
         }
- 
+
+
+        //TODO duplication happening in the two methods below, candidates for future refactor.
         public string GeneratePreviewFromPath(string path, int lines = 39) {
             //Second parameter is optional, change it if a bigger or smaller preview is needed.
             int currentLine = 0;
@@ -236,6 +261,9 @@ namespace AKCCore {
                     if (line == null) {
                         break;
                     }
+                    //TODO This line break addition a) is ugly b) can mess up with FileFormat keyword's position. 
+                    //TODO We must standardise line breaks for multiplatform happiness, remove any linebreak hard-
+                    //coded addition, and, if necessary, modify keyword's positions for better recognisement. 
                     // Add line and jumps to a new line in preview.
                     preview += line + " \n "; 
                     currentLine++;
@@ -268,15 +296,6 @@ namespace AKCCore {
             }
 
             return preview;
-        }
-
-        public void RunParsingSequence(){
-            /// <summary>
-            /// Method running the whole parsing process, carrying away a few compatibility test first and
-            /// running the parser only if check results are OK. It checks for a general language configuration
-            /// setup, then confirms compatibility format/language/FormatType, selects correct instances of 
-            /// parser and only then starts with parsing itself.
-            /// </summary>
         }
     }
 }
