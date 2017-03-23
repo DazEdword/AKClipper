@@ -12,6 +12,11 @@ namespace AKCWeb.Controllers {
             return View("Index");
         }
 
+        public ViewResult TestParse() {
+            ViewData["Title"] = "Testing";
+            return View("/Views/Shared/Components/Clipper/Results.cshtml");
+        }
+
         //AJAX-friendly component refresh logic
         public IActionResult GetParserComponent(bool parsed = false) {
             return ViewComponent("ParserController", new {parsed = parsed});

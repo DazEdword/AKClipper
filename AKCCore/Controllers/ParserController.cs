@@ -72,7 +72,7 @@ namespace AKCCore {
 
         //TODO This method passes a path ONLY to the file, uses parser.Parse to get clippings.
         //We can use content directly on parser.DirectParse, and create the clipping database normally. 
-        //Changes have to be made. 
+        //Changes have to be made. For now, we can use a second RunParserDirect method. 
 
         /// <summary>
         /// Method running the whole parsing process, carrying away a few compatibility test first and
@@ -83,8 +83,16 @@ namespace AKCCore {
         public void RunParser(string path) {
             try {
                 var clippings = options.SelectedParser.Parse(path, options.SelectedFormat);
+                GenerateClippingList(clippings);  
+            } catch (Exception ex) {
+                System.Diagnostics.Debug.WriteLine("Parsing Error: " + ex.Message);
+            }
+        }
+
+        public void RunParserDirect(string content) {
+            try {
+                var clippings = options.SelectedParser.DirectParse(content, options.SelectedFormat);
                 GenerateClippingList(clippings);
-                
             } catch (Exception ex) {
                 System.Diagnostics.Debug.WriteLine("Parsing Error: " + ex.Message);
             }

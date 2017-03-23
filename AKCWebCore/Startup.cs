@@ -27,6 +27,7 @@ namespace AKCWebCore {
             services.AddMvc();
             services.AddSingleton<ParserController, ParserController>();
             services.AddSingleton<ParserWebHelper, ParserWebHelper>();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +44,9 @@ namespace AKCWebCore {
             }
 
             app.UseStaticFiles();
+
+            //enable session before MVC
+            app.UseSession();
 
             app.UseMvc(routes => {
                 routes.MapRoute(
