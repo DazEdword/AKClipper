@@ -42,7 +42,7 @@
             catch(e) { alert("Failed to save content on local storage."); }
 
             //Getting parse content and preview
-            reader.readAsText(selectedFile);  
+            reader.readAsText(selectedFile);
 
         } else {
             fileDisplayArea.innerHTML = "File not supported!"
@@ -60,11 +60,11 @@
             </div>
         </div>
         <div class="col-2">
-            <form  method="post" asp-action="UploadFile" asp-controller="Home" 
+            <form  method="post" asp-action="UploadFile" asp-controller="Home"
                   enctype="multipart/form-data">
                 <label for="file-select" class="button" id="browseButton">Browse File</label>
                 <input type="file" id="file-select" onchange="SelectFile()" />
-            </form>        
+            </form>
         </div>
     </div>
 

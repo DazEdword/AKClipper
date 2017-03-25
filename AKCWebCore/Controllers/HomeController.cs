@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using AKCWebCore.Models;
-using Microsoft.AspNetCore.Http;
-using System.IO;
 
 namespace AKCWeb.Controllers {
 
@@ -12,6 +9,8 @@ namespace AKCWeb.Controllers {
             return View("Index");
         }
 
+        /* TODO Test we can call this view from Main.cshtml (Form, "Parse" button)*/
+
         public ViewResult TestParse() {
             ViewData["Title"] = "Testing";
             return View("/Views/Shared/Components/Clipper/Results.cshtml");
@@ -19,7 +18,7 @@ namespace AKCWeb.Controllers {
 
         //AJAX-friendly component refresh logic
         public IActionResult GetParserComponent(bool parsed = false) {
-            return ViewComponent("ParserController", new {parsed = parsed});
+            return ViewComponent("ParserController", new { parsed = parsed });
         }
     }
 }
