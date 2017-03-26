@@ -36,8 +36,6 @@
         <link href="@Url.Content("~/css/main.css")" rel="stylesheet" type="text/css" />
     }
 
-
-
     <div id="page-wrapper">
         <div id="header-wrapper">
             <div class="container">
@@ -57,7 +55,9 @@
         <div id="akc-component-wrapper">
             <div class="container">
                 <div class="akc-container">
-                    @await Component.InvokeAsync("ParserController")
+                    @{var parsed = Model.parsed;}
+                    @await Component.InvokeAsync("ParserController",
+                   new {parsed = parsed })
                 </div>
             </div>
         </div>

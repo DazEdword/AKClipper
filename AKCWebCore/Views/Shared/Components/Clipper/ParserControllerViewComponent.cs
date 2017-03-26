@@ -20,9 +20,9 @@ namespace AKCWebCore.ViewComponents {
         }
 
         //ViewComponent
+        //Sync/Async - Only one active at any given time.
 
         //Sync
-        //Only one active at any given time.
         public IViewComponentResult Invoke(bool parsed = false) {
             if (parsed) {
                 return InvokeResults();
