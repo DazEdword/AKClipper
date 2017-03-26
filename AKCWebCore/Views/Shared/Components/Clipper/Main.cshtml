@@ -48,6 +48,9 @@
             fileDisplayArea.innerHTML = "File not supported!"
         }
     }
+
+
+
 </script>
 
 <div id="akc-component">
@@ -63,7 +66,7 @@
             <form  method="post" asp-action="UploadFile" asp-controller="Home"
                   enctype="multipart/form-data">
                 <label for="file-select" class="button" id="browseButton">Browse File</label>
-                <input type="file" id="file-select" onchange="SelectFile()" />
+                <input type="file" id="file-select" onchange='SelectFile()' />
             </form>
         </div>
     </div>
