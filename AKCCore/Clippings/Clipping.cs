@@ -20,7 +20,7 @@ namespace AKCCore {
         public int? BeginningLocation => GetBeginningOfRange(Location);
 
         private int? GetBeginningOfRange(string range) {
-            if ((String.IsNullOrEmpty(range)) || (range.All(c => char.IsDigit(c))) == false) {
+            if ((String.IsNullOrEmpty(range)) || (range.All(c => CharIsDigitOrHyphen(c))) == false) {
                 return null;
             }
 
@@ -30,10 +30,19 @@ namespace AKCCore {
 
             first = (hIndex >= 0) ? range.Substring(0, hIndex) : range;
 
-            try { return int.Parse(first); }
-            catch (Exception ex) {
+            try {
+                return int.Parse(first);
+            } catch (Exception ex) {
                 System.Diagnostics.Debug.WriteLine(ex.Message, "Error parsing range.");
                 return null;
+            }
+        }
+
+        public static bool CharIsDigitOrHyphen(char c) {
+            if (char.IsDigit(c) == true || c.ToString() == "-") {
+                return true;
+            } else {
+                return false;
             }
         }
 

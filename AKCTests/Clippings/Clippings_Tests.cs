@@ -10,20 +10,40 @@ namespace AKCTests.Clippings {
         public int validBeginning;
         public int validEnd;
         public string location;
+        public int validPage;
 
+        public void InitDefaultClipping(Clipping clipping) {
+            clipping.Location = "25-27";
+            validBeginning = 25;
+            validEnd = 27;
+
+            clipping.Page = "50";
+            validPage = 50;
+
+        }
 
         [TestInitialize]
         public void Init() {
             clipping = new Clipping();
-            clipping.Location = "25-27";
-            validBeginning = 25;
-            validEnd = 27;
+            InitDefaultClipping(clipping);
         }
 
         [TestMethod]
         public void BeginningOfRange() {
             int testBeginning = (int)clipping.BeginningLocation;
             Assert.AreEqual(testBeginning, validBeginning);
+        }
+
+        [TestMethod]
+        public void BeginningOfPageRange() {
+            int testBeginning = (int)clipping.BeginningPage;
+            Assert.AreEqual(testBeginning, validPage);
+        }
+
+        [TestMethod]
+        public void IllegalRange() {
+            clipping.Location = "2T5-27";
+            Assert.AreEqual(null, clipping.BeginningLocation);
         }
     }
 }
