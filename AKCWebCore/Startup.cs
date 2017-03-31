@@ -27,6 +27,7 @@ namespace AKCWebCore {
             services.AddMvc();
             services.AddSingleton<ParserController, ParserController>();
             services.AddSingleton<ParserWebHelper, ParserWebHelper>();
+            services.AddDistributedMemoryCache();
             services.AddSession();
         }
 
@@ -50,10 +51,10 @@ namespace AKCWebCore {
 
             app.UseMvc(routes => {
                 routes.MapRoute(
-                    name: "default",
+                    name: "parser",
                     template: "{controller=Home}/{action=Index}/{parsed:bool?}");
                     //template: "{controller=Home}/{action=Index}/{id?}");
-            });
+        });
         }
     }
 }

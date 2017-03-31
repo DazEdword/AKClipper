@@ -11,12 +11,13 @@ namespace AKCWeb.Controllers {
             Helper = helper;
         }
 
-        [Route("parser/{parsed:bool?}")]
-        [Route("/{parsed:bool?}")]
-        [Route("")]
-        
         //http://localhost:60362/?parsed=true
         //this already works when called manually from browser
+
+        [Route("parser")]
+        [Route("/{parsed:bool?}")]
+        [Route("")]
+       
         public ViewResult Index(bool parsed = false) {
             ViewData["Title"] = "Home";
 
@@ -29,9 +30,9 @@ namespace AKCWeb.Controllers {
             return View("Index", Helper);
         }
 
-        //AJAX-friendly component refresh logic
-        //public IActionResult GetParserComponent(bool parsed = false) {
-        //    return ViewComponent("ParserController", new { parsed = parsed });
+        //public async ViewResult Parse() {
+        //    var result = await ViewComponent("ParserController");
+        //    return View("Index", Helper);
         //}
     }
 }
