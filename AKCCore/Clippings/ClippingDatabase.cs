@@ -13,10 +13,8 @@ namespace AKCCore {
         /// <returns>The unique identifier corresponding to this clipping</returns>
 
         public static int AddClipping(Clipping clipping) {
-            var id = numberedClippings.Keys.Count;
-
+            int id = numberedClippings.Keys.Count;
             numberedClippings.Add(id, clipping);
-
             return id;
         }
 
