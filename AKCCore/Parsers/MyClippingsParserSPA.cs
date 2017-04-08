@@ -90,25 +90,9 @@ namespace AKCCore {
                 System.Diagnostics.Debug.WriteLine(ex.Message, "Can't identify TXT format.");
             }
 
-            var clippingType = split[format.clippingTypePosition];
+            string clippingType = split[format.clippingTypePosition];
 
-            switch (clippingType.ToLower()) {
-                case "subrayado":
-                    clipping.ClippingType = ClippingTypeEnum.Subrayado;
-                    break;
-
-                case "nota":
-                    clipping.ClippingType = ClippingTypeEnum.Notas;
-                    break;
-
-                case "marcador":
-                    clipping.ClippingType = ClippingTypeEnum.Marcador;
-                    break;
-
-                default:
-                    clipping.ClippingType = ClippingTypeEnum.NoReconocido;
-                    break;
-            }
+            SetClippingType(clippingType, clipping);
 
             hasPageNumber = format.pageWording.Any(line.Contains);
             hasLocation = format.locationWording.Any(line.Contains);
@@ -172,6 +156,26 @@ namespace AKCCore {
             } catch (Exception ex) {
                 clipping.DateAdded = Defaults.DateAdded;
                 new Exception("Error encountered adding date: " + ex.Message, ex);
+            }
+        }
+
+        private void SetClippingType(string clippingType, Clipping clipping) {
+            switch (clippingType.ToLower()) {
+                case "subrayado":
+                    clipping.ClippingType = ClippingTypeEnum.Subrayado;
+                    break;
+
+                case "nota":
+                    clipping.ClippingType = ClippingTypeEnum.Notas;
+                    break;
+
+                case "marcador":
+                    clipping.ClippingType = ClippingTypeEnum.Marcador;
+                    break;
+
+                default:
+                    clipping.ClippingType = ClippingTypeEnum.NoReconocido;
+                    break;
             }
         }
     }

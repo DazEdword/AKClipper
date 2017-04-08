@@ -1,14 +1,12 @@
 ﻿using AKCCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace AKCTests.ParserController {
+namespace AKCTests.ParserControllerTest {
 
     [TestClass]
     public class PreviewGeneration {
 
-        AKCCore.ParserController parserController = new AKCCore.ParserController();
+        ParserController parserController = new ParserController();
 
         [TestMethod]
         public void TestPreviewFromContentDefaultLines() {

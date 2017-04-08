@@ -1,7 +1,10 @@
 ﻿using AKCCore;
 using AKCWebCore.Extensions;
 using AKCWebCore.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace AKCWebCore.ViewComponents {
 
@@ -17,9 +20,9 @@ namespace AKCWebCore.ViewComponents {
         }
 
         //ViewComponent
+        //Sync/Async - Only one active at any given time.
 
         //Sync
-        //Only one active at any given time.
         public IViewComponentResult Invoke(bool parsed = false) {
             if (parsed) {
                 return InvokeResults();
@@ -44,57 +47,69 @@ namespace AKCWebCore.ViewComponents {
         }
 
         public IViewComponentResult InvokeResults() {
+            var result = Parse();
             return View("~/Views/Shared/Components/Clipper/Results.cshtml", new { model = Helper }.ToExpando());
         }
 
-        //public async Task<IActionResult> Parse() {
-        //    if (Helper.content != null && ParserController.options.Language != null) {
-        //        bool correctParserConfirmed = ParserController.ConfirmParserCompatibility(Helper.textSample, Helper.preview);
+        public async Task<IActionResult> Parse() {
+            const string sessionKey = "AKCContent";
+            string content = Helper.content = HttpContext.Session.GetString(sessionKey);
 
-        //        try {
-        //            if (correctParserConfirmed == false) {
-        //                //Potential errors
-        //                //MessageBoxResult parsingProblemMessageBox = MessageBox.Show("Potential language incompatibilities detected. Are you sure you want to continue? \r\n \r\n Click 'Cancel' to go back and select the correct language (RECOMMENDED) or 'OK' to continue (WARNING: program might became inestable or crash.)",
-        //                //    "Parsing problem?", System.Windows.MessageBoxButton.OKCancel, MessageBoxImage.Information, MessageBoxResult.Cancel);
-        //                //if (parsingProblemMessageBox == MessageBoxResult.OK) {
-        //                //    correctParserConfirmed = true;
-        //                //}
-        //            }
-        //        }
-        //        catch (Exception ex) {
-        //            //MessageBox.Show(ex.Message, "Parsing problem");
-        //        }
+            if (Helper.content != null && ParserController.options.Language != null) {
+                bool correctParserConfirmed = ParserController.ConfirmParserCompatibility(Helper.textSample, Helper.preview);
 
-        //        if (correctParserConfirmed) {
-        //            //Async parsing
-        //            //TODO ParserController's RunParser needs refactoring, in this case we are interested on options.SelectedParser.DirectParse(),
+                try {
+                    if (correctParserConfirmed == false) {
 
-        //            //TODO Loading gif here?
-        //            await Task.Run(() => ParserController.RunParser(/* stuff*/));
+                        //Potential errors
+                        //MessageBoxResult parsingProblemMessageBox = MessageBox.Show("Potential language incompatibilities detected. Are you sure you want to continue? \r\n \r\n Click 'Cancel' to go back and select the correct language (RECOMMENDED) or 'OK' to continue (WARNING: program might became inestable or crash.)",
+                        //    "Parsing problem?", System.Windows.MessageBoxButton.OKCancel, MessageBoxImage.Information, MessageBoxResult.Cancel);
+                        //if (parsingProblemMessageBox == MessageBoxResult.OK) {
+                        //    correctParserConfirmed = true;
+                        //}
+                        return new BadRequestResult();
 
-        //            //Result generation
-        //            dynamic result = ParserController.ReportParsingResult(false);
+                    }
+                } catch (Exception ex) {
+                    //MessageBox.Show(ex.Message, "Parsing problem");
+                    return new BadRequestResult();
+                }
 
-        //            if (result != null) {
-        //                //MessageBox.Show(result.clippingCount + " clippings parsed.", "Parsing successful.");
-        //                //MessageBox.Show(result.databaseEntries.ToString() + " clippings added to database. " +
-        //                //    result.removedClippings.ToString() + " empty or null clippings removed.", "Database created.");
-        //            }
+                if (correctParserConfirmed) {
+                    //Async parsing
 
-        //            //If you want to update UI from this task a dispatcher has to be used, since it has to be in the UI thread.
-        //            //TODO Launch results component, update or whatever we are going to do.
-        //            //For now it'll be return success message.
-        //            return Content("Parsed succeeded");
-        //        }
-        //    }
+                    //TODO Loading gif here?
+                    await Task.Run(() => ParserController.RunParserDirect(content));
 
-        //    if (ParserController.options.TextToParsePath == null) {
-        //        //MessageBox.Show("No path to .txt found, please select your Kindle clipping file and try again.");
-        //    }
+                    //Result generation
+                    dynamic result = ParserController.ReportParsingResult(false);
 
-        //    if (ParserController.options.Language == null) {
-        //        //MessageBox.Show("Problems detecting language, please select your language and try again.");
-        //    }
-        //}
+                    if (result != null) {
+                        //MessageBox.Show(result.clippingCount + " clippings parsed.", "Parsing successful.");
+                        //MessageBox.Show(result.databaseEntries.ToString() + " clippings added to database. " +
+                        //    result.removedClippings.ToString() + " empty or null clippings removed.", "Database created.");
+                    }
+
+                    //If you want to update UI from this task a dispatcher has to be used, since it has to be in the UI thread.
+                    //TODO Launch results component, update or whatever we are going to do.
+                    //For now it'll be return success message.
+                    return new OkObjectResult(new {
+                        myContent = content
+                    });
+                }
+            }
+
+            if (ParserController.options.TextToParsePath == null) {
+                //MessageBox.Show("No path to .txt found, please select your Kindle clipping file and try again.");
+                return new BadRequestResult();
+            }
+
+            if (ParserController.options.Language == null) {
+                //MessageBox.Show("Problems detecting language, please select your language and try again.");
+                return new BadRequestResult();
+            }
+
+            return new BadRequestResult();
+        }
     }
 }

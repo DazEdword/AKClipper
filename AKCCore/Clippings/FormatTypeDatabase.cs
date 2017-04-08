@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace AKCCore {
 
@@ -16,10 +17,11 @@ namespace AKCCore {
         /// <param name="formatType">The formatType to add to the database</param>
 
         public static void PopulateFormatList(FormatType[] formatLanguagePack) {
-            //Reset
-            formatTypeList.Clear();
             foreach (FormatType formatInstance in formatLanguagePack) {
-                formatTypeList.Add(formatInstance);
+                bool contains = formatTypeList.Any(x => x.ID == formatInstance.ID);
+                if (!contains) {
+                    formatTypeList.Add(formatInstance);
+                }
             }
         }
 

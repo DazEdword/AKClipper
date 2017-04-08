@@ -42,12 +42,15 @@
             catch(e) { alert("Failed to save content on local storage."); }
 
             //Getting parse content and preview
-            reader.readAsText(selectedFile);  
+            reader.readAsText(selectedFile);
 
         } else {
             fileDisplayArea.innerHTML = "File not supported!"
         }
     }
+
+
+
 </script>
 
 <div id="akc-component">
@@ -60,11 +63,11 @@
             </div>
         </div>
         <div class="col-2">
-            <form  method="post" asp-action="UploadFile" asp-controller="Home" 
+            <form  method="post" asp-action="UploadFile" asp-controller="Home"
                   enctype="multipart/form-data">
                 <label for="file-select" class="button" id="browseButton">Browse File</label>
-                <input type="file" id="file-select" onchange="SelectFile()" />
-            </form>        
+                <input type="file" id="file-select" onchange='SelectFile()' />
+            </form>
         </div>
     </div>
 
@@ -97,15 +100,9 @@
         <form>
             <button class="button"
                     asp-controller="Home" asp-action="Index"
-                    asp-route-parsed="true">
+                    asp-route-parsed="@true">
                 Start Parsing
             </button>
-
-            @*<button class="button"
-                    asp-controller="Home" asp-action="Index"
-                    asp-route-parsed="true">
-                Start Parsing
-            </button>*@
         </form>
          </div>
     </div>

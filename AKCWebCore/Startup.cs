@@ -27,6 +27,8 @@ namespace AKCWebCore {
             services.AddMvc();
             services.AddSingleton<ParserController, ParserController>();
             services.AddSingleton<ParserWebHelper, ParserWebHelper>();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,11 +46,15 @@ namespace AKCWebCore {
 
             app.UseStaticFiles();
 
+            //enable session before MVC
+            app.UseSession();
+
             app.UseMvc(routes => {
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+                    name: "parser",
+                    template: "{controller=Home}/{action=Index}/{parsed:bool?}");
+                    //template: "{controller=Home}/{action=Index}/{id?}");
+        });
         }
     }
 }
