@@ -102,9 +102,10 @@ namespace AKCCore {
             rawClippingCount = 0;
             foreach (var item in clippings) {
                 //Adding clippings to the currently used, dictionary database.
-                if (!Clipping.IsNullOrEmpty(item)) {
+                if (!Clipping.IsNullOrEmpty(item) || 
+                    (Clipping.IsNullOrEmpty(item) && Clipping.IsBookMark(item))) {
                     ClippingDatabase.AddClipping(item);
-                }
+                } 
                 ++rawClippingCount;
             }
 

@@ -53,7 +53,8 @@ namespace AKCCore {
                     new FormatType.KeyPositionLang("Clip", 2, "English")
                 }, 9, 5, 5, 9, 8, 12);
 
-            engFormats = new FormatType[] { typeBase, typeRick };  //Gathering all formats in an array, easy foreach iteration.
+            //Gathering all formats in an array, easy foreach iteration.
+            engFormats = new FormatType[] {typeBase, typeRick};
         }
 
         protected override void InitDefaults() {

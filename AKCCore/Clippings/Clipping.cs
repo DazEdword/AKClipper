@@ -49,5 +49,16 @@ namespace AKCCore {
         public static bool IsNullOrEmpty(Clipping item) {
             return item == null || string.IsNullOrEmpty(item.Text);
         }
+
+        //TODO quick hardcoded solution in order to exclude bookmarks from empty clipping removal. 
+        //Quick and dirty, can be way better.
+        public static bool IsBookMark(Clipping item) {
+            if (item.ClippingType == ClippingTypeEnum.Bookmark || 
+                item.ClippingType == ClippingTypeEnum.Marcador) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 }

@@ -124,19 +124,19 @@ namespace AKCCore {
 
         protected virtual void ParseLine1(string line, Clipping clipping) {
             try {
-                var match = Regex.Match(line, Line1RegexPattern);
+                Match match = Regex.Match(line, Line1RegexPattern);
                 if (match.Success) {
-                    var bookName = match.Groups[1].Value.Trim();
-                    var author = match.Groups[2].Value.Trim();
+                    string bookName = match.Groups[1].Value.Trim();
+                    string author = match.Groups[2].Value.Trim();
 
-                    clipping.BookName = bookName;
-                    clipping.Author = author;
+                    clipping.BookName = !string.IsNullOrEmpty(bookName) ? bookName : Defaults.BookName;
+                    clipping.Author = !string.IsNullOrEmpty(author) ? author : Defaults.Author;
                 }
             }
             catch (Exception) {
                 clipping.BookName = Defaults.BookName;
                 clipping.Author = Defaults.Author;
-                Console.WriteLine("Clipping Line 1 did not match regex pattern, using default values for Author and Bookname.");
+                System.Diagnostics.Debug.WriteLine("Clipping Line 1 did not match regex pattern, using default values for Author and Bookname.");
             }
         }
 
