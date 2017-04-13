@@ -136,22 +136,9 @@ namespace AKCCore {
                 clipping.Location = Defaults.Location;
             }
 
-            try {
-                //Date detection.
-                string dateAddedString = String.Join(" ", split[dateIndex], split[dateIndex + 1], split[dateIndex + 2], split[dateIndex + 3], split[dateIndex + 4], split[dateIndex + 5]);
-                DateTime dateAdded = DateTime.Parse(dateAddedString);
-                clipping.DateAdded = dateAdded;
-            } catch (Exception ex) {
-                clipping.DateAdded = Defaults.DateAdded;
-                new Exception("Error encountered adding date: " + ex.Message, ex);
-            }
-
             /*Indexes are different in Spanish and English version (answers "where to cut" for the different variables).
             It also depends on particular formats for each language. If any format exceptions occur or it is better to
             manually look for something for any reason, add logic below. */
-
-            if (fileType == "typeBase") {
-            }
 
             if (fileType == "typeRick") {
                 if (split[1] == "Clip") {
@@ -168,6 +155,8 @@ namespace AKCCore {
                     }
                 }
             }
+
+            ParseDate(split, clipping, dateIndex);
         }
     }
 }

@@ -275,11 +275,20 @@ namespace AKCWPF {
             DataGrid grid = sender as DataGrid;
             if (grid == null) { return; }
 
-            
+            //Programmatically adding text wrapping to add later to a given column.
+            Style wrapped = new Style(typeof(TextBlock));
+            wrapped.Setters.Add(new Setter(TextBlock.TextWrappingProperty, TextWrapping.Wrap));
 
             //Manually fixing rows header names to a more friendly format.
+            if (e.PropertyName.StartsWith("Author")) {
+                var column = e.Column as DataGridTextColumn;
+                column.ElementStyle = wrapped;
+            }
+
             if (e.PropertyName.StartsWith("BookName")) {
                 e.Column.Header = "Book name";
+                var column = e.Column as DataGridTextColumn;
+                column.ElementStyle = wrapped;
             }
 
             if (e.PropertyName.StartsWith("ClippingType")) {
@@ -298,16 +307,13 @@ namespace AKCWPF {
                 e.Column.Header = "Beginning location";
             }
 
-            //Programmatically adding text wrapping to Text column.
+            //Programmatically adding text wrapping to a given column.
             if (e.Column.Header.ToString() == "Text") {
-                Style wrapped = new Style(typeof(TextBlock));
-
                 var column = e.Column as DataGridTextColumn;
 
                 column.MinWidth = 50;
                 column.MaxWidth = 500;
 
-                wrapped.Setters.Add(new Setter(TextBlock.TextWrappingProperty, TextWrapping.Wrap));
                 column.ElementStyle = wrapped;
             }
         }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace AKCCore {
@@ -149,6 +151,53 @@ namespace AKCCore {
             }
             catch (Exception) {
                 clipping.Text = Defaults.Text;
+            }
+        }
+
+        //TODO Too many parameters, simplify
+        protected virtual void ParseDateExact(string[] splitLine, Clipping clipping, int dateIndex, 
+            string[] dateFormats, CultureInfo culture) {
+            //Formatting help: https://msdn.microsoft.com/en-us/library/8kb3ddd4.aspx
+            
+            string dateAdded = String.Join(" ", splitLine[dateIndex], splitLine[dateIndex + 1], 
+                splitLine[dateIndex + 3], splitLine[dateIndex + 5], splitLine[dateIndex + 6]);
+            //Removing single quotes. There might be other "noise" characters, this one is especially important in typeRub.
+            string input = dateAdded.Replace("'", string.Empty);
+
+            try {
+                /*Dates have to be parsed and converted to a dateTime format. TryParseExact should do the 
+                 * trick as long as the proper format is added to the dateFormats array.  */
+                DateTime dt;
+                if (DateTime.TryParseExact(input, dateFormats, culture, DateTimeStyles.None, out dt)) {
+                    if (dt < DateTime.Now) {
+                        clipping.DateAdded = dt;
+                    }
+                }
+            }
+            catch (Exception ex) {
+                clipping.DateAdded = Defaults.DateAdded;
+                new Exception("Error encountered adding date: " + ex.Message, ex);
+            }
+        }
+
+        protected virtual void ParseDate(string[] splitLine, Clipping clipping, int dateIndex) {
+            try {
+
+                string[] filteredLine = splitLine.Where(item => !item.Contains("GMT")).ToArray();
+                string dateAddedString;
+
+                //Hackish, removing GMT to simplify parse. Indexes change and problems. Can be improved.
+                if (splitLine.Length != filteredLine.Length) {
+                    dateAddedString = String.Join(" ", splitLine[dateIndex], splitLine[dateIndex + 1], splitLine[dateIndex + 2], splitLine[dateIndex + 3], splitLine[dateIndex + 4]);
+                } else {
+                    dateAddedString = String.Join(" ", splitLine[dateIndex], splitLine[dateIndex + 1], splitLine[dateIndex + 2], splitLine[dateIndex + 3], splitLine[dateIndex + 4], splitLine[dateIndex + 5]);
+                }
+           
+                DateTime dateAdded = DateTime.Parse(dateAddedString);
+                clipping.DateAdded = dateAdded;
+            } catch (Exception ex) {
+                clipping.DateAdded = Defaults.DateAdded;
+                new Exception("Error encountered adding date: " + ex.Message, ex);
             }
         }
 

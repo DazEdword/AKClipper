@@ -13,6 +13,7 @@ namespace AKCCore {
         public FormatType typeRub;
         public FormatType[] spaFormats;
         private CultureInfo spaCulture;
+        private string[] dateFormats;
 
         //Singleton instantiation.
         private static readonly MyClippingsParserSPA myParserSPA = new MyClippingsParserSPA();
@@ -60,7 +61,18 @@ namespace AKCCore {
                 }, 8, 3, 5, 5, 8, 13);
 
             spaFormats = new FormatType[] { typeEd, typeRub };
-        }
+
+            //Formatting help: https://msdn.microsoft.com/en-us/library/8kb3ddd4.aspx
+            dateFormats = new string[] {
+                "dddd d MMMM yyyy, HH:mm:ss",
+                "dddd dd MMMM yyyy, HH:mm:ss",
+                "dddd dd MMMM yyyy, hh:mm:ss",
+                "dddd d MMMM yyyy, hh:mm:ss",
+                "dddd d MMMM yyyy H'H'mm",
+                "dddd dd MMMM yyyy",
+                "dddd, dd MMMM yyyy HH:mm:ss",
+                "dddd, d MMMM yyyy HH:mm:ss", "dddd dd MMMM yyyy, H:mm:ss", "dddd dd MMMM yyyy, h:mm:ss", "dddd d MMMM yyyy, h:mm:ss" };
+            }
 
         protected override void InitDefaults() {
             Defaults = new Clipping();
@@ -133,36 +145,7 @@ namespace AKCCore {
                 clipping.Location = Defaults.Location;
             }
 
-            ParseDate(split, clipping, dateIndex);
-        }
-
-        protected void ParseDate(string[] splitLine, Clipping clipping, int dateIndex) {
-            //Formatting help: https://msdn.microsoft.com/en-us/library/8kb3ddd4.aspx
-            string[] formats = { "dddd d MMMM yyyy, HH:mm:ss",
-                "dddd dd MMMM yyyy, HH:mm:ss",
-                "dddd dd MMMM yyyy, hh:mm:ss",
-                "dddd d MMMM yyyy, hh:mm:ss",
-                "dddd d MMMM yyyy H'H'mm",
-                "dddd dd MMMM yyyy",
-                "dddd, dd MMMM yyyy HH:mm:ss",
-                "dddd, d MMMM yyyy HH:mm:ss", "dddd dd MMMM yyyy, H:mm:ss", "dddd dd MMMM yyyy, h:mm:ss", "dddd d MMMM yyyy, h:mm:ss" };
-            string dateAddedStringSPA = String.Join(" ", splitLine[dateIndex], splitLine[dateIndex + 1], splitLine[dateIndex + 3], splitLine[dateIndex + 5], splitLine[dateIndex + 6]);
-            //Removing single quotes. There might be other "noise" characters, this one is especially important in typeRub.
-            string input = dateAddedStringSPA.Replace("'", string.Empty); 
-
-            try {
-                /*Dates have to be parsed and converted to a dateTime format. TryParseExact should do the trick as long as
-                 * the proper format is added to the formats array.  */
-                DateTime dt;
-                if (DateTime.TryParseExact(input, formats, spaCulture, DateTimeStyles.None, out dt)) {
-                    if (dt < DateTime.Now) {
-                        clipping.DateAdded = dt;
-                    }
-                }
-            } catch (Exception ex) {
-                clipping.DateAdded = Defaults.DateAdded;
-                new Exception("Error encountered adding date: " + ex.Message, ex);
-            }
+            ParseDateExact(split, clipping, dateIndex, dateFormats, spaCulture);
         }
 
         private void SetClippingType(string clippingType, Clipping clipping) {
