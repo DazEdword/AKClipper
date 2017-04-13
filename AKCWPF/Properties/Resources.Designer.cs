@@ -59,5 +59,85 @@ namespace AKCWPF.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;!--
+        ///// (c) Copyright Microsoft Corporation.
+        ///// This source is subject to Microsoft Public License (Ms-PL).
+        ///// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+        ///// All other rights reserved.
+        ///--&gt;
+        ///
+        ///&lt;ResourceDictionary
+        ///  xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        ///  xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        ///  xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        ///  mc:Ignorable=&quot;d&quot;
+        ///  xmlns:d=&quot;http://schemas.microsoft.com/express [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string BureauBlue {
+            get {
+                return ResourceManager.GetString("BureauBlue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;!--
+        ///// (c) Copyright Microsoft Corporation.
+        ///// This source is subject to Microsoft Public License (Ms-PL).
+        ///// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+        ///// All other rights reserved.
+        ///--&gt;
+        ///
+        ///&lt;ResourceDictionary
+        ///    xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        ///    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        ///    xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        ///    xmlns:basic=&quot;clr-namespace:Microsoft.Windows.Controls;ass [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string TwilightBlue {
+            get {
+                return ResourceManager.GetString("TwilightBlue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;ResourceDictionary xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        ///    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        ///	xmlns:d=&quot;http://schemas.microsoft.com/expression/blend/2008&quot; 
+        ///	xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot; 
+        ///	xmlns:vsm=&quot;clr-namespace:System.Windows;assembly=WPFToolkit&quot;
+        ///	mc:Ignorable=&quot;d&quot;&gt;
+        ///
+        ///    &lt;SolidColorBrush x:Key=&quot;WindowBackgroundBrush&quot; Color=&quot;#FF333333&quot; /&gt;
+        ///    &lt;SolidColorBrush x:Key=&quot;BaseColorBrush&quot; Color=&quot;#FF9FD752&quot;/&gt;
+        ///     [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string UXMusingsGreen {
+            get {
+                return ResourceManager.GetString("UXMusingsGreen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;!--
+        ///// (c) Copyright Microsoft Corporation.
+        ///// This source is subject to Microsoft Public License (Ms-PL).
+        ///// Please see http://go.microsoft.com/fwlink/?LinkID=131993 for details.
+        ///// All other rights reserved.
+        ///--&gt;
+        ///
+        ///&lt;ResourceDictionary
+        ///  xmlns=&quot;http://schemas.microsoft.com/winfx/2006/xaml/presentation&quot;
+        ///  xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;
+        ///  xmlns:mc=&quot;http://schemas.openxmlformats.org/markup-compatibility/2006&quot;
+        ///  mc:Ignorable=&quot;d&quot;
+        ///  xmlns:d=&quot;http://schemas.microsoft.com/express [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string WhistlerBlue {
+            get {
+                return ResourceManager.GetString("WhistlerBlue", resourceCulture);
+            }
+        }
     }
 }

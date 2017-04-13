@@ -104,6 +104,7 @@ namespace AKCCore {
 
         /* Calling to the different methods parsing the different lines. Line 3 is irrelevant 
         * (just white space acting as a separator) and thus is not included in the logic. */
+
         public virtual void ParseClipping(int lineNumber, string line, Clipping clipping, FormatType format) {
             try {
                 switch (lineNumber) {

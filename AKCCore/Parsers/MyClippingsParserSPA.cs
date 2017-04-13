@@ -72,7 +72,6 @@ namespace AKCCore {
             Defaults.DateAdded = new DateTime();
         }
 
-        //TODO: Several different methods to be extracted here. 
         protected override void ParseLine2(string line, Clipping clipping, FormatType format) {
             var split = line.Split(' ');
             var fileType = "";
