@@ -13,6 +13,7 @@ namespace AKCCore {
         public FormatType typeRub;
         public FormatType[] spaFormats;
         private CultureInfo spaCulture;
+        private string[] dateFormats;
 
         //Singleton instantiation.
         private static readonly MyClippingsParserSPA myParserSPA = new MyClippingsParserSPA();
@@ -43,7 +44,7 @@ namespace AKCCore {
         protected override void InitFormats(){
             //Manually instancing an array of keys per type to be added to struct constructor. Modifyable.
             typeEdPageKeys = new string[] { " en la página " };
-            typeEdLocationKeys = new string[] { " Posición " };
+            typeEdLocationKeys = new string[] { " Posición ", " posición " };
 
             typeRubPageKeys = new string[] { " en la página " };
             typeRubLocationKeys = new string[] { " Pos. " };
@@ -57,10 +58,21 @@ namespace AKCCore {
             typeRub = new FormatType("typeRub", typeRubPageKeys, typeRubLocationKeys, 1,
                 new FormatType.KeyPositionLang[] {
                     new FormatType.KeyPositionLang("-", 1, "Spanish"),
-                }, 7, 3, 5, 5, 8, 13);
+                }, 8, 3, 5, 5, 8, 13);
 
             spaFormats = new FormatType[] { typeEd, typeRub };
-        }
+
+            //Formatting help: https://msdn.microsoft.com/en-us/library/8kb3ddd4.aspx
+            dateFormats = new string[] {
+                "dddd d MMMM yyyy, HH:mm:ss",
+                "dddd dd MMMM yyyy, HH:mm:ss",
+                "dddd dd MMMM yyyy, hh:mm:ss",
+                "dddd d MMMM yyyy, hh:mm:ss",
+                "dddd d MMMM yyyy H'H'mm",
+                "dddd dd MMMM yyyy",
+                "dddd, dd MMMM yyyy HH:mm:ss",
+                "dddd, d MMMM yyyy HH:mm:ss", "dddd dd MMMM yyyy, H:mm:ss", "dddd dd MMMM yyyy, h:mm:ss", "dddd d MMMM yyyy, h:mm:ss" };
+            }
 
         protected override void InitDefaults() {
             Defaults = new Clipping();
@@ -72,7 +84,6 @@ namespace AKCCore {
             Defaults.DateAdded = new DateTime();
         }
 
-        //TODO: Several different methods to be extracted here. 
         protected override void ParseLine2(string line, Clipping clipping, FormatType format) {
             var split = line.Split(' ');
             var fileType = "";
@@ -134,29 +145,7 @@ namespace AKCCore {
                 clipping.Location = Defaults.Location;
             }
 
-            ParseDate(split, clipping, dateIndex);
-        }
-
-        protected void ParseDate(string[] splitLine, Clipping clipping, int dateIndex) {
-            string[] formats = { "dddd d MMMM yyyy, HH:mm:ss", "dddd dd MMMM yyyy, HH:mm:ss", "dddd dd MMMM yyyy, hh:mm:ss",
-                "dddd d MMMM yyyy, hh:mm:ss", "dddd d MMMM yyyy HH'H'mm", "dddd dd MMMM yyyy HH'H'mm", "dddd, dd MMMM yyyy HH:mm:ss",
-                "dddd, d MMMM yyyy HH:mm:ss", "dddd dd MMMM yyyy, H:mm:ss", "dddd dd MMMM yyyy, h:mm:ss" };
-            string dateAddedStringSPA = String.Join(" ", splitLine[dateIndex], splitLine[dateIndex + 1], splitLine[dateIndex + 3], splitLine[dateIndex + 5], splitLine[dateIndex + 6]);
-            string input = dateAddedStringSPA;  //domingo 2 septiembre 2012, 23:54:20 Case Edu //miércoles 29 abril 2015 15H08 case ruber
-
-            try {
-                /*Dates have to be parsed and converted to a dateTime format. TryParseExact should do the trick as long as
-                 * the proper format is added to the formats array.  */
-                DateTime dt;
-                if (DateTime.TryParseExact(input, formats, spaCulture, DateTimeStyles.None, out dt)) {
-                    if (dt < DateTime.Now) {
-                        clipping.DateAdded = dt;
-                    }
-                }
-            } catch (Exception ex) {
-                clipping.DateAdded = Defaults.DateAdded;
-                new Exception("Error encountered adding date: " + ex.Message, ex);
-            }
+            ParseDateExact(split, clipping, dateIndex, dateFormats, spaCulture);
         }
 
         private void SetClippingType(string clippingType, Clipping clipping) {

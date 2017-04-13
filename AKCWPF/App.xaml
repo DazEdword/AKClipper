@@ -4,5 +4,6 @@
              xmlns:local="clr-namespace:AKCCore"
              StartupUri="GUI/MainWindow.xaml">
     <Application.Resources>
+        <ResourceDictionary Source="GUI/Themes/BureauBlue.xaml" />
     </Application.Resources>
 </Application>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AKCWPF"
         mc:Ignorable="d"
-        Title="Amazing Kindly Clipper" Height="327" Width="525" WindowStartupLocation="CenterScreen" Background="#FFE4E4E4"
+        Title="Amazing Kindly Clipper" Height="327" Width="525" WindowStartupLocation="CenterScreen" Background="#FFE2F1FF"
         MinHeight="425" MinWidth="525">
     <Grid Margin="10,10,10,2">
         <Grid.RowDefinitions>
@@ -40,7 +40,7 @@
         <Label x:Name="label" Content="Select the language of your Kindle device &#xA;and click the &quot;Start Parsing&quot; button." Margin="10,6,0,10" Grid.Row="2" HorizontalAlignment="Left" Width="230" />
         <Button x:Name="buttonParse" Content="Start Parsing" Margin="0,11,7,28" Grid.Row="2" Click="buttonParse_Click" Background="White" HorizontalAlignment="Right" Width="80" />
         <ScrollViewer x:Name="previewScroll" Margin="0,10" Background="White" Grid.Row="1">
-            <TextBox x:Name="filePreview" TextWrapping="Wrap" Text="A preview of your .txt will appear here." HorizontalAlignment="Left" Width="443" Opacity="0.75" Panel.ZIndex="-4" VerticalAlignment="Top" Background="White" IsReadOnly="True" BorderBrush="{x:Null}" />
+            <TextBox x:Name="filePreview" TextWrapping="Wrap" Text="A preview of your .txt will appear here."  Opacity="0.75" Panel.ZIndex="-4" VerticalAlignment="Top" Background="White" IsReadOnly="True" BorderBrush="{x:Null}" RenderTransformOrigin="0.975,3.5" />
         </ScrollViewer>
     </Grid>
 </Window>

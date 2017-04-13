@@ -24,8 +24,7 @@ namespace AKCCore {
                 return null;
             }
 
-            var hIndex = range.IndexOf('-');
-
+            int hIndex = range.IndexOf('-');
             string first;
 
             first = (hIndex >= 0) ? range.Substring(0, hIndex) : range;
