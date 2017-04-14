@@ -1,4 +1,7 @@
-﻿//JS-AJAX alternative for file "upload".
+﻿//TODO 1) Update server with data from AJAX 2) Disable start parse button until update has occured
+//JS-AJAX alternative for file "upload".
+//http://stackoverflow.com/questions/4622499/disable-button-while-ajax-request
+//https://en.wikipedia.org/wiki/Ajax_(programming)
 function SelectFile() {
     var selectedFile = document.getElementById('file-select').files[0];
     var fileDisplayArea = document.getElementById("file-preview");
@@ -6,6 +9,7 @@ function SelectFile() {
     var textType = /text.*/;
 
     if (selectedFile.type.match(textType)) {
+        disableParsingButton();
         var reader = new FileReader();
 
         reader.onload = function (e) {
@@ -30,9 +34,9 @@ function SelectFile() {
 
         //Testing local storage
         try {
-            var storTest = window['sessionStorage'];
-            storTest.setItem("", ".");
-            storTest.removeItem("");
+            var session = window['sessionStorage'];
+            session.setItem("", ".");
+            session.removeItem("");
         } catch (e) {
             alert("Failed to save content on local storage.");
         }
@@ -40,7 +44,18 @@ function SelectFile() {
         //Getting parse content and preview
         reader.readAsText(selectedFile);
 
+        //This is debug only, needs to happen after XHR/AJAX
+        enableParsingButton();
+
     } else {
         fileDisplayArea.innerHTML = "File not supported!"
     }
+}
+
+function enableParsingButton() {
+    document.getElementById("startParsingButton").disabled = false;
+}
+
+function disableParsingButton() {
+    document.getElementById("startParsingButton").disabled = true;
 }
