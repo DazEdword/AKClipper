@@ -71,7 +71,11 @@ namespace AKCCore {
                 "dddd d MMMM yyyy H'H'mm",
                 "dddd dd MMMM yyyy",
                 "dddd, dd MMMM yyyy HH:mm:ss",
-                "dddd, d MMMM yyyy HH:mm:ss", "dddd dd MMMM yyyy, H:mm:ss", "dddd dd MMMM yyyy, h:mm:ss", "dddd d MMMM yyyy, h:mm:ss" };
+                "dddd, d MMMM yyyy HH:mm:ss",
+                "dddd, d MMMM yyyy H:mm:ss",
+                "dddd dd MMMM yyyy, H:mm:ss",
+                "dddd dd MMMM yyyy, h:mm:ss",
+                "dddd d MMMM yyyy, h:mm:ss" };
             }
 
         protected override void InitDefaults() {
