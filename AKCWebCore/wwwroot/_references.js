@@ -3,6 +3,7 @@
 /// <reference path="js/ie/respond.min.js" />
 /// <reference path="js/jquery.min.js" />
 /// <reference path="js/main.js" />
+/// <reference path="js/select-file.js" />
 /// <reference path="js/site.js" />
 /// <reference path="js/skel.min.js" />
 /// <reference path="js/skel-viewport.min.js" />
