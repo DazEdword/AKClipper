@@ -49,12 +49,18 @@ namespace AKCWebCore.ViewComponents {
 
         public IViewComponentResult InvokeResults() {
             //var result = Parse();
+            //Helper.parserClientContent.parsed = true;
+            var result = Parse();
             return View("~/Views/Shared/Components/Clipper/Results.cshtml", new { model = Helper }.ToExpando());
         }
 
         public async Task<IActionResult> Parse() {
-            const string sessionKey = "AKCContent";
-            string content = Helper.parserClientContent.content = HttpContext.Session.GetString(sessionKey);
+            const string SESSION_KEY = "AKCContent";
+            //TODO Problem 1: This works properly, SERVER SIDE session. However, with our JS code in Main, we are storing on WebStorage, CLIENT SIDE.
+            //We can't get content as we are trying below.
+            //HttpContext.Session.SetString(SESSION_KEY, "Ben Rules!");
+            string content = Helper.parserClientContent.content = HttpContext.Session.GetString(SESSION_KEY);
+
 
             if (Helper.parserClientContent.content != null && ParserController.options.Language != null) {
                 bool correctParserConfirmed = ParserController.ConfirmParserCompatibility(Helper.parserClientContent.textSample, Helper.parserClientContent.preview);

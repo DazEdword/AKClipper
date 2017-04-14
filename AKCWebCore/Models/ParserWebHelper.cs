@@ -30,8 +30,7 @@ namespace AKCWebCore.Models {
             public ParserClientContent() {
                 this.preview = "A preview of your text will appear here.";
                 this.language = "English";
-                this.parsed = false;
-                
+                this.parsed = false; 
             }
 
             //Async

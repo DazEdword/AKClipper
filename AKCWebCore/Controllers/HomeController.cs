@@ -36,19 +36,29 @@ namespace AKCWeb.Controllers {
 
         public ViewResult ParseIndex() {
             ViewData["Title"] = "Home";
-                Helper.parserClientContent.parsed = true;
+            Helper.parserClientContent.parsed = true;
             return View("Index", Helper);
         }
 
-        public ViewResult TestRoutes() => View("Routes", new RoutingHelper {
-            Controller = nameof(HomeController),
-            Action = nameof(TestRoutes)
-            });
+        public ViewResult TestRoutes() {
+            Helper.routing.Controller = nameof(HomeController);
+            Helper.routing.Action = nameof(TestRoutes);
+   
+            return View("Routes", Helper);
         }
 
         //public async ViewResult Parse() {
         //    var result = await ViewComponent("ParserController");
         //    return View("Index", Helper);
         //}
-    
+    }
+
+    //public ViewResult TestRoutes() => View("Routes", new RoutingHelper {
+    //    Controller = nameof(HomeController),
+    //    Action = nameof(TestRoutes)
+    //    });
+    //}
+
+ 
+
 }
