@@ -78,7 +78,7 @@
                 //http://stackoverflow.com/questions/5120317/dynamic-anonymous-type-in-razor-causes-runtimebinderexception
                 //TODO robustness checks can be added
                 foreach (var item in Model) {
-                    <div>@item.Value.preview</div>
+                    <div>@item.Value.parserClientContent.preview</div>
                 }
             }
         </div>
@@ -97,13 +97,13 @@
             </span>
         </div>
         <div class="col-2">
-        <form>
-            <button class="button"
-                    asp-controller="Home" asp-action="Index"
-                    asp-route-parsed="@true">
-                Start Parsing
-            </button>
-        </form>
+            <form>
+                <button class="button"
+                        asp-controller="Home" asp-action="ParseIndex"
+                        asp-route-parsed="true">
+                    Start Parsing
+                </button>
+            </form>
          </div>
     </div>
 </div>

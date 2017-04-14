@@ -42,7 +42,7 @@
                 <div class="row">
                     <div class="12u">
                         <header id="header">
-                            <h1><a href="#" id="logo">Amazing Kindly Clipper 0.3</a></h1>
+                            <h1><a href="#" id="logo">Amazing Kindly Clipper 0.4</a></h1>
                             <nav id="nav">
                                 @Html.ActionLink("Home", "Index", "home", null, new { @class = "current-page-item" })
                                 @Html.ActionLink("About", "Index", "about", null, null)
@@ -55,9 +55,9 @@
         <div id="akc-component-wrapper">
             <div class="container">
                 <div class="akc-container">
-                    @{var parsed = Model.parsed;}
+                    @{var parsed = Model.parserClientContent.parsed;}
                     @await Component.InvokeAsync("ParserController",
-                   new {parsed = parsed })
+                        new {parsed = parsed })
                 </div>
             </div>
         </div>

@@ -23,7 +23,7 @@ namespace AKCWebCore.ViewComponents {
         //Sync/Async - Only one active at any given time.
 
         //Sync
-        public IViewComponentResult Invoke(bool parsed = false) {
+        public IViewComponentResult Invoke(bool parsed) {
             if (parsed) {
                 return InvokeResults();
             } else {
@@ -43,20 +43,21 @@ namespace AKCWebCore.ViewComponents {
         //}
 
         public IViewComponentResult InvokeMain() {
+            //return View("~/Views/Shared/Routes.cshtml", new {model = Helper });
             return View("~/Views/Shared/Components/Clipper/Main.cshtml", new { model = Helper }.ToExpando());
         }
 
         public IViewComponentResult InvokeResults() {
-            var result = Parse();
+            //var result = Parse();
             return View("~/Views/Shared/Components/Clipper/Results.cshtml", new { model = Helper }.ToExpando());
         }
 
         public async Task<IActionResult> Parse() {
             const string sessionKey = "AKCContent";
-            string content = Helper.content = HttpContext.Session.GetString(sessionKey);
+            string content = Helper.parserClientContent.content = HttpContext.Session.GetString(sessionKey);
 
-            if (Helper.content != null && ParserController.options.Language != null) {
-                bool correctParserConfirmed = ParserController.ConfirmParserCompatibility(Helper.textSample, Helper.preview);
+            if (Helper.parserClientContent.content != null && ParserController.options.Language != null) {
+                bool correctParserConfirmed = ParserController.ConfirmParserCompatibility(Helper.parserClientContent.textSample, Helper.parserClientContent.preview);
 
                 try {
                     if (correctParserConfirmed == false) {

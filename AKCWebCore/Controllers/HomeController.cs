@@ -17,22 +17,38 @@ namespace AKCWeb.Controllers {
         [Route("parser")]
         [Route("/{parsed:bool?}")]
         [Route("")]
-       
-        public ViewResult Index(bool parsed = false) {
+
+        public ViewResult Index(bool parsed) {
             ViewData["Title"] = "Home";
 
             if (parsed == true) {
-                Helper.parsed = true;
+                Helper.parserClientContent.parsed = true;
             } else {
-                Helper.parsed = false;
+                Helper.parserClientContent.parsed = false;
             }
 
             return View("Index", Helper);
+        }
+
+        //public ViewResult Index() {
+        //    return TestRoutes();
+        //}
+
+        public ViewResult ParseIndex() {
+            ViewData["Title"] = "Home";
+                Helper.parserClientContent.parsed = true;
+            return View("Index", Helper);
+        }
+
+        public ViewResult TestRoutes() => View("Routes", new RoutingHelper {
+            Controller = nameof(HomeController),
+            Action = nameof(TestRoutes)
+            });
         }
 
         //public async ViewResult Parse() {
         //    var result = await ViewComponent("ParserController");
         //    return View("Index", Helper);
         //}
-    }
+    
 }
