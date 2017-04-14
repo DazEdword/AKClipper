@@ -21,7 +21,7 @@ How to use the program
 
  * Your language should have been automatically selected, after browsing, my if it hasn't please select the language of your Kindle device. This step is very important: Spanish and English parsers are very different, and choosing the wrong parser might lead to errors and exceptions (AKA program crashing).
 
- * Click the Start Parsing button to start the process. Remember to wait a few seconds if your file is really big (+500 clippings), the program is running properly as long as you can see the progress bar moving. For standard files in normal conditions, the parsing should be carried out instantly.
+ * Click the Start Parsing button to start the process. For standard files in normal scenarios, the parsing should be carried out instantly, but you might need to wait a few seconds for especially heavy files (with tens of thousands of notes).
 
  * Clicked the parsing button you should see some dialog boxes with information, and a confirmation dialog with how many clippings have been added to the database. After that, the Browse Clippings window will appear. You’ll see now a grid with the Book Name, Author, Clipping Type, Page, Location, Date Added and Text of each clipping. Some of the cells might be missing (due to the clipping lacking said field, or to the parser not having been able to read it) so definitely don’t worry about that. In order to filter your results, select the category you want to filter in the dropdown called Filter by, type your search time in the Search field and click enter; your results should be showing immediately after. Hit the columns for automatic sorting. 
 
