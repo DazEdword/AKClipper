@@ -2,6 +2,9 @@
 //JS-AJAX alternative for file "upload".
 //http://stackoverflow.com/questions/4622499/disable-button-while-ajax-request
 //https://en.wikipedia.org/wiki/Ajax_(programming)
+
+var CONTENT_ID_NAME = Object.freeze("AKCContent");
+
 function SelectFile() {
     var selectedFile = document.getElementById('file-select').files[0];
     var fileDisplayArea = document.getElementById("file-preview");
@@ -16,9 +19,13 @@ function SelectFile() {
             var lines = this.result.split('\n');
 
             //Saving in local storage
-            var st;
-            st = sessionStorage;
-            st.setItem("AKCContent", this.result);
+            try {
+                var session = window['sessionStorage'];
+                session.setItem("AKCContent", this.result);
+
+            } catch (e) {
+                alert("Failed to save content on local storage.");
+            }
 
             //Generating preview
             for (var line = 0; line < 39; line++) {
@@ -30,25 +37,16 @@ function SelectFile() {
                 fileDisplayArea.appendChild(lineBreak);
                 //fileDisplayArea.innerHTML += (lines[line] + '\n');
             }
-        }
 
-        //Testing local storage
-        try {
-            var session = window['sessionStorage'];
-            session.setItem("", ".");
-            session.removeItem("");
-        } catch (e) {
-            alert("Failed to save content on local storage.");
-        }
+            //AJAX call here
+            updateServerContent();
+        };
 
         //Getting parse content and preview
-        reader.readAsText(selectedFile);
-
-        //This is debug only, needs to happen after XHR/AJAX
-        enableParsingButton();
+        reader.readAsText(selectedFile);   
 
     } else {
-        fileDisplayArea.innerHTML = "File not supported!"
+        fileDisplayArea.innerHTML = "File not supported!";
     }
 }
 
@@ -58,4 +56,23 @@ function enableParsingButton() {
 
 function disableParsingButton() {
     document.getElementById("startParsingButton").disabled = true;
+}
+
+function updateServerContent() {
+    var content = window['sessionStorage'].getItem(CONTENT_ID_NAME);
+    
+    //TODO localhost has to change in production
+    //AJAX stub
+    //$.ajax({
+    //    url: 'http://localhost:60362/home/testajax',
+    //    data: {
+    //        content: content
+    //    },
+    //    success: function (data) {
+    //        enableParsingButton();
+    //    },
+    //    error: function (dataerror) {
+    //        alert("WE FAILED MATE");
+    //    }
+    //});
 }

@@ -47,6 +47,16 @@ namespace AKCWeb.Controllers {
             return View("Routes", Helper);
         }
 
+        //TODO: Sth wrong here, not receiving content on every occasion. 
+        public IActionResult TestAjax(string content) {
+            if (content != null && content.Length > 0) {
+                Helper.parserClientContent.content = content;
+                return Ok();
+            } else {
+                return NotFound();
+            }
+        }
+
         //public async ViewResult Parse() {
         //    var result = await ViewComponent("ParserController");
         //    return View("Index", Helper);
