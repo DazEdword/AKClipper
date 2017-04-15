@@ -55,9 +55,7 @@
         <div id="akc-component-wrapper">
             <div class="container">
                 <div class="akc-container">
-                    @{var parsed = Model.parserClientContent.parsed;}
-                    @await Component.InvokeAsync("ParserController",
-                        new {parsed = parsed })
+                    @await Component.InvokeAsync("ParserController")
                 </div>
             </div>
         </div>

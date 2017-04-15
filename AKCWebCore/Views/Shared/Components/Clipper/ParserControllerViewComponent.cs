@@ -1,11 +1,8 @@
 ﻿using AKCCore;
 using AKCWebCore.Extensions;
 using AKCWebCore.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace AKCWebCore.ViewComponents {
 
@@ -24,8 +21,10 @@ namespace AKCWebCore.ViewComponents {
         //Sync/Async - Only one active at any given time.
 
         //Sync
-        public IViewComponentResult Invoke(bool parsed) {
-            if (parsed) {
+        public IViewComponentResult Invoke() {
+            bool results = Helper.parserClientContent.showResults;
+
+            if (results) {
                 return InvokeResults();
             } else {
                 return InvokeMain();
@@ -49,9 +48,8 @@ namespace AKCWebCore.ViewComponents {
         }
 
         public IViewComponentResult InvokeResults() {
+            //TODO removing real parse (for now) and focusing on the results/main logic
             //var result = Parse();
-            //Helper.parserClientContent.parsed = true;
-            var result = Parse();
             return View("~/Views/Shared/Components/Clipper/Results.cshtml", new { model = Helper }.ToExpando());
         }
 
