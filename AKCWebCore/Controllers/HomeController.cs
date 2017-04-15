@@ -30,38 +30,43 @@ namespace AKCWeb.Controllers {
             return View("Index", Helper);
         }
 
-        //public ViewResult Index() {
-        //    return TestRoutes();
-        //}
-
         public ViewResult ParseIndex() {
             ViewData["Title"] = "Home";
             Helper.parserClientContent.parsed = true;
             return View("Index", Helper);
         }
 
-        public ViewResult TestRoutes() {
-            Helper.routing.Controller = nameof(HomeController);
-            Helper.routing.Action = nameof(TestRoutes);
-   
-            return View("Routes", Helper);
-        }
-
         //TODO: Sth wrong here, not receiving content on every occasion. 
-        public IActionResult TestAjax(string content) {
+        [HttpPost]
+        public IActionResult UpdateContent(string content, string language) {
             if (content != null && content.Length > 0) {
                 Helper.parserClientContent.content = content;
+                Helper.parserClientContent.parsed = true;
+                Helper.parserClientContent.language = language;
                 return Ok();
             } else {
+                Helper.parserClientContent.parsed = false;
+                Helper.parserClientContent.content = "";
+                //TODO Are we sure is a "not found" what we want to do?
                 return NotFound();
             }
         }
 
-        //public async ViewResult Parse() {
-        //    var result = await ViewComponent("ParserController");
-        //    return View("Index", Helper);
+        [HttpPost]
+        public ViewResult Parse() {
+            //var result = ViewComponent("ParserController");
+            return View("Index", Helper);
+        }
+
+        //public ViewResult TestRoutes() {
+        //    Helper.routing.Controller = nameof(HomeController);
+        //    Helper.routing.Action = nameof(TestRoutes);
+
+        //    return View("Routes", Helper);
         //}
     }
+
+
 
     //public ViewResult TestRoutes() => View("Routes", new RoutingHelper {
     //    Controller = nameof(HomeController),
@@ -69,6 +74,6 @@ namespace AKCWeb.Controllers {
     //    });
     //}
 
- 
+
 
 }

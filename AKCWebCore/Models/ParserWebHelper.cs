@@ -20,11 +20,11 @@ namespace AKCWebCore.Models {
         }
 
         public class ParserClientContent : IParserWeb {
-            public string preview { get; set; }
-            public string textSample { get; set; }
             public string language { get; set; }
-            public string content { get; set; }
             public bool parsed { get; set; }
+            public string content { get; set; }
+            public string preview { get; set; }
+            
 
             //Sync
             public ParserClientContent() {

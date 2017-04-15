@@ -3,6 +3,12 @@
 //http://stackoverflow.com/questions/4622499/disable-button-while-ajax-request
 //https://en.wikipedia.org/wiki/Ajax_(programming)
 
+window.onload = function () {
+    document.getElementById("languageSelector").onchange = function () {
+        updateServerContent(null, this.value);
+    };
+};
+
 var CONTENT_ID_NAME = Object.freeze("AKCContent");
 
 function SelectFile() {
@@ -12,7 +18,7 @@ function SelectFile() {
     var textType = /text.*/;
 
     if (selectedFile.type.match(textType)) {
-        disableParsingButton();
+        //disableParsingButton();
         var reader = new FileReader();
 
         reader.onload = function (e) {
@@ -58,21 +64,31 @@ function disableParsingButton() {
     document.getElementById("startParsingButton").disabled = true;
 }
 
-function updateServerContent() {
-    var content = window['sessionStorage'].getItem(CONTENT_ID_NAME);
-    
+function updateServerContent(content, language) {
+    //TODO at the moment changing language only re-sends content, that has to change.
+    if (!content) {
+        content = window['sessionStorage'].getItem(CONTENT_ID_NAME);
+    }
+
+    if (!language) {
+        language = document.getElementById("languageSelector").value;
+    }
+   
+    disableParsingButton();
+
     //TODO localhost has to change in production
-    //AJAX stub
-    //$.ajax({
-    //    url: 'http://localhost:60362/home/testajax',
-    //    data: {
-    //        content: content
-    //    },
-    //    success: function (data) {
-    //        enableParsingButton();
-    //    },
-    //    error: function (dataerror) {
-    //        alert("WE FAILED MATE");
-    //    }
-    //});
+    $.ajax({
+        url: 'http://localhost:60362/home/updatecontent',
+        type: "post",
+        data: {
+            content: content,
+            language: language
+        },
+        success: function () {
+            enableParsingButton();
+        },
+        error: function (dataerror) {
+            alert("Failed to send content. Please refresh your browser and try again.");
+        }
+    });
 }
