@@ -11,28 +11,33 @@ namespace AKCWeb.Controllers {
             Helper = helper;
         }
 
-        //http://localhost:60362/?parsed=true
+        //http://localhost:60362/?results=true
         //this already works when called manually from browser
 
         [Route("parser")]
-        [Route("/{parsed:bool?}")]
+        [Route("/{results:bool?}")]
         [Route("")]
-       
-        public ViewResult Index(bool parsed = false) {
+
+        public ViewResult Index(bool results = false) {
             ViewData["Title"] = "Home";
-
-            if (parsed == true) {
-                Helper.parsed = true;
-            } else {
-                Helper.parsed = false;
-            }
-
+            Helper.parserClientContent.showResults = results;
             return View("Index", Helper);
         }
 
-        //public async ViewResult Parse() {
-        //    var result = await ViewComponent("ParserController");
-        //    return View("Index", Helper);
-        //}
+        [HttpPost]
+        public IActionResult Parse(string content, string language) {
+            if (content != null && content.Length > 0) {
+                Helper.parserClientContent.content = content;
+                //TODO this necessary at this point? I'd say it isn't
+                Helper.parserClientContent.showResults = true;
+                Helper.parserClientContent.language = language;
+                return ViewComponent("ParserController");
+            } else {
+                Helper.parserClientContent.showResults = false;
+                Helper.parserClientContent.content = "";
+                //TODO Are we sure is a "not found" what we want to do?
+                return NotFound();
+            }  
+        }
     }
 }

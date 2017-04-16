@@ -193,8 +193,11 @@ namespace AKCCore {
             }
         }
 
-        public bool ConfirmParserCompatibility(string textSample, string textPreview) {
-            string path = options.TextToParsePath;
+        public bool ConfirmParserCompatibility(string textSample, string textPreview, bool direct = false) {
+            if (direct == false) {
+                string path = options.TextToParsePath;
+            }
+            
             string language = options.Language;
             bool correctParserConfirmed = false;
 

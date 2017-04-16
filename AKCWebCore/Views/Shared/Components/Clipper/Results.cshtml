@@ -3,5 +3,22 @@
 }
 
 <div id="akc-component">
-    <div class="akc-row">Hello</div>
+    <table class="grid">
+        <tr>
+            <th>Look a this table, Morty!</th>
+        </tr>
+
+        @foreach (var myModel in Model) {
+            @foreach (var item in myModel.Value.parserClientContent.clippingData) {
+                <tr>
+                    <td class="left">@item.Author</td>
+                    <td class="left">@item.BookName</td>
+                    <td class="left">@item.ClippingType</td>
+                    <td class="left">@item.DateAdded</td>
+                    <td class="left">@item.Location</td>
+                    <td class="left">@item.Text</td>
+                </tr>
+            }
+        }
+    </table>
 </div>

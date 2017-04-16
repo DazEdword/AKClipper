@@ -1,0 +1,19 @@
+﻿@model AKCWebCore.Models.ParserWebHelper
+@{ Layout = null; }
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Routing</title>
+    <link rel="stylesheet" asp-href-include="lib/bootstrap/dist/css/*.min.css" />
+</head>
+<body class="panel-body">
+    <table class="table table-bordered table-striped table-condensed">
+        <tr><th>Controller:</th><td>@Model.routing.Controller</td></tr>
+        <tr><th>Action:</th><td>@Model.routing.</td></tr>
+        @foreach (string key in Model.routing.Data.Keys) {
+            <tr><th>@key :</th><td>@Model.routing.Data[key]</td></tr>
+        }
+    </table>
+</body>
+</html>
