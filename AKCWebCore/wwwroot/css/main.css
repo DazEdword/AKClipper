@@ -1410,7 +1410,7 @@
 				-ms-box-sizing: content-box;
 				box-sizing: content-box;
 				position: relative;
-				width: 1160px;
+				width: auto;
 				height: auto;
 				box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
 				border-radius: 10px;
@@ -1686,6 +1686,13 @@
 				background-color: #007294;
 			}
 
+            #akc-component-wrapper {
+                background: #c8d2bc url(../images/bg1.png);
+                /*background-color: white;*/
+			    padding: 2em 0;
+                width: 100%
+		    }
+
 			#header {
 				display: none;
 			}
@@ -1706,32 +1713,32 @@
 				position: relative;
 			}
 
-				#banner h2 {
-					position: absolute;
-					z-index: 1;
-					width: 100%;
-					bottom: 80px;
-					left: 0;
-					font-size: 2em;
-					color: #fff;
-					text-align: center;
-					letter-spacing: -2px;
-				}
+			#banner h2 {
+				position: absolute;
+				z-index: 1;
+				width: 100%;
+				bottom: 80px;
+				left: 0;
+				font-size: 2em;
+				color: #fff;
+				text-align: center;
+				letter-spacing: -2px;
+			}
 
-				#banner span {
-					display: block;
-					position: absolute;
-					z-index: 1;
-					width: 100%;
-					top: 135px;
-					left: 0;
-					font-size: 1em;
-					color: #fff;
-					text-align: center;
-					letter-spacing: -1px;
-					/*text-transform: lowercase;*/
-					opacity: 0.8;
-				}
+			#banner span {
+				display: block;
+				position: absolute;
+				z-index: 1;
+				width: 100%;
+				top: 135px;
+				left: 0;
+				font-size: 1em;
+				color: #fff;
+				text-align: center;
+				letter-spacing: -1px;
+				/*text-transform: lowercase;*/
+				opacity: 0.8;
+			}
 
 		/* Main */
 
