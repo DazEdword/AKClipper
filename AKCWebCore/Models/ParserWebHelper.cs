@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AKCCore;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -24,14 +25,16 @@ namespace AKCWebCore.Models {
             public bool showResults { get; set; }
             public string content { get; set; }
             public string preview { get; set; }
-            
+            public List<Clipping> clippingData;
+
 
             //Sync
             public ParserClientContent() {
                 this.preview = "A preview of your text will appear here.";
                 this.language = "English";
-                this.showResults = false; 
-            }
+                this.showResults = false;
+                this.clippingData = new List<Clipping>();
+        }
 
             //Async
             public Task<String> GetPreview() {

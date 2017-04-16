@@ -49,11 +49,12 @@ namespace AKCWebCore.ViewComponents {
         }
 
         public IViewComponentResult InvokeResults() {
-            var result = Parse();
+            Parse();
             return View("~/Views/Shared/Components/Clipper/Results.cshtml", new { model = Helper }.ToExpando());
         }
 
-        public IActionResult Parse() {
+        //This would be better off if we returned the collection. For WPF too I guess.
+        public void Parse() {
             //Simpler version compared to WPF, not so many "safety checks". Can add said checks, but more simplified. 
             string content = Helper.parserClientContent.content;
             string preview = ParserController.GeneratePreviewFromContent(content);
@@ -63,14 +64,11 @@ namespace AKCWebCore.ViewComponents {
             bool correctParser = ParserController.ConfirmParserCompatibility(textSample, preview, true);
 
             if (correctParser != true) {
-                return new BadRequestResult();
+                //What if language mismatching?
             }
 
             ParserController.RunParserDirect(content);
-            List<Clipping> clippings = ClippingDatabase.finalClippingsList;
-
-            //Temp
-            return new BadRequestResult();
+            Helper.parserClientContent.clippingData = ClippingDatabase.finalClippingsList;
         }
     }
 }
