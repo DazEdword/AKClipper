@@ -49,8 +49,7 @@ namespace AKCWebCore.ViewComponents {
         }
 
         public IViewComponentResult InvokeResults() {
-            //TODO removing real parse (for now) and focusing on the results/main logic
-            //var result = Parse();
+            var result = Parse();
             return View("~/Views/Shared/Components/Clipper/Results.cshtml", new { model = Helper }.ToExpando());
         }
 

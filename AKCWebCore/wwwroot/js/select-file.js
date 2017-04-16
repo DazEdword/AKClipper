@@ -3,30 +3,44 @@
 //http://stackoverflow.com/questions/4622499/disable-button-while-ajax-request
 //https://en.wikipedia.org/wiki/Ajax_(programming)
 
-window.onload = function () {
-    //TODO We are not using JQuery where we could, fix that. 
-    //Selector logic. 
-    document.getElementById("languageSelector").onchange = function() {
-        updateServerContent(null, this.value);
-    };
-
-    //Start parsing logic.
-    document.getElementById('startParsingButton').onclick = function() {
-        //document.location = '@Url.Action("Parse","Home")';
-        $.ajax({
-            url: 'http://localhost:60362/home/parse',
-            type: "get",
-            success: function (response) {
-                var component = document.getElementById('akc-container').innerHTML = response;
-            },
-            error: function (dataerror) {
-                alert("Failed to parse. Please refresh your browser and try again.");
-            }
-        });
-    };
-};
+//TODO This file's name must not be "select-file" anymore
 
 var CONTENT_ID_NAME = Object.freeze("AKCContent");
+
+window.onload = function () {
+    //TODO We are not using JQuery where we could (get elemns by id), fix that. 
+
+    document.getElementById('startParsingButton').onclick = (function() {
+        sendParseRequest(undefined, undefined);
+    })
+};
+
+function sendParseRequest(content, language) {
+    //TODO at the moment selecting language also re-sends content, that has to change.
+    if (!content) {
+        content = window['sessionStorage'].getItem(CONTENT_ID_NAME);
+    }
+
+    if (!language) {
+        language = document.getElementById("languageSelector").value;
+    }
+
+    //TODO localhost has to change in production
+    $.ajax({
+        url: 'http://localhost:60362/home/parse',
+        data: {
+            content: content,
+            language: language
+        },
+        type: "post",
+        success: function (response) {
+            var component = document.getElementById('akc-container').innerHTML = response;
+        },
+        error: function (dataerror) {
+            alert("Failed to parse. Please refresh your browser and try again.");
+        }
+    });
+}
 
 function SelectFile() {
     var selectedFile = document.getElementById('file-select').files[0];
@@ -35,7 +49,6 @@ function SelectFile() {
     var textType = /text.*/;
 
     if (selectedFile.type.match(textType)) {
-        //disableParsingButton();
         var reader = new FileReader();
 
         reader.onload = function (e) {
@@ -60,13 +73,11 @@ function SelectFile() {
                 fileDisplayArea.appendChild(lineBreak);
                 //fileDisplayArea.innerHTML += (lines[line] + '\n');
             }
-
-            //AJAX call here
-            updateServerContent();
         };
 
         //Getting parse content and preview
-        reader.readAsText(selectedFile);   
+        reader.readAsText(selectedFile);
+        enableParsingButton();
 
     } else {
         fileDisplayArea.innerHTML = "File not supported!";
@@ -79,33 +90,4 @@ function enableParsingButton() {
 
 function disableParsingButton() {
     document.getElementById("startParsingButton").disabled = true;
-}
-
-function updateServerContent(content, language) {
-    //TODO at the moment selecting language also re-sends content, that has to change.
-    if (!content) {
-        content = window['sessionStorage'].getItem(CONTENT_ID_NAME);
-    }
-
-    if (!language) {
-        language = document.getElementById("languageSelector").value;
-    }
-   
-    disableParsingButton();
-
-    //TODO localhost has to change in production
-    $.ajax({
-        url: 'http://localhost:60362/home/updatecontent',
-        type: "post",
-        data: {
-            content: content,
-            language: language
-        },
-        success: function () {
-            enableParsingButton();
-        },
-        error: function (dataerror) {
-            alert("Failed to send content. Please refresh your browser and try again.");
-        }
-    });
 }
