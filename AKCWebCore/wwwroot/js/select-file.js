@@ -4,8 +4,25 @@
 //https://en.wikipedia.org/wiki/Ajax_(programming)
 
 window.onload = function () {
-    document.getElementById("languageSelector").onchange = function () {
+    //TODO We are not using JQuery where we could, fix that. 
+    //Selector logic. 
+    document.getElementById("languageSelector").onchange = function() {
         updateServerContent(null, this.value);
+    };
+
+    //Start parsing logic.
+    document.getElementById('startParsingButton').onclick = function() {
+        //document.location = '@Url.Action("Parse","Home")';
+        $.ajax({
+            url: 'http://localhost:60362/home/parse',
+            type: "get",
+            success: function (response) {
+                var component = document.getElementById('akc-container').innerHTML = response;
+            },
+            error: function (dataerror) {
+                alert("Failed to parse. Please refresh your browser and try again.");
+            }
+        });
     };
 };
 
@@ -65,7 +82,7 @@ function disableParsingButton() {
 }
 
 function updateServerContent(content, language) {
-    //TODO at the moment changing language only re-sends content, that has to change.
+    //TODO at the moment selecting language also re-sends content, that has to change.
     if (!content) {
         content = window['sessionStorage'].getItem(CONTENT_ID_NAME);
     }

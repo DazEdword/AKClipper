@@ -26,7 +26,6 @@ namespace AKCWeb.Controllers {
             return View("Index", Helper);
         }
 
-        //TODO: Sth wrong here, not receiving content on every occasion. 
         [HttpPost]
         public IActionResult UpdateContent(string content, string language) {
             if (content != null && content.Length > 0) {
@@ -42,17 +41,24 @@ namespace AKCWeb.Controllers {
             }
         }
 
-        [HttpPost]
-        public ViewResult Parse() {
-            //TODO Carry on here
-            Helper.parserClientContent.showResults = true;
-            return View("Index", Helper);
-
-            //TestRoutes
-            //Helper.routing.Controller = nameof(HomeController);
-            //Helper.routing.Action = nameof(Parse);
-            //return View("Routes", Helper);
+        [HttpGet]
+        public IActionResult Parse() {
+            return ViewComponent("ParserController");
         }
+        
+        //[HttpPost]
+        //public ViewResult Parse() {
+        //    //TODO Carry on here
+        //    Helper.parserClientContent.showResults = true;
+        //    // return View("Index", Helper);
+        //    return View("~/Views/Shared/Components/Clipper/Results.cshtml", Helper);
+            
+
+        //    //TestRoutes
+        //    //Helper.routing.Controller = nameof(HomeController);
+        //    //Helper.routing.Action = nameof(Parse);
+        //    //return View("Routes", Helper);
+        //}
 
         //public ViewResult TestRoutes() {
         //    Helper.routing.Controller = nameof(HomeController);

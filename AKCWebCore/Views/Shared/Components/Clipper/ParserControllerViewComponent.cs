@@ -22,6 +22,7 @@ namespace AKCWebCore.ViewComponents {
 
         //Sync
         public IViewComponentResult Invoke() {
+            //TODO prob we should pass results directly from AJAX to ViewComponent, in which case this results will disappear.
             bool results = Helper.parserClientContent.showResults;
 
             if (results) {
