@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NonFactors.Mvc.Grid;
 
 namespace AKCWebCore {
 
@@ -30,6 +31,7 @@ namespace AKCWebCore {
             services.AddDistributedMemoryCache();
             services.AddMemoryCache();
             services.AddSession();
+            services.AddMvcGrid();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

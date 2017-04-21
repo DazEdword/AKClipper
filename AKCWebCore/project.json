@@ -3,7 +3,7 @@
     "AKCCore": "0.3.0-*",
     "Microsoft.AspNetCore.Diagnostics": "1.0.0",
     "Microsoft.AspNetCore.Mvc": "1.0.1",
-    "Microsoft.AspNetCore.Routing": "1.0.1",
+    "Microsoft.AspNetCore.Routing": "1.1.0",
     "Microsoft.AspNetCore.Server.IISIntegration": "1.0.0",
     "Microsoft.AspNetCore.Server.Kestrel": "1.0.1",
     "Microsoft.AspNetCore.StaticFiles": "1.0.0",
@@ -19,7 +19,8 @@
     "System.Linq.Parallel": "4.3.0",
     "Microsoft.Extensions.Caching.Memory": "1.0.0",
     "Microsoft.AspNetCore.Session": "1.0.0",
-    "Microsoft.AspNetCore.Http.Extensions": "1.0.0"
+    "Microsoft.AspNetCore.Http.Extensions": "1.1.0",
+    "NonFactors.Grid.Mvc6": "1.4.0"
   },
 
   "tools": {
