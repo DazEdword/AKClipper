@@ -1,24 +1,56 @@
-﻿@section Styles {
-    <link href="@Url.Content("~/css/main.css")" rel="stylesheet" type="text/css" />
-}
+﻿<!DOCTYPE html>
+<html>
+<head>
 
-<div id="akc-component">
-    <table class="grid">
-        <tr>
-            <th>Look a this table, Morty!</th>
-        </tr>
+    @section Styles {
+        <link href="@Url.Content("~/css/main.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/css/mvc-grid.css")" rel="stylesheet" type="text/css" />
+    }
+</head>
+<body>
 
-        @foreach (var myModel in Model) {
-            @foreach (var item in myModel.Value.parserClientContent.clippingData) {
-                <tr>
-                    <td class="left">@item.Author</td>
-                    <td class="left">@item.BookName</td>
-                    <td class="left">@item.ClippingType</td>
-                    <td class="left">@item.DateAdded</td>
-                    <td class="left">@item.Location</td>
-                    <td class="left">@item.Text</td>
-                </tr>
-            }
+    <div id="akc-component">
+
+        @{
+            var expandoDict = (IDictionary<string, object>)Model;
+            var model = (ParserWebHelper)expandoDict["model"];
+            var clippingData = model.parserClientContent.clippingData;
         }
-    </table>
-</div>
+
+        @(Html
+            .Grid(clippingData)
+            .Build(columns => {
+                columns.Add(item => item.Author).Titled("Author");
+                columns.Add(item => item.BookName).Titled("Book Name");
+                columns.Add(item => item.ClippingType).Titled("ClippingType");
+                columns.Add(item => item.DateAdded).Titled("Date Added");
+                columns.Add(item => item.Location).Titled("Location");
+                columns.Add(item => item.Location).Titled("Text");
+            })
+        .Filterable()
+        .Sortable()
+        .Pageable()
+        )
+
+    </div>
+
+</body>
+</html>
+
+    @*<table class="grid">
+            <tr>
+                <th>Look a this table, Morty!</th>
+            </tr>
+            @foreach (var myModel in Model) {
+                    @foreach (var item in myModel.Value.parserClientContent.clippingData) {
+                        <tr>
+                            <td class="left">@item.Author</td>
+                            <td class="left">@item.BookName</td>
+                            <td class="left">@item.ClippingType</td>
+                            <td class="left">@item.DateAdded</td>
+                            <td class="left">@item.Location</td>
+                            <td class="left">@item.Text</td>
+                        </tr>
+                    }
+                }
+        </table>*@
