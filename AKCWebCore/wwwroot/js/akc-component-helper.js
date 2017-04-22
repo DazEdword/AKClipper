@@ -3,8 +3,6 @@
 //http://stackoverflow.com/questions/4622499/disable-button-while-ajax-request
 //https://en.wikipedia.org/wiki/Ajax_(programming)
 
-//TODO This file's name must not be "select-file" anymore
-
 var CONTENT_ID_NAME = Object.freeze("AKCContent");
 
 window.onload = function () {
@@ -12,8 +10,6 @@ window.onload = function () {
     document.getElementById('startParsingButton').onclick = (function() {
         sendParseRequest(undefined, undefined);
     })
-
-    highlightSelectedNavItem();
 };
 
 function sendParseRequest(content, language) {
@@ -91,18 +87,4 @@ function enableParsingButton() {
 
 function disableParsingButton() {
     document.getElementById("startParsingButton").disabled = true;
-}
-
-function highlightSelectedNavItem() {
-    $('#nav span a').click(function () {
-
-        //'unselect' all the rest
-
-        $('#nav span a').each(function (index, element) {
-            $(this).removeClass("current-page-item"); // set all links' style to unselected first
-        })
-
-        // $(this) is now the link user has clicked on
-        $(this).addClass('current-page-item'); // class you want to use for the link user clicked
-    });
 }
