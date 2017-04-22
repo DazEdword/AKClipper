@@ -12,34 +12,34 @@
 
     <environment names="Development">
         <link rel="stylesheet" href="~/css/main.css" />
+        <link href="@Url.Content("~/css/mvc-grid.css")" rel="stylesheet" type="text/css" /> 
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/mvc-grid.js"></script>
+        
     </environment>
 
     <environment names="Staging,Production">
         <link rel="stylesheet" href="~/css/main.css" />
+        <link href="@Url.Content("~/css/mvc-grid.css")" rel="stylesheet" type="text/css" /> 
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/mvc-grid.js"></script>
+        <script>$('.mvc-grid').mvcgrid();</script>
     </environment>
 </head>
 
 <body>
-
     <!-- Scripts -->
     @section Scripts {
         <script type="text/javascript" src="/scripts/main.js"></script>
-        <script src="~/jquery.min.js"></script>
-        <script src="~/js/mvc-grid.js"></script>
         <script src="~/js/skel.min.js"></script>
         <script src="~/js/skel-viewport.min.js"></script>
         <script src="~/js/util.js"></script>
         <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
         <script src="~/js/main.js"></script>
-
-        <script>
-                $('.mvc-grid').mvcgrid();
-        </script>
     }
 
     @section Styles {
         <link href="@Url.Content("~/css/main.css")" rel="stylesheet" type="text/css" />   
-        <link href="@Url.Content("~/css/mvc-grid.css")" rel="stylesheet" type="text/css" /> 
     }
 
     <div id="page-wrapper">

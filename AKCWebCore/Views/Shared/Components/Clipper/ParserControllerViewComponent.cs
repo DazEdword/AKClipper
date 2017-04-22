@@ -49,6 +49,12 @@ namespace AKCWebCore.ViewComponents {
         }
 
         public IViewComponentResult InvokeResults() {
+            //Reset old results
+            //TODO This couldn't be uglier, go fix this for Core library (drop database?) and see what´s the status on WPF.
+            Helper.parserClientContent.showResults = false;
+            Helper.parserClientContent.clippingData = ClippingDatabase.finalClippingsList = new List<Clipping>();
+            ClippingDatabase.numberedClippings = new Dictionary<int, Clipping>();
+
             Parse();
             return View("~/Views/Shared/Components/Clipper/Results.cshtml", new { model = Helper }.ToExpando());
         }
