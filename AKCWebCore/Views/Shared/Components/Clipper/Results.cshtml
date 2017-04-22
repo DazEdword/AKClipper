@@ -1,8 +1,16 @@
 ﻿<!DOCTYPE html>
 <html>
+<head>
+    <environment names="Development">
+        <link href="@Url.Content("~/css/mvc-grid.css")" rel="stylesheet" type="text/css" />
+    </environment>
+
+    <environment names="Staging,Production">
+    </environment>
+</head>
+
 <body>
     <div id="akc-component">
-
         @{
             var expandoDict = (IDictionary<string, object>)Model;
             var model = (ParserWebHelper)expandoDict["model"];
@@ -17,13 +25,16 @@
                 columns.Add(item => item.ClippingType).Titled("ClippingType");
                 columns.Add(item => item.DateAdded).Titled("Date Added");
                 columns.Add(item => item.Location).Titled("Location");
-                columns.Add(item => item.Location).Titled("Text");
+                columns.Add(item => item.Text).Titled("Text");
             })
         .Filterable()
         .Sortable()
         .Pageable()
         )
 
+        <link href="@Url.Content("~/css/mvc-grid.css")" rel="stylesheet" type="text/css" />
+        <script src="/js/mvc-grid.js"></script>
+        <script>$('.mvc-grid').mvcgrid();</script>
     </div>
 
 </body>
