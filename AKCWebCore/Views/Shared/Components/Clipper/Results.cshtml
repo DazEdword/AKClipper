@@ -2,7 +2,6 @@
 <html>
 <head>
     <environment names="Development">
-        <link href="@Url.Content("~/css/mvc-grid.css")" rel="stylesheet" type="text/css" />
     </environment>
 
     <environment names="Staging,Production">
@@ -29,31 +28,8 @@
             })
         .Filterable()
         .Sortable()
-        .Pageable()
-        )
-
-        <link href="@Url.Content("~/css/mvc-grid.css")" rel="stylesheet" type="text/css" />
-        <script src="/js/mvc-grid.js"></script>
-        <script>$('.mvc-grid').mvcgrid();</script>
+        .Pageable()  
+        )   
     </div>
-
 </body>
 </html>
-
-    @*<table class="grid">
-            <tr>
-                <th>Look a this table, Morty!</th>
-            </tr>
-            @foreach (var myModel in Model) {
-                    @foreach (var item in myModel.Value.parserClientContent.clippingData) {
-                        <tr>
-                            <td class="left">@item.Author</td>
-                            <td class="left">@item.BookName</td>
-                            <td class="left">@item.ClippingType</td>
-                            <td class="left">@item.DateAdded</td>
-                            <td class="left">@item.Location</td>
-                            <td class="left">@item.Text</td>
-                        </tr>
-                    }
-                }
-        </table>*@

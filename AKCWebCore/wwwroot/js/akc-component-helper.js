@@ -32,6 +32,10 @@ function sendParseRequest(content, language) {
         type: "post",
         success: function (response) {
             var component = document.getElementById('akc-container').innerHTML = response;
+
+            //TODO At the moment we are importing the MVC Grid script on _Layout, and calling it from the helper.
+            //Encapsulation could certainly be better here. 
+            $('.mvc-grid').mvcgrid();
         },
         error: function (dataerror) {
             alert("Failed to parse. Please refresh your browser and try again.");
