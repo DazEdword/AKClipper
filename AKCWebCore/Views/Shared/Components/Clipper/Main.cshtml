@@ -10,19 +10,19 @@
             <div style="width:100%; height:100%; font-weight: bold; font-size: 1.1em">
                 Click "Browse File" button and
                 navigate to the folder with your Kindle text file, click file and then "Open" to upload your file.
-                If you need help locating your file, find more information <a href="#">here</a>
+                If you need help locating your file, find more information <a href="http://www.gottabegarabi.com/blog/amazing-kindly-clipper-for-kindle/">here</a>
             </div>
         </div>
         <div class="col-2">
             <form>
-                <label for="file-select" class="button" id="browseButton">Browse File</label>
+                <label for="file-select" class="button float-right" id="browseButton">Browse</label>
                 <input type="file" id="file-select" onchange='SelectFile()' />
             </form>
         </div>
     </div>
 
     <div class="akc-row">
-        <div class="col-3" id="file-preview" style="overflow-y:scroll">
+        <div class="col-3 akc-comp-preview" id="file-preview" style="overflow-y:scroll">
             @{
                 //Added extension to avoid binding runtime error.
                 //http://stackoverflow.com/questions/5120317/dynamic-anonymous-type-in-razor-causes-runtimebinderexception
@@ -34,20 +34,20 @@
         </div>
     </div>
     <div class="akc-row">
-        <div class="col-1">
+        <div class="col-1" style="font-weight: bold; font-size: 1.1em">
             <span>
                 Select the language of your Kindle device
                 and click the "Start Parsing" button.
             </span>
             <span>
-                <select class="dropdown" name="languages" id="languageSelector">
+                <select class="dropdown float-right" name="languages" id="languageSelector">
                     <option value="English">English</option>
                     <option value="Spanish">Spanish</option>
                 </select>
             </span>
         </div>
         <div class="col-2">
-                <button class="button" disabled id="startParsingButton">
+                <button class="button float-right" disabled id="startParsingButton">
                     Start
                 </button>
          </div>
