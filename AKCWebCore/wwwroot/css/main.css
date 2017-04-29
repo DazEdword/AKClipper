@@ -1373,7 +1373,7 @@
             left:  0;
             height: 100%;
             width:  100%;
-            background: rgba( 255, 255, 255, .75 ) url("../images/loading_spin.gif") 
+            background: rgba( 255, 255, 255, .75 ) url("../images/loading_spinner.svg") 
                 50% 50% 
                 no-repeat;
         }
