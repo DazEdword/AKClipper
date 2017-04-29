@@ -4,6 +4,7 @@
 //https://en.wikipedia.org/wiki/Ajax_(programming)
 
 var CONTENT_ID_NAME = Object.freeze("AKCContent");
+var body = $body = $("body");
 
 window.onload = function () {
     //TODO We are not using JQuery where we could (get elemns by id), fix that. 
@@ -22,6 +23,8 @@ function sendParseRequest(content, language) {
         language = document.getElementById("languageSelector").value;
     }
 
+    show_loading();
+
     //TODO localhost has to change in production
     $.ajax({
         url: 'http://localhost:60362/home/parse',
@@ -31,6 +34,7 @@ function sendParseRequest(content, language) {
         },
         type: "post",
         success: function (response) {
+            stop_loading();
             var component = document.getElementById('akc-container').innerHTML = response;
 
             //TODO At the moment we are importing the MVC Grid script on _Layout, and calling it from the helper.
@@ -38,6 +42,7 @@ function sendParseRequest(content, language) {
             $('.mvc-grid').mvcgrid();
         },
         error: function (dataerror) {
+            stop_loading();
             alert("Failed to parse. Please refresh your browser and try again.");
         }
     });
@@ -91,4 +96,12 @@ function enableParsingButton() {
 
 function disableParsingButton() {
     document.getElementById("startParsingButton").disabled = true;
+}
+
+function show_loading() {
+    body.addClass("loading");
+}
+
+function stop_loading() {
+    body.removeClass("loading");
 }

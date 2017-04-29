@@ -1365,6 +1365,27 @@
 
         /* AKC Component */
 
+        .spinner {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top:  0;
+            left:  0;
+            height: 100%;
+            width:  100%;
+            background: rgba( 255, 255, 255, .75 ) url("../images/loading_spin.gif") 
+                50% 50% 
+                no-repeat;
+        }
+
+        body.loading {
+            overflow: hidden;   
+        }
+
+        body.loading .spinner {
+            display: block;
+        }
+        
         .akc-grid {
             box-sizing: border-box;
         }
@@ -1846,7 +1867,7 @@
 						position: absolute;
 						width: 20px;
 						height: 30px;
-						background: url("images/mobileUI-site-nav-opener-bg.svg");
+						background: url("../images/mobileUI-site-nav-opener-bg.svg");
 						top: 16px;
 						left: 19px;
 					}
