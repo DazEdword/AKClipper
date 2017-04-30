@@ -1,58 +1,12 @@
 ﻿@{
-    Layout = null;
+    Layout = "_Layout";
+    ViewBag.Title = "Home";
 }
 
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="@Url.Content("~/AmazingClip.ico")" />
-    <title>@ViewData["Title"] - AKCWeb</title>
-
-    <environment names="Development">
-        <link rel="stylesheet" href="~/css/main.css" />
-    </environment>
-
-    <environment names="Staging,Production">
-        <link rel="stylesheet" href="~/css/main.css" />
-    </environment>
-</head>
-
 <body>
-
-    <!-- Scripts -->
-    @section Scripts {
-        <script type="text/javascript" src="/scripts/main.js"></script>
-        <script src="~/jquery.min.js"></script>
-        <script src="~/js/skel.min.js"></script>
-        <script src="~/js/skel-viewport.min.js"></script>
-        <script src="~/js/util.js"></script>
-        <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-        <script src="~/js/main.js"></script>
-    }
-
-    @section Styles {
-        <link href="@Url.Content("~/css/main.css")" rel="stylesheet" type="text/css" />
-    }
-
-    <div id="page-wrapper">
-        <div id="header-wrapper">
-            <div class="container">
-                <div class="row">
-                    <div class="12u">
-                        <header id="header">
-                            <h1><a href="#" id="logo">Amazing Kindly Clipper 0.4</a></h1>
-                            <nav id="nav">
-                                @Html.ActionLink("Home", "Index", "home", null, new {@class = "current-page-item", parsed=false })
-                                @Html.ActionLink("About", "Index", "about", null, null)
-                            </nav>
-                        </header>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="akc-component-wrapper">
+    <div id="akc-component-wrapper">
             <div class="container">
                 <div class="akc-container" id="akc-container">
                     @await Component.InvokeAsync("ParserController")
@@ -66,7 +20,8 @@
                         <section>
                             <h2>Help</h2>
                             <p>
-                                Click here and do that and bla blah instructions instructions.
+                                Make sure to follow all the steps above, and double check that the correct language is selected; <b>note that it is the language your Kindle is set up to</b>.
+                                If you happen to encounter any problem using AKC feel free to reach me via <a href="http://www.gottabegarabi.com/#contact" target="_blank"> this contact form</a>, describing your problem with as much detail as possible and, ideally, providing a link to download the file you are having problems with.
                             </p>
                         </section>
                     </div>
@@ -75,9 +30,9 @@
                             <h2>Contribute</h2>
                             <ul class="small-image-list">
                                 <li>
-                                    <a href="https://github.com/DazEdword/AKClipper"><img src="~/images/github_logo.png" alt="" class="left" /></a>
+                                    <a href="https://github.com/DazEdword/AKClipper" target="_blank"><img src="~/images/github_logo.png" alt="" class="left" /></a>
                                     <h4>GitHub</h4>
-                                    <p><a href="https://github.com/DazEdword/AKClipper">Fork the repo!</a></p>
+                                    <p><a href="https://github.com/DazEdword/AKClipper" target="_blank">Fork the repo!</a></p>
                                 </li>
                             </ul>
                         </section>
@@ -110,6 +65,5 @@
                 </div>
             </div>
         </div>
-    </div>
 </body>
 </html>

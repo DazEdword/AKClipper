@@ -14,10 +14,10 @@ namespace AKCWeb.Controllers {
         //http://localhost:60362/?results=true
         //this already works when called manually from browser
 
+        [Route("/")]
         [Route("parser")]
         [Route("/{results:bool?}")]
-        [Route("")]
-
+       
         public ViewResult Index(bool results = false) {
             ViewData["Title"] = "Home";
             Helper.parserClientContent.showResults = results;

@@ -1180,11 +1180,11 @@
 		margin: 0.75em 0 0 0;
 	}
 
-		ul.link-list li:first-child {
-			padding-top: 0;
-			margin-top: 0;
-			border-top: 0;
-		}
+	ul.link-list li:first-child {
+		padding-top: 0;
+		margin-top: 0;
+		border-top: 0;
+	}
 
 	.button {
 		background-image: -moz-linear-gradient(top, #008dad, #007b9d);
@@ -1202,6 +1202,10 @@
 		letter-spacing: -1px;
 		border: solid 1px #006e8b;
 		box-shadow: inset 0px 0px 0px 1px #18a8c8;
+	}
+
+    .float-right {
+        float:right
 	}
 
 	.button:hover {
@@ -1361,6 +1365,27 @@
 
         /* AKC Component */
 
+        .spinner {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top:  0;
+            left:  0;
+            height: 100%;
+            width:  100%;
+            background: rgba( 255, 255, 255, .75 ) url("../images/loading_spinner.svg") 
+                50% 50% 
+                no-repeat;
+        }
+
+        body.loading {
+            overflow: hidden;   
+        }
+
+        body.loading .spinner {
+            display: block;
+        }
+        
         .akc-grid {
             box-sizing: border-box;
         }
@@ -1381,7 +1406,6 @@
         [class*="col-"] {
             float: left;
             padding: 15px;
-            border: 1px solid red;
         }
 
         @media only screen and (max-width: 768px) {
@@ -1422,10 +1446,15 @@
                 margin: 0 auto;
 			}
 
+        .akc-comp-preview {
+            border: 1px solid lightgrey;
+            margin-right: 15px;
+        }
+
         .dropdown {
             border-radius: 10px;
 		    /*text-transform: lowercase;*/
-		    font-size: 1.2em;
+		    font-size: 1.1em;
 		    letter-spacing: -1px;
 		    border: solid 1px #006e8b;
 		    box-shadow: inset 0px 0px 0px 1px #18a8c8;
@@ -1838,7 +1867,7 @@
 						position: absolute;
 						width: 20px;
 						height: 30px;
-						background: url("images/mobileUI-site-nav-opener-bg.svg");
+						background: url("../images/mobileUI-site-nav-opener-bg.svg");
 						top: 16px;
 						left: 19px;
 					}

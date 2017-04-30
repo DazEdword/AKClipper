@@ -15,6 +15,6 @@ namespace AKCWebCore.Models {
         public string Location { get; set; }
         public string Text { get; set; }
 
-        List<Clipping> Clippings; //clippings = ClippingDatabase.finalClippingsList;
+        //List<Clipping> Clippings; //clippings = ClippingDatabase.finalClippingsList;
     }
 }
