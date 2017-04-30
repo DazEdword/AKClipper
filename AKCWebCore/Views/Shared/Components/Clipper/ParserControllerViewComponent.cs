@@ -22,7 +22,8 @@ namespace AKCWebCore.ViewComponents {
 
         //Sync
         public IViewComponentResult Invoke() {
-            //TODO prob we should pass results directly from AJAX to ViewComponent, in which case this results will disappear.
+            //TODO prob we should pass results directly from AJAX to ViewComponent, in which case this 
+            //'results' variable will disappear.
             bool results = Helper.parserClientContent.showResults;
 
             if (results) {
@@ -48,12 +49,7 @@ namespace AKCWebCore.ViewComponents {
         }
 
         public IViewComponentResult InvokeResults() {
-            //Reset old results
-            //TODO This couldn't be uglier, go fix this for Core library (drop database?) and see what´s the status on WPF.
-            //Helper.parserClientContent.showResults = false;
-            Helper.parserClientContent.clippingData = ClippingDatabase.finalClippingsList = new List<Clipping>();
-            ClippingDatabase.numberedClippings = new Dictionary<int, Clipping>();
-
+            ResetParser();
             Parse();
 
             return View("~/Views/Shared/Components/Clipper/Results.cshtml", new { model = Helper }.ToExpando());
@@ -61,7 +57,7 @@ namespace AKCWebCore.ViewComponents {
 
         //This would be better off if we returned the collection. For WPF too I guess.
         public void Parse() {
-            //Simpler version compared to WPF, not so many "safety checks". Can add said checks, but more simplified. 
+            //Simpler version compared to WPF, not so many "safety checks". Can add said checks, but simpler. 
             string content = Helper.parserClientContent.content;
             string preview = ParserController.GeneratePreviewFromContent(content);
             string language = ParserController.options.Language = Helper.parserClientContent.language;
@@ -74,7 +70,14 @@ namespace AKCWebCore.ViewComponents {
             }
 
             ParserController.RunParserDirect(content);
-            Helper.parserClientContent.clippingData = ClippingDatabase.finalClippingsList;
+            Helper.parserClientContent.clippingData = ClippingStorage.finalClippingsList;
+        }
+
+        public void ResetParser() {
+            //TODO changing results to false can cause problems manipulating the grid (goes to index again)
+            //Either we solve this with proper parameters or make the grid AJAX to avoid reloads. 
+            Helper.parserClientContent.showResults = false;
+            ClippingStorage.ClearStorage();
         }
     }
 }
