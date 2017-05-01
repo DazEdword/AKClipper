@@ -4,7 +4,7 @@
     <environment names="Development">
     </environment>
 
-    <environment names="Staging,Production">
+    <environment names="Staging, Production">
     </environment>
 </head>
 
@@ -28,8 +28,10 @@
             })
         .Filterable()
         .Sortable()
-        .Pageable()  
-        )   
+        .Pageable(pager => {
+            pager.RowsPerPage = 10;
+        })
+        )
     </div>
 </body>
 </html>

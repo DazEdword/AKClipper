@@ -1074,9 +1074,9 @@
 	body {
 		font-size: 13.5pt;
 		font-family: sans-serif;
-		background-color: #e3e9dc;
+		background-color: #bbbbbb;
 		font-family: 'Ubuntu Condensed', sans-serif;
-		color: #878e83;
+		color: #646469;
 		letter-spacing: -1px;
 	}
 
@@ -1192,13 +1192,13 @@
 		background-image: -ms-linear-gradient(top, #008dad, #007b9d);
 		background-image: linear-gradient(top, #008dad, #007b9d);
 		display: inline-block;
-		padding: 15px 25px 15px 25px;
+		padding: 10px 30px 10px 30px;
 		background-color: #007b9d;
 		border-radius: 10px;
 		/*text-transform: lowercase;*/
 		text-decoration: none;
 		color: #fff;
-		font-size: 1.2em;
+		font-size: 1.1em;
 		letter-spacing: -1px;
 		border: solid 1px #006e8b;
 		box-shadow: inset 0px 0px 0px 1px #18a8c8;
@@ -1218,21 +1218,21 @@
 	}
 
     .button:disabled, .button[disabled]{
-       	background-image: -moz-linear-gradient(top, #a7adaf, #bdcdd2);
-		background-image: -webkit-linear-gradient(top, #a7adaf, #bdcdd2);
-		background-image: -ms-linear-gradient(top, #a7adaf, #bdcdd2);
-		background-image: linear-gradient(top, #a7adaf, #bdcdd2);
+       	background-image: -moz-linear-gradient(top, #a7adaf, #bbbbbb);
+		background-image: -webkit-linear-gradient(top, #a7adaf, #bbbbbb);
+		background-image: -ms-linear-gradient(top, #a7adaf, #bbbbbb);
+		background-image: linear-gradient(top, #a7adaf, #bbbbbb);
 		display: inline-block;
-		padding: 15px 25px 15px 25px;
+		padding: 10px 30px 10px 30px;
 		background-color: #007b9d;
 		border-radius: 10px;
 		/*text-transform: lowercase;*/
 		text-decoration: none;
 		color: #fff;
-		font-size: 1.2em;
+		font-size: 1.1em;
 		letter-spacing: -1px;
-		border: solid 1px #006e8b;
-		box-shadow: inset 0px 0px 0px 1px #18a8c8;   
+		border: solid 1px #a7adaf;
+		box-shadow: inset 0px 0px 0px 1px #97979b;   
     }
 
 /* Desktop + Tablet */
@@ -1390,6 +1390,10 @@
             box-sizing: border-box;
         }
 
+        .mvc-grid table {
+             width: 100%
+        }
+
         .col-1 {
             width: 82.00%;
         }
@@ -1423,7 +1427,7 @@
         }
         
         #akc-component-wrapper {
-            background: #c8d2bc url(../images/bg1.png);
+            background: #c8d2bc url(../images/ebook_bg.jpg);
             /*background-color: white;*/
 			padding: 2em 0;
 		}
@@ -1536,21 +1540,21 @@
 		/* Footer */
 
 			#footer-wrapper {
-				padding: 4em 0;
+				padding: 1em 0 2em;
 			}
 
 		/* Copyright */
 
 			#copyright {
 				text-align: center;
-				color: #A6A88F;
+				color: #646469;
 				border-top: solid 1px #ced0b7;
-				padding: 3em 0 0 0;
+				padding: 0 0 0 0;
 				margin: 1% 0 0 0;
 			}
 
 				#copyright a {
-					color: #A6A88F;
+					color: #007897;
 				}
 
 	}
@@ -1620,14 +1624,14 @@
 		/* Footer */
 
 			#footer-wrapper {
-				padding: 5% 0 5% 0;
+				padding: 1% 0 2% 0;
 			}
 
 		/* Copyright */
 
 			#copyright {
-				padding: 3em 0 0 0;
-				margin: 5% 0 0 0;
+				padding: 0 0 0 0;
+				margin: 1% 0 0 0;
 			}
 
 	}
@@ -1716,8 +1720,7 @@
 			}
 
             #akc-component-wrapper {
-                background: #c8d2bc url(../images/bg1.png);
-                /*background-color: white;*/
+                background-color: lightgrey;
 			    padding: 2em 0;
                 width: 100%
 		    }
@@ -1785,14 +1788,14 @@
 
 			#copyright {
 				text-align: center;
-				color: #A6A88F;
+				color: #646469;
 				padding: 40px;
 				font-size: 0.8em;
 				line-height: 1.5em;
 			}
 
 				#copyright a {
-					color: #A6A88F;
+					color: #007897;
 				}
 
 		/* Off-Canvas Navigation */

@@ -14,22 +14,23 @@
 .mvc-grid tr th {
     background-clip: padding-box;
     position: relative;
+    padding: 1em 0 1em 0
 }
 
 .mvc-grid td {
-    padding: 10px 0;     /* 10px top & bottom padding, 0px left & right */
-    border-width: 1px 0; /*  1px top & bottom border,  0px left & right */
-    border-color: lightgray;
+    padding: 10px 3px 5px 3px;     /* 10px top & bottom padding, 0px left & right */
+    border-width: 2px 0; /*  1px top & bottom border,  0px left & right */
+    border-color: #e6e6e6;
     border-style: solid;
 }
 
 .mvc-grid thead {
-    background-color: lightgrey
+    background-color: #007897
 }
 
 .mvc-grid .mvc-grid-header-title {
-    font-weight: bold;
-    font-size: 22px;
+    color: #ffffff;
+    font-size: 20px;
 }
 
 /*
@@ -214,18 +215,18 @@
 
 .mvc-grid-pager span:focus,
 .mvc-grid-pager span:hover {
-    background-color: rgba(0, 0, 0, 0.02);
+    background-color: rgba(0, 120, 0, 0.02);
 }
 
 .mvc-grid-pager .active span {
-    background-color: #82A1D2;
+    background-color: #007897;
     border-color: #83AED3;
     color: #FFFFFF;
 }
 
     .mvc-grid-pager .active span:hover {
-        background-color: #337AB7;
-        border-color: #337AB7;
+        background-color: #006680;
+        border-color: #006680;
     }
 
 .mvc-grid-pager .disabled span,

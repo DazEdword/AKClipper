@@ -104,18 +104,18 @@ namespace AKCCore {
                 //Adding clippings to the currently used, dictionary database.
                 if (!Clipping.IsNullOrEmpty(item) || 
                     (Clipping.IsNullOrEmpty(item) && Clipping.IsBookMark(item))) {
-                    ClippingDatabase.AddClipping(item);
+                    ClippingStorage.AddClipping(item);
                 } 
                 ++rawClippingCount;
             }
 
             //Now adding clippings to the layout'ed, list database.
-            int numberOfClippings = ClippingDatabase.numberedClippings.Count;
+            int numberOfClippings = ClippingStorage.numberedClippings.Count;
 
             if (numberOfClippings > 0) {
                 for (int i = 0; i < numberOfClippings; i++) {
-                    Clipping clippingToAdd = ClippingDatabase.GetClipping(i);
-                    ClippingDatabase.finalClippingsList.Add(clippingToAdd);
+                    Clipping clippingToAdd = ClippingStorage.GetClipping(i);
+                    ClippingStorage.finalClippingsList.Add(clippingToAdd);
                 }
             } else {
                 //TODO What if there is no valid clippings at all?
@@ -126,7 +126,7 @@ namespace AKCCore {
         public dynamic ReportParsingResult(bool consoleOnly){
             dynamic result = new ExpandoObject();
             result.clippingCount = rawClippingCount;
-            result.databaseEntries = ClippingDatabase.numberedClippings.Count;
+            result.databaseEntries = ClippingStorage.numberedClippings.Count;
             result.removedClippings = result.clippingCount - result.databaseEntries;
 
             if (consoleOnly) {
@@ -235,8 +235,7 @@ namespace AKCCore {
 
                     if ((options.Language == "English") && (parser == parserENG) && (options.SelectedFormat != null)) {
                         return true;
-                    }
-                    else {
+                    } else {
                         return false;
                     }
                 } else {
@@ -308,6 +307,21 @@ namespace AKCCore {
             }
 
             return preview;
+        }
+
+        public string DetectLanguageFromPreview(string preview) {
+            //Get critical line from textPreview, hardcoded here as first line. 
+            string textSample = preview.Replace("\r", "").Split('\n')[1];
+
+            if (textSample.Contains("Añadido")) {
+                return "Spanish";
+            }
+
+            if (textSample.Contains("Added")) {
+                return "English";
+            }
+
+            return null;
         }
     }
 }

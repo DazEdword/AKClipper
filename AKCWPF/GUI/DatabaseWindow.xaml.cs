@@ -17,11 +17,9 @@ namespace AKCWPF {
     /// </summary>
 
     public partial class DatabaseWindow : Window {
-        public static Dictionary<int, Clipping> numberedClippings = ClippingDatabase.numberedClippings;
-        private List<Clipping> finalClippingsList = ClippingDatabase.finalClippingsList;
+        private List<Clipping> finalClippingsList;
 
-        private ICollectionView updateableItemList { get; set; }
-        public ICollectionView PublicUpdateableItemList => updateableItemList;
+        private ICollectionView filterableItems { get; set; }
 
         private string query;
         private string category;
@@ -36,6 +34,8 @@ namespace AKCWPF {
 
         public DatabaseWindow() {
             InitializeComponent();
+
+            finalClippingsList = ClippingStorage.finalClippingsList;
 
             query = "";
             category = "";
@@ -86,9 +86,9 @@ namespace AKCWPF {
         }
 
         private ICollectionView InitializeFilter() {
-            updateableItemList = CollectionViewSource.GetDefaultView(finalClippingsList);
-            ApplyFilter(updateableItemList);
-            return updateableItemList;
+            filterableItems = CollectionViewSource.GetDefaultView(finalClippingsList);
+            ApplyFilter(filterableItems);
+            return filterableItems;
         }
 
         private void ApplyFilter(ICollectionView myCollectionView) {
@@ -128,8 +128,7 @@ namespace AKCWPF {
 
             if (contains) {
                 return true;
-            }
-            else {
+            } else {
                 return false;
             }
         }
@@ -145,14 +144,13 @@ namespace AKCWPF {
         private void Window_Closing(object sender, CancelEventArgs e) {
             dataGrid.ItemsSource = null;
             dataGrid.Items.Clear();
-            finalClippingsList.Clear(); //Empty list...
-            numberedClippings.Clear();  //...and dict to be used again later.
+            ClippingStorage.ClearStorage();
         }
 
         private void FilterTextBox_KeyDown(object sender, KeyEventArgs e) {
             if (e.Key == Key.Enter) {
                 query = filterTextBox.Text;
-                ApplyFilter(updateableItemList);
+                ApplyFilter(filterableItems);
             }
         }
 
@@ -321,7 +319,7 @@ namespace AKCWPF {
         private void Delete_Button_Click(object sender, RoutedEventArgs e) {
             query = string.Empty;
             filterTextBox.Text = string.Empty;
-            ApplyFilter(updateableItemList);
+            ApplyFilter(filterableItems);
         }
     }
 }
