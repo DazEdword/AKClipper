@@ -17,8 +17,7 @@ namespace AKCWebCore.ViewComponents {
             Helper = helper;
         }
 
-        //ViewComponent
-        //Sync/Async - Only one active at any given time.
+        //ViewComponent Sync/Async methods- Only one active at any given time.
 
         //Sync
         public IViewComponentResult Invoke() {

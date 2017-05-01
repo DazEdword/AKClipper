@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AKCWebCore.Models;
+using System;
 
 namespace AKCWeb.Controllers {
 
@@ -11,16 +12,18 @@ namespace AKCWeb.Controllers {
             Helper = helper;
         }
 
-        //http://localhost:60362/?results=true
-        //this already works when called manually from browser
-
         [Route("/")]
         [Route("parser")]
         [Route("/{results:bool?}")]
-       
-        public ViewResult Index(bool results = false) {
+
+        //http://localhost:60362/parser?Grid-Page=3&Grid-Rows=20&results=true works
+        // if showResults is not reset, same problem with grid.
+
+        //If using AjaxGrid, make sure to use it properly:
+        //https://github.com/NonFactors/MVC6.Grid/issues/39
+
+        public ViewResult Index() {
             ViewData["Title"] = "Home";
-            Helper.parserClientContent.showResults = results;
             return View("Index", Helper);
         }
 
