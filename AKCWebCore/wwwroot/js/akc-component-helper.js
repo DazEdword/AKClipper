@@ -90,7 +90,6 @@ function SelectFile() {
                         select_detected_language(language)
                     }
                 }
-
             }
         };
 

@@ -1423,7 +1423,7 @@
         }
         
         #akc-component-wrapper {
-            background: #c8d2bc url(../images/bg1.png);
+            background: #c8d2bc url(../images/ebook_bg.jpg);
             /*background-color: white;*/
 			padding: 2em 0;
 		}
@@ -1716,7 +1716,7 @@
 			}
 
             #akc-component-wrapper {
-                background: #c8d2bc url(../images/bg1.png);
+                background: #c8d2bc url(../images/ebook_bg.jpg);
                 /*background-color: white;*/
 			    padding: 2em 0;
                 width: 100%
