@@ -66,19 +66,17 @@ namespace AKCWPF {
                     string safeFilePath = ofd.SafeFileName;
 
                     textPreview = parserController.GeneratePreviewFromPath(filePath);
-                    //Get critical line from textPreview, hardcoded here as first line. 
-                    //Safe, since min. number lines is 4
-                    textSample = textPreview.Replace("\r", "").Split('\n')[1];
 
-                    //TODO if we add translation support in a future, this needs to be better.
+                    string detectedLanguage = parserController.DetectLanguageFromPreview(textPreview);
+
                     try {
-                        if (textSample.Contains("Añadido")) {
-                            parserController.options.Language = "Spanish";
+                        parserController.options.Language = detectedLanguage;
+
+                        if (detectedLanguage == "Spanish") {
                             radioButtonB.IsChecked = true;
                         }
 
-                        if (textSample.Contains("Added")) {
-                            parserController.options.Language = "English";
+                        if (detectedLanguage == "English") { 
                             radioButtonA.IsChecked = true;
                         }
                     } catch (Exception ex) {
@@ -101,7 +99,6 @@ namespace AKCWPF {
         private void browseButton_Click(object sender, RoutedEventArgs e) {
             BrowseFile();
         }
-
 
         private async void Parse() {
             if (parserController.options.TextToParsePath != null && parserController.options.Language != null) {

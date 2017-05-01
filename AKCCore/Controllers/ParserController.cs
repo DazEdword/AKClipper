@@ -235,8 +235,7 @@ namespace AKCCore {
 
                     if ((options.Language == "English") && (parser == parserENG) && (options.SelectedFormat != null)) {
                         return true;
-                    }
-                    else {
+                    } else {
                         return false;
                     }
                 } else {
@@ -308,6 +307,21 @@ namespace AKCCore {
             }
 
             return preview;
+        }
+
+        public string DetectLanguageFromPreview(string preview) {
+            //Get critical line from textPreview, hardcoded here as first line. 
+            string textSample = preview.Replace("\r", "").Split('\n')[1];
+
+            if (textSample.Contains("Añadido")) {
+                return "Spanish";
+            }
+
+            if (textSample.Contains("Added")) {
+                return "English";
+            }
+
+            return null;
         }
     }
 }
