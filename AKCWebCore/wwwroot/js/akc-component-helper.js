@@ -76,12 +76,21 @@ function SelectFile() {
             //Generating preview
             for (var line = 0; line < 39; line++) {
                 if (lines[line] == undefined) break;
+
                 var newLine = document.createElement("span");
                 var lineBreak = document.createElement("br");
                 newLine.innerHTML = lines[line];
                 fileDisplayArea.appendChild(newLine);
                 fileDisplayArea.appendChild(lineBreak);
-                //fileDisplayArea.innerHTML += (lines[line] + '\n');
+
+                //Pick first line for language detection. 
+                if (line == 1) {
+                    language = detect_language_from_sample(lines[line])
+                    if (language) {
+                        select_detected_language(language)
+                    }
+                }
+
             }
         };
 
@@ -108,4 +117,21 @@ function show_loading() {
 
 function stop_loading() {
     body.removeClass("loading");
+}
+
+function detect_language_from_sample(sample) {
+    list_sample = sample.split(" ")
+    if (list_sample.indexOf("Added") != -1) {
+        return "English";
+    }
+        
+    if (list_sample.indexOf("Añadido") != -1) {
+        return "Spanish";
+    }
+
+    return undefined;
+}
+
+function select_detected_language(language) {
+    document.getElementById("languageSelector").value = language;
 }
