@@ -54,9 +54,9 @@ namespace AKCWebCore {
 
             app.UseMvc(routes => {
                 routes.MapRoute(
-                    name: "parser",
-                    template: "{controller}/{action}/{results:bool?}");
-        });
+                    name: "default",
+                    template: "{controller=home}/{action=index}");
+            });
         }
     }
 }
