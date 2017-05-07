@@ -1,18 +1,20 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AKCWPF", "AKCWPF\AKCWPF.csproj", "{C88370A2-09EC-43B1-A04E-A2DE59DEF36F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{52AD4A21-E88E-4E49-91FB-7C8B7BE68FB2} = {52AD4A21-E88E-4E49-91FB-7C8B7BE68FB2}
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AKCWebCore", "AKCWebCore\AKCWebCore.xproj", "{8F3BDCC5-7634-4667-B6C5-B97C2510929F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AKCWebCore", "AKCWebCore\AKCWebCore.csproj", "{8F3BDCC5-7634-4667-B6C5-B97C2510929F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{52AD4A21-E88E-4E49-91FB-7C8B7BE68FB2} = {52AD4A21-E88E-4E49-91FB-7C8B7BE68FB2}
+	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AKCCore", "AKCCore\AKCCore.xproj", "{52AD4A21-E88E-4E49-91FB-7C8B7BE68FB2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AKCCore", "AKCCore\AKCCore.csproj", "{52AD4A21-E88E-4E49-91FB-7C8B7BE68FB2}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AKCTests", "AKCTests\AKCTests.xproj", "{E0745FF2-67BD-41F6-BF09-60D983256F7B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AKCTests", "AKCTests\AKCTests.csproj", "{E0745FF2-67BD-41F6-BF09-60D983256F7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
