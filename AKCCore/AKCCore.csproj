@@ -4,7 +4,7 @@
     <Description>Organise, sort, filter and export your Amazon Kindle notes (library)</Description>
     <Copyright>Ed Garabito @2017</Copyright>
     <AssemblyTitle>Amazing Kindly Clipper</AssemblyTitle>
-    <VersionPrefix>0.3.0</VersionPrefix>
+    <VersionPrefix>1.0.0.0</VersionPrefix>
     <TargetFrameworks>netstandard2.0;net462</TargetFrameworks>
     <AssemblyName>AKCCore</AssemblyName>
     <PackageId>AKCCore</PackageId>
@@ -23,7 +23,6 @@
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <PackageReference Include="Microsoft.CSharp" Version="4.3.0" />
-    <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net462' ">

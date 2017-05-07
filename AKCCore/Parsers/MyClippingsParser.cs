@@ -19,13 +19,7 @@ namespace AKCCore {
         private const string ClippingSeparator = "==========";
         private const string Line1RegexPattern = @"^(.+?)(?: \(([^)]+?)\))?$";
 
-
-        //TODO Modify parser so as to have them receive format type (and anything else vital to parse) that is in options.
-        //Parsers should not be interested on options or not even in ParserController, but ParserController interested on parsers
-
         internal Clipping Defaults;
-        internal ParserOptions options;
-
 
         //TODO Maybe in the process of changing and adapting this method to increase flexibility we should 
         //implement an async approach that tracks progress
