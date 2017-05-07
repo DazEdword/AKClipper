@@ -18,7 +18,6 @@
     "System.Linq": "4.3.0",
     "System.Linq.Parallel": "4.3.0",
     "Microsoft.Extensions.Caching.Memory": "1.0.0",
-    "Microsoft.AspNetCore.Session": "1.0.0",
     "Microsoft.AspNetCore.Http.Extensions": "1.1.0",
     "NonFactors.Grid.Mvc6": "1.4.0"
   },
