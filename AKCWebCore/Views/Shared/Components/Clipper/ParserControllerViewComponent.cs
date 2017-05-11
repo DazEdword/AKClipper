@@ -20,13 +20,23 @@ namespace AKCWebCore.ViewComponents {
         //ViewComponent Sync/Async methods- Only one active at any given time.
 
         //Sync
-        public IViewComponentResult Invoke() {
-            //TODO prob we should pass results directly from AJAX to ViewComponent, in which case this 
-            //'results' variable will disappear.
-            bool results = Helper.parserClientContent.showResults;
+        public IViewComponentResult Invoke(dynamic parse_params) {
+            //Parser setup
+            string content = Helper.parserClientContent.content = parse_params?.content;
+            string language = Helper.parserClientContent.language = parse_params?.language;
 
-            if (results) {
+            bool parse = true ? (content != null && language != null) : false;
+
+            //TODO in any case, this logic if very shaky. We should perhaps add a "reparse" flag to reset parse
+            //and parse again only upon "parse", do some other logic on grid interaction. 
+
+            //Active parse or reparse
+            if (parse) {
                 return InvokeResults();
+            //There is parse data already stored, we might be receiving query strings to reorder grid.
+            } else if (Helper.parserClientContent.clippingData.Count > 0) {
+                return InvokeMain();
+            //No parse action call or prior data, invoke main so that the user can pick file, etc. 
             } else {
                 return InvokeMain();
             }
@@ -53,6 +63,12 @@ namespace AKCWebCore.ViewComponents {
 
             return View("~/Views/Shared/Components/Clipper/Results.cshtml", new { model = Helper }.ToExpando());
         }
+
+        //[HttpGet]
+        //public ActionResult ResultsGrid(String param) {
+        //    // Only grid string query values will be visible here.
+        //    return PartialView("~/Views/Shared/Components/Clipper/Results.cshtml", new { model = Helper }.ToExpando());
+        //}
 
         //This would be better off if we returned the collection. For WPF too I guess.
         public void Parse() {
