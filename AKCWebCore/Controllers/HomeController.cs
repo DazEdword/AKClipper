@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AKCWebCore.Models;
+using System;
+using AKCWebCore.Extensions;
 
 namespace AKCWeb.Controllers {
 
@@ -30,14 +32,12 @@ namespace AKCWeb.Controllers {
         [HttpPost]
         public IActionResult Parse(string content, string language) {
             if (content != null && content.Length > 0) {
-                Helper.parserClientContent.content = content;
-                Helper.parserClientContent.showResults = true;
-                Helper.parserClientContent.language = language;
-                return ViewComponent("ParserController");
+                return ViewComponent("ParserController", new {
+                    content = content,
+                    language = language,
+                });
             } else {
-                Helper.parserClientContent.showResults = false;
-                Helper.parserClientContent.content = "";
-                //TODO Are we sure is a "not found" what we want to do?
+                //TODO Not found added just temporarily, return useful error message for user. 
                 return NotFound();
             }  
         }
