@@ -20,12 +20,17 @@ namespace AKCWeb.Controllers {
         //https://github.com/NonFactors/MVC6.Grid/issues/39
 
 
-        [Route("")]
-        [Route("/parse")]
-        //[HttpGet("{id}")]
-        //?Grid-Sort=DateAdded&Grid-Order=Asc
+        //[Route("/parse")]
         public ViewResult Index() {
             ViewData["Title"] = "Home";
+            return View("Index", Helper);
+        }
+
+        [Route("/results")]
+        //[HttpGet("{id}")]
+        //?Grid-Sort=DateAdded&Grid-Order=Asc
+        public ViewResult Results() {
+            ViewData["Title"] = "Results";
             return View("Index", Helper);
         }
 

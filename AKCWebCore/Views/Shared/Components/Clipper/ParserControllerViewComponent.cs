@@ -32,10 +32,10 @@ namespace AKCWebCore.ViewComponents {
 
             //Active parse or reparse
             if (parse) {
-                return InvokeResults();
+                return InvokeNewResults();
             //There is parse data already stored, we might be receiving query strings to reorder grid.
             } else if (Helper.parserClientContent.clippingData.Count > 0) {
-                return InvokeMain();
+                return InvokeResults();
             //No parse action call or prior data, invoke main so that the user can pick file, etc. 
             } else {
                 return InvokeMain();
@@ -57,10 +57,14 @@ namespace AKCWebCore.ViewComponents {
             return View("~/Views/Shared/Components/Clipper/Main.cshtml", new { model = Helper }.ToExpando());
         }
 
-        public IViewComponentResult InvokeResults() {
+        public IViewComponentResult InvokeNewResults() {
             ResetParser();
             Parse();
 
+            return View("~/Views/Shared/Components/Clipper/Results.cshtml", new { model = Helper }.ToExpando());
+        }
+
+        public IViewComponentResult InvokeResults() {
             return View("~/Views/Shared/Components/Clipper/Results.cshtml", new { model = Helper }.ToExpando());
         }
 
@@ -89,8 +93,6 @@ namespace AKCWebCore.ViewComponents {
         }
 
         public void ResetParser() {
-            //TODO changing results to false can cause problems manipulating the grid (goes to index again)
-            //Either we solve this with proper parameters or make the grid AJAX to avoid reloads. 
             Helper.parserClientContent.showResults = false;
             ClippingStorage.ClearStorage();
         }

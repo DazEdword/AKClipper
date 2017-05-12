@@ -29,7 +29,7 @@
                         <header id="header">
                             <h1><a href="#" id="logo">Amazing Kindly Clipper 0.4</a></h1>
                             <nav id="nav">
-                                @Html.ActionLink("Home", "Index", "home", null, null)
+                                @Html.ActionLink("Home", "Index", "home", new {reset=true}, null)
                                 @Html.ActionLink("About", "Index", "about", null, null)
                             </nav>
                         </header>
