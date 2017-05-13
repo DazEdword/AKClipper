@@ -11,13 +11,19 @@ namespace AKCWeb.Controllers {
             Helper = helper;
         }
 
-        public ViewResult Index() {
+        public ActionResult Index() {
             ViewData["Title"] = "Home";
             return View("Index", Helper);
         }
 
+        [Route("/new")]
+        public ActionResult New() {
+            Helper.parserClientContent.reset = true;
+            return RedirectToAction("Index");
+        }
+
         [Route("/results")]
-        public ViewResult Results() {
+        public ActionResult Results() {
             //var path = context.HttpContext.Request.Path.Value.Trim().ToLower();
             ViewData["Title"] = "Results";
             return View("Index", Helper);

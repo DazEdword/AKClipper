@@ -29,8 +29,9 @@
                         <header id="header">
                             <h1><a href="#" id="logo">Amazing Kindly Clipper 1.0</a></h1>
                             <nav id="nav">
-                                @Html.ActionLink("Home", "Index", "home", null, null)
-                                @Html.ActionLink("About", "Index", "about", null, null)
+                                <span>@Html.ActionLink("Home", "Index", "home", null, null)</span>
+                                <span>@Html.ActionLink("Reset", "New", "home", null, null)</span>
+                                <span>@Html.ActionLink("About", "Index", "about", null, null)</span>
                             </nav>
                         </header>
                     </div>

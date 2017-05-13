@@ -35,6 +35,7 @@ function sendParseRequest(content, language) {
         type: "post",
         success: function (response) {
             stop_loading();
+            window.location.reload();
             var component = document.getElementById('akc-container').innerHTML = response;
             $('.mvc-grid').mvcgrid();
         },
