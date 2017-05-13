@@ -22,7 +22,7 @@ namespace AKCWebCore.Models {
 
         public class ParserClientContent : IParserWeb {
             public string language { get; set; }
-            public bool showResults { get; set; }
+            public bool reset { get; set; }
             public string content { get; set; }
             public string preview { get; set; }
             public List<Clipping> clippingData;
@@ -32,7 +32,7 @@ namespace AKCWebCore.Models {
             public ParserClientContent() {
                 this.preview = "A preview of your text will appear here.";
                 this.language = "English";
-                this.showResults = false;
+                this.reset = false;
                 this.clippingData = new List<Clipping>();
         }
 
