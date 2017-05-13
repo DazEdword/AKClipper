@@ -15,7 +15,6 @@ namespace AKCCore {
         /// </summary>
 
         //String matching-related variables.
-
         private const string ClippingSeparator = "==========";
         private const string Line1RegexPattern = @"^(.+?)(?: \(([^)]+?)\))?$";
 
@@ -176,7 +175,6 @@ namespace AKCCore {
 
         protected virtual void ParseDate(string[] splitLine, Clipping clipping, int dateIndex) {
             try {
-
                 string[] filteredLine = splitLine.Where(item => !item.Contains("GMT")).ToArray();
                 string dateAddedString;
 

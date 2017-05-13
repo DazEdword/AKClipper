@@ -45,4 +45,8 @@
     <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.2.301" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\images\AmazingClip.ico" />
+  </ItemGroup>
+
 </Project>
