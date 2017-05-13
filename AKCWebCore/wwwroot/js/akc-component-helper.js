@@ -11,10 +11,6 @@ window.onload = function () {
     document.getElementById('startParsingButton').onclick = function() {
         sendParseRequest(undefined, undefined);
     };
-
-    //$('.content-refresh').on('click', function () {
-    //    $('.mvc-grid').mvcgrid();
-    //})
 };
 
 function sendParseRequest(content, language) {
@@ -40,10 +36,7 @@ function sendParseRequest(content, language) {
         success: function (response) {
             stop_loading();
             var component = document.getElementById('akc-container').innerHTML = response;
-
-            //TODO At the moment we are importing the MVC Grid script on _Layout, and calling it from the helper.
-            //Encapsulation could certainly be better here. 
-            $('.mvc-grid').mvcgrid();  
+            $('.mvc-grid').mvcgrid();
         },
         error: function (dataerror) {
             stop_loading();

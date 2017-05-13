@@ -20,13 +20,24 @@ namespace AKCWebCore.ViewComponents {
         //ViewComponent Sync/Async methods- Only one active at any given time.
 
         //Sync
-        public IViewComponentResult Invoke() {
-            //TODO prob we should pass results directly from AJAX to ViewComponent, in which case this 
-            //'results' variable will disappear.
-            bool results = Helper.parserClientContent.showResults;
+        public IViewComponentResult Invoke(dynamic parse_params) {
+            //Parser setup
+            string content = Helper.parserClientContent.content = parse_params?.content;
+            string language = Helper.parserClientContent.language = parse_params?.language;
 
-            if (results) {
+            //if (Helper.parserClientContent.reset == true) {
+            //    ResetParser();
+            //}
+
+            bool parse = true ? (content != null && language != null) : false;
+
+            //Active parse or reparse
+            if (parse) {
+                return InvokeNewResults();
+            //There is parse data already stored, we might be receiving query strings to reorder grid.
+            } else if (Helper.parserClientContent.clippingData.Count > 0) {
                 return InvokeResults();
+            //No parse action call or prior data, invoke main so that the user can pick file, etc. 
             } else {
                 return InvokeMain();
             }
@@ -47,10 +58,14 @@ namespace AKCWebCore.ViewComponents {
             return View("~/Views/Shared/Components/Clipper/Main.cshtml", new { model = Helper }.ToExpando());
         }
 
-        public IViewComponentResult InvokeResults() {
+        public IViewComponentResult InvokeNewResults() {
             ResetParser();
             Parse();
 
+            return View("~/Views/Shared/Components/Clipper/Results.cshtml", new { model = Helper }.ToExpando());
+        }
+
+        public IViewComponentResult InvokeResults() {
             return View("~/Views/Shared/Components/Clipper/Results.cshtml", new { model = Helper }.ToExpando());
         }
 
@@ -73,10 +88,8 @@ namespace AKCWebCore.ViewComponents {
         }
 
         public void ResetParser() {
-            //TODO changing results to false can cause problems manipulating the grid (goes to index again)
-            //Either we solve this with proper parameters or make the grid AJAX to avoid reloads. 
-            Helper.parserClientContent.showResults = false;
             ClippingStorage.ClearStorage();
+            Helper.parserClientContent.reset = false;
         }
     }
 }
