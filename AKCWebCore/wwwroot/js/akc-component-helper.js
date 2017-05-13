@@ -1,8 +1,6 @@
-﻿//TODO 1) Update server with data from AJAX 2) Disable start parse button until update has occured
-//JS-AJAX alternative for file "upload".
-//http://stackoverflow.com/questions/4622499/disable-button-while-ajax-request
-//https://en.wikipedia.org/wiki/Ajax_(programming)
-
+﻿var ENVIRONMENT = "LIVE";
+var LIVE_ENV_URL = "http://gottabegarabi.com/AKC";
+var DEV_ENV_URL = "http://localhost:60362";
 var CONTENT_ID_NAME = Object.freeze("AKCContent");
 var body = $body = $("body");
 
@@ -23,11 +21,13 @@ function sendParseRequest(content, language) {
         language = document.getElementById("languageSelector").value;
     }
 
+    var url = (ENVIRONMENT === "LIVE") ? LIVE_ENV_URL : DEV_ENV_URL;
+
     show_loading();
 
     //TODO localhost has to change in production
     $.ajax({
-        url: 'http://localhost:60362/home/parse',
+        url: url.concat('/home/parse'),
         data: {
             content: content,
             language: language
