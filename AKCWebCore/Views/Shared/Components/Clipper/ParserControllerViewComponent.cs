@@ -25,10 +25,11 @@ namespace AKCWebCore.ViewComponents {
             string content = Helper.parserClientContent.content = parse_params?.content;
             string language = Helper.parserClientContent.language = parse_params?.language;
 
-            bool parse = true ? (content != null && language != null) : false;
+            if (Helper.parserClientContent.reset == true) {
+                ResetParser();
+            }
 
-            //TODO in any case, this logic if very shaky. We should perhaps add a "reparse" flag to reset parse
-            //and parse again only upon "parse", do some other logic on grid interaction. 
+            bool parse = true ? (content != null && language != null) : false;
 
             //Active parse or reparse
             if (parse) {
@@ -68,12 +69,6 @@ namespace AKCWebCore.ViewComponents {
             return View("~/Views/Shared/Components/Clipper/Results.cshtml", new { model = Helper }.ToExpando());
         }
 
-        //[HttpGet]
-        //public ActionResult ResultsGrid(String param) {
-        //    // Only grid string query values will be visible here.
-        //    return PartialView("~/Views/Shared/Components/Clipper/Results.cshtml", new { model = Helper }.ToExpando());
-        //}
-
         //This would be better off if we returned the collection. For WPF too I guess.
         public void Parse() {
             //Simpler version compared to WPF, not so many "safety checks". Can add said checks, but simpler. 
@@ -93,8 +88,8 @@ namespace AKCWebCore.ViewComponents {
         }
 
         public void ResetParser() {
-            Helper.parserClientContent.showResults = false;
             ClippingStorage.ClearStorage();
+            Helper.parserClientContent.reset = false;
         }
     }
 }

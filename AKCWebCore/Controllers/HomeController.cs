@@ -13,26 +13,17 @@ namespace AKCWeb.Controllers {
             Helper = helper;
         }
 
-        //http://localhost:60362/parser?Grid-Page=3&Grid-Rows=20&results=true works
-        // if showResults is not reset, same problem with grid.
-
-        //If using AjaxGrid, make sure to use it properly:
-        //https://github.com/NonFactors/MVC6.Grid/issues/39
-
-
-        //[Route("/parse")]
         public ViewResult Index() {
             ViewData["Title"] = "Home";
             return View("Index", Helper);
         }
 
-        [Route("/results")]
-        //[HttpGet("{id}")]
-        //?Grid-Sort=DateAdded&Grid-Order=Asc
-        public ViewResult Results() {
-            ViewData["Title"] = "Results";
-            return View("Index", Helper);
-        }
+        //[Route("/results")]
+        //public ViewResult Results(ActionExecutingContext context) {
+        //    //var path = context.HttpContext.Request.Path.Value.Trim().ToLower();
+        //    ViewData["Title"] = "Results";
+        //    return View("Index", Helper);
+        //}
 
         [HttpPost]
         public IActionResult Parse(string content, string language) {
