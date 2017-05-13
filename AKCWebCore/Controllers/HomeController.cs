@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AKCWebCore.Models;
-using System;
-using AKCWebCore.Extensions;
 
 namespace AKCWeb.Controllers {
 
@@ -18,12 +16,12 @@ namespace AKCWeb.Controllers {
             return View("Index", Helper);
         }
 
-        //[Route("/results")]
-        //public ViewResult Results(ActionExecutingContext context) {
-        //    //var path = context.HttpContext.Request.Path.Value.Trim().ToLower();
-        //    ViewData["Title"] = "Results";
-        //    return View("Index", Helper);
-        //}
+        [Route("/results")]
+        public ViewResult Results() {
+            //var path = context.HttpContext.Request.Path.Value.Trim().ToLower();
+            ViewData["Title"] = "Results";
+            return View("Index", Helper);
+        }
 
         [HttpPost]
         public IActionResult Parse(string content, string language) {

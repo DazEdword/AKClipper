@@ -11,10 +11,6 @@ window.onload = function () {
     document.getElementById('startParsingButton').onclick = function() {
         sendParseRequest(undefined, undefined);
     };
-
-    $('.content-refresh').on('click', function () {
-        $('.mvc-grid').mvcgrid();
-    })
 };
 
 function sendParseRequest(content, language) {
@@ -40,6 +36,7 @@ function sendParseRequest(content, language) {
         success: function (response) {
             stop_loading();
             var component = document.getElementById('akc-container').innerHTML = response;
+            $('.mvc-grid').mvcgrid();
         },
         error: function (dataerror) {
             stop_loading();

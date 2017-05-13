@@ -25,9 +25,9 @@ namespace AKCWebCore.ViewComponents {
             string content = Helper.parserClientContent.content = parse_params?.content;
             string language = Helper.parserClientContent.language = parse_params?.language;
 
-            if (Helper.parserClientContent.reset == true) {
-                ResetParser();
-            }
+            //if (Helper.parserClientContent.reset == true) {
+            //    ResetParser();
+            //}
 
             bool parse = true ? (content != null && language != null) : false;
 
