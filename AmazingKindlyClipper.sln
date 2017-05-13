@@ -1,13 +1,13 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AKCWPF", "AKCWPF\AKCWPF.csproj", "{C88370A2-09EC-43B1-A04E-A2DE59DEF36F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{52AD4A21-E88E-4E49-91FB-7C8B7BE68FB2} = {52AD4A21-E88E-4E49-91FB-7C8B7BE68FB2}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AKCWebCore", "AKCWebCore\AKCWebCore.csproj", "{8F3BDCC5-7634-4667-B6C5-B97C2510929F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AKCWeb", "AKCWebCore\AKCWeb.csproj", "{8F3BDCC5-7634-4667-B6C5-B97C2510929F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{52AD4A21-E88E-4E49-91FB-7C8B7BE68FB2} = {52AD4A21-E88E-4E49-91FB-7C8B7BE68FB2}
 	EndProjectSection
