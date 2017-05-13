@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title - AKCWeb</title>
 
-    <environment names="Development">
+    <environment names="Development,Staging,Production">
         <link href="@Url.Content("~/css/main.css")" rel="stylesheet" type="text/css" /> 
         <link href="@Url.Content("~/css/mvc-grid.css")" rel="stylesheet" type="text/css" />
 
@@ -17,8 +17,6 @@
         <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
     </environment>
 
-    <environment names="Staging,Production">
-    </environment>
 </head>
 <body>
     <div id="page-wrapper">
@@ -30,7 +28,7 @@
                             <h1><a href="#" id="logo">Amazing Kindly Clipper 1.0</a></h1>
                             <nav id="nav">
                                 <span>@Html.ActionLink("Home", "Index", "home", null, null)</span>
-                                <span>@Html.ActionLink("Reset", "New", "home", null, null)</span>
+                                <span>@Html.ActionLink("Restart", "New", "home", null, null)</span>
                                 <span>@Html.ActionLink("About", "Index", "about", null, null)</span>
                             </nav>
                         </header>
