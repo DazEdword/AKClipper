@@ -44,7 +44,7 @@ namespace AKCCore {
         protected override void InitFormats(){
             //Manually instancing an array of keys per type to be added to struct constructor. Modifyable.
             typeEdPageKeys = new string[] { " en la página " };
-            typeEdLocationKeys = new string[] { " Posición ", " posición " };
+            typeEdLocationKeys = new string[] { " Posición ", " posición ", " Location " };
 
             typeRubPageKeys = new string[] { " en la página " };
             typeRubLocationKeys = new string[] { " Pos. " };
@@ -115,6 +115,9 @@ namespace AKCCore {
             var dateIndex = format.dateIndex;
             var locationIndex = format.locationIndex;
             var pageIndex = format.pageIndex;
+            var hasPageDateIndex = format.hasPageDateIndex;
+            var hasPageHasLocationDateIndex = format.hasPageHasLocationDateIndex;
+            var hasPageLocationIndex = format.hasPageLocationIndex;
 
             bool isSubtypeKyuni = false;
 
@@ -124,6 +127,8 @@ namespace AKCCore {
 
             if (isSubtypeKyuni) {
                 dateIndex = 10;
+                locationIndex = 6;
+                hasPageDateIndex = 10;
             }
 
             try {
@@ -131,8 +136,8 @@ namespace AKCCore {
                     var pageNumber = split[pageIndex];
                     clipping.Page = pageNumber;
 
-                    locationIndex = format.hasPageLocationIndex;
-                    dateIndex = hasLocation ? format.hasPageHasLocationDateIndex : format.hasPageDateIndex;
+                    locationIndex = hasPageLocationIndex;
+                    dateIndex = hasLocation ? hasPageHasLocationDateIndex : hasPageDateIndex;
                 }
             }
             catch (Exception) {

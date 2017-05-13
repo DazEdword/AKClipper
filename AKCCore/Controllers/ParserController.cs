@@ -9,11 +9,6 @@ namespace AKCCore {
     //TODO Refactor in progress, many public methods around in this public class. Reorganise and change access 
     //levels later. 
 
-    //TODO Dependency AKCCore (.netStandard) - AKCWPF (.net framework 462) is carried away via local NuGet package.
-    //We should automate this process so that every time we rebuild AKCCore, AKCCore library in WPF is updated with the
-    //new library. What we want is an alternative to "dotnet pack" in AKCCore, followed by install/update via NuGet console.
-
-
     /// <summary>
     /// Parser Controller logic. Its concerns include to get and store which file to use as a source for parsing, 
     /// store the user selected language, initialise parsing process. It has several checks to prevent the user from using the wrong parser.
