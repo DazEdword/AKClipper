@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace AKCCore {
 
-    public static class FormatTypeDatabase {
+    public static class FormatTypeStorage {
         public static List<FormatType> formatTypeList = new List<FormatType>();
         public static Dictionary<FormatType.KeyPositionLang, FormatType> FormatDictionary = new Dictionary<FormatType.KeyPositionLang, FormatType>();
         public static bool isLastFormatSafeMatch = false;
@@ -11,7 +11,7 @@ namespace AKCCore {
         /// <summary>
         /// This static class populates and returns formatTypes from a database. A format list is populated when the program launches
         /// by the instances of each parser (one per language), which creates formatTypes with a set of properties. After that, the
-        /// GenerateFormatTypeDatabase() method creates a Dictionary KeyPosition/FormatTypes Key/Value pairs, iterating
+        /// GenerateFormatTypeStorage() method creates a Dictionary KeyPosition/FormatTypes Key/Value pairs, iterating
         /// through the List and adding a number of entries to the dictionary. Single formats can be added manually using AddFormat().
         /// </summary>
         /// <param name="formatType">The formatType to add to the database</param>
@@ -25,7 +25,7 @@ namespace AKCCore {
             }
         }
 
-        public static void GenerateFormatTypeDatabase() {
+        public static void GenerateFormatTypeStorage() {
             //Reset
             FormatDictionary.Clear();
             //Repopulation from

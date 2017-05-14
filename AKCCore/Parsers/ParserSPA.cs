@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace AKCCore {
 
-    public class MyClippingsParserSPA : MyClippingsParser {
+    public class ParserSPA : ClippingsParser {
         public string[] typeEdPageKeys;
         public string[] typeEdLocationKeys;
         public string[] typeRubPageKeys;
@@ -16,7 +16,7 @@ namespace AKCCore {
         private string[] dateFormats;
 
         //Singleton instantiation.
-        private static readonly MyClippingsParserSPA myParserSPA = new MyClippingsParserSPA();
+        private static readonly ParserSPA myParserSPA = new ParserSPA();
 
         /* Following three methods: simple, thread safe singleton implementation*/
 
@@ -24,18 +24,18 @@ namespace AKCCore {
         // We are using it to initialise the parser, but even if there's nothing to initialise
         // the init method needs to exist if we want this singleton pattern to work properly 
 
-        private MyClippingsParserSPA() {
+        private ParserSPA() {
             spaCulture = new CultureInfo("es-ES");
             InitDefaults();
             InitFormats();
         }
 
         // Explicit static constructor to tell C# compiler not to mark type as 'beforefieldinit'
-        static MyClippingsParserSPA() {
+        static ParserSPA() {
 
         }
 
-        public static MyClippingsParserSPA MyParserSPA {
+        public static ParserSPA MyParserSPA {
             get {
                 return myParserSPA;
             }

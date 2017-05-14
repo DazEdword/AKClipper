@@ -15,7 +15,7 @@ namespace AKCCore {
         private string textToParsePath;
         private Encoding fileEncoding;
         private FormatType formatInUse;
-        private MyClippingsParser parserInUse;
+        private ClippingsParser parserInUse;
 
         public ParserOptions() {
             language = null;
@@ -72,7 +72,7 @@ namespace AKCCore {
             }
         }
 
-        public MyClippingsParser SelectedParser {
+        public ClippingsParser SelectedParser {
             get {
                 return parserInUse;
             }

@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace AKCCore {
 
-    public abstract class MyClippingsParser {
+    public abstract class ClippingsParser {
         /// <summary>
         /// Base parser, all the other parsers should inherit from it. It's pretty fail safe, with every different variable of the clipping braced
         /// in try/catch statements, so that unrecognized fields can be assigned with a default value instead of throwing an exception. Empty fields

@@ -19,8 +19,8 @@ namespace AKCCore {
     /// </summary>
 
     public class ParserController {
-        private MyClippingsParserENG parserENG;
-        private MyClippingsParserSPA parserSPA;
+        private ParserENG parserENG;
+        private ParserSPA parserSPA;
         public ParserOptions options;
 
         //Variable keeping count of raw clippings, declared on the class scope so that 
@@ -28,14 +28,14 @@ namespace AKCCore {
         public int rawClippingCount; 
 
         public ParserController() {
-            parserENG = MyClippingsParserENG.MyParserENG; 
-            parserSPA = MyClippingsParserSPA.MyParserSPA;
+            parserENG = ParserENG.MyParserENG; 
+            parserSPA = ParserSPA.MyParserSPA;
             options = new ParserOptions();
 
             //Methods generating a Dictionary of FormatTypes on instantiation.
-            FormatTypeDatabase.PopulateFormatList(parserENG.engFormats);
-            FormatTypeDatabase.PopulateFormatList(parserSPA.spaFormats);
-            FormatTypeDatabase.GenerateFormatTypeDatabase();
+            FormatTypeStorage.PopulateFormatList(parserENG.engFormats);
+            FormatTypeStorage.PopulateFormatList(parserSPA.spaFormats);
+            FormatTypeStorage.GenerateFormatTypeStorage();
         }
 
         public void SetParser(string id) {
@@ -53,7 +53,7 @@ namespace AKCCore {
         }
 
         //Instance type override, in case a parser instance is passed instead of a string with parser name
-        public void SetParser(MyClippingsParser parser) {
+        public void SetParser(ClippingsParser parser) {
             string t = parser.GetType().ToString();
 
             if (t == "MyClippingsParserENG") {
@@ -167,7 +167,7 @@ namespace AKCCore {
 
                 foreach (var KeyPos in FormatKeyPosRead) {
                     bool isSafe = false;
-                    format = FormatTypeDatabase.GetFormat(KeyPos, out isSafe);
+                    format = FormatTypeStorage.GetFormat(KeyPos, out isSafe);
 
                     if (format != null) {
                         if (!isSafe) {
@@ -205,7 +205,7 @@ namespace AKCCore {
             return correctParserConfirmed = CheckParserLanguageAndType(options.SelectedParser, textSample, textPreview);
         }
 
-        public bool CheckParserLanguageAndType(MyClippingsParser parser, string sample, string preview) {
+        public bool CheckParserLanguageAndType(ClippingsParser parser, string sample, string preview) {
 
             /// <summary> All parsers inherit from abstract class MyClippingsParser. Inheriting parsers need to be 
             /// instantiated prior to use. At the moment only ENG and SPA parsers are recognized and used, but the 
