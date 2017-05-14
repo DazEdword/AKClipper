@@ -6,7 +6,8 @@ namespace AKCTests.Core.Clippings {
     internal class DateParsingTests {
         [TestInitialize]
         public void Init() {
-            //MyClippingsParser parser_eng = new MyClippingsParser();
+            ParserENG parser_eng = ParserENG.MyParserENG;
+            ParserSPA parser_spa = ParserSPA.MyParserSPA;
         }
 
         [TestMethod]

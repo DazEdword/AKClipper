@@ -12,7 +12,7 @@ namespace AKCCore {
     /// <summary>
     /// Parser Controller logic. Its concerns include to get and store which file to use as a source for parsing, 
     /// store the user selected language, initialise parsing process. It has several checks to prevent the user from using the wrong parser.
-    /// All parsers inherit from abstract class MyClippingsParserm and every inheriting parsers need to be instantiated prior to use
+    /// All parsers inherit from abstract class ClippingsParser and every inheriting parsers need to be instantiated prior to use
     /// (due to the singleton pattern implementation only one instance of each parser can be instanced. At the moment only ENG and SPA parsers
     /// are recognized and used, each one with various subtypes <seealso cref="FormatType"/> but the system should be easily extendable to other
     /// subtypes and additional languages if needed.
@@ -56,9 +56,9 @@ namespace AKCCore {
         public void SetParser(ClippingsParser parser) {
             string t = parser.GetType().ToString();
 
-            if (t == "MyClippingsParserENG") {
+            if (t == "ParserENG") {
                 options.SelectedParser = parserENG;
-            } else if (t == "MyClippingsParserSPA") {
+            } else if (t == "ParserSPA") {
                 options.SelectedParser = parserSPA;
             } else {
                 System.Diagnostics.Debug.WriteLine("Parser instance not recognised: unable to set parser");
@@ -207,7 +207,7 @@ namespace AKCCore {
 
         public bool CheckParserLanguageAndType(ClippingsParser parser, string sample, string preview) {
 
-            /// <summary> All parsers inherit from abstract class MyClippingsParser. Inheriting parsers need to be 
+            /// <summary> All parsers inherit from abstract class ClippingsParser. Inheriting parsers need to be 
             /// instantiated prior to use. At the moment only ENG and SPA parsers are recognized and used, but the 
             /// system should be easily extendable to other languages if needed.
             /// </summary>

@@ -32,7 +32,6 @@ namespace AKCCore {
 
         // Explicit static constructor to tell C# compiler not to mark type as 'beforefieldinit'
         static ParserSPA() {
-
         }
 
         public static ParserSPA MyParserSPA {
