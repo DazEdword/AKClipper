@@ -31,6 +31,12 @@ namespace AKCWebCore {
             services.AddDistributedMemoryCache();
             services.AddMemoryCache();
             services.AddMvcGrid();
+
+            services.AddSession(options => {
+                // Set a short timeout for easy testing.
+                options.IdleTimeout = System.TimeSpan.FromMinutes(10);
+                options.CookieHttpOnly = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,6 +44,8 @@ namespace AKCWebCore {
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.UseSession();
 
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
