@@ -2,6 +2,7 @@
 using AKCWebCore.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -26,11 +27,16 @@ namespace AKCWebCore {
         public void ConfigureServices(IServiceCollection services) {
             // Add framework services.
             services.AddMvc();
-            services.AddSingleton<ParserController, ParserController>();
-            services.AddSingleton<ParserWebHelper, ParserWebHelper>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<ParserWebHelper, ParserWebHelper>(sp => ParserWebHelper.GetHelper(sp)); 
             services.AddDistributedMemoryCache();
             services.AddMemoryCache();
             services.AddMvcGrid();
+
+            services.AddSession(options => {
+                options.IdleTimeout = System.TimeSpan.FromMinutes(10);
+                options.CookieHttpOnly = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,8 +52,8 @@ namespace AKCWebCore {
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseSession();
             app.UseStaticFiles();
-
 
             app.UseMvc(routes => {
                 routes.MapRoute(

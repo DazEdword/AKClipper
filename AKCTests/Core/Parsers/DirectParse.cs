@@ -11,7 +11,7 @@ namespace AKCTests {
 
         [TestMethod]
         public void TestDirectParse() {
-            MyClippingsParserSPA spaParser = MyClippingsParserSPA.MyParserSPA;
+            ParserSPA spaParser = ParserSPA.MyParserSPA;
             FormatType format = spaParser.typeEd;
             string input = "A Dance With Dragons: Book 5 of A Song of Ice and Fire(Song of Ice & Fire 5)(Martin, George R.R.)\r\n- Mi subrayado en la página 41 | Posición 620 - 620 | Añadido el domingo 2 de septiembre de 2012, 23:54:20\r\n \r\n droll?”\r\n==========";
 

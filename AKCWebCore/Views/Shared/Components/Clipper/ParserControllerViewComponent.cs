@@ -7,14 +7,13 @@ using System.Collections.Generic;
 namespace AKCWebCore.ViewComponents {
 
     public class ParserControllerViewComponent : ViewComponent {
-        private ParserController ParserController;
         private ParserWebHelper Helper;
+        private ParserController ParserController;
 
         //Parser controller dependency injection.
-        public ParserControllerViewComponent(ParserController parserController,
-            ParserWebHelper helper) {
-            ParserController = parserController;
+        public ParserControllerViewComponent(ParserWebHelper helper) {
             Helper = helper;
+            ParserController = new ParserController();
         }
 
         //ViewComponent Sync/Async methods- Only one active at any given time.
@@ -22,10 +21,10 @@ namespace AKCWebCore.ViewComponents {
         //Sync
         public IViewComponentResult Invoke(dynamic parse_params) {
             //Parser setup
-            string content = Helper.parserClientContent.content = parse_params?.content;
-            string language = Helper.parserClientContent.language = parse_params?.language;
+            string content = Helper.content = parse_params?.content;
+            string language = Helper.language = parse_params?.language;
 
-            if (Helper.parserClientContent.reset == true) {
+            if (Helper.reset == true) {
                 ResetParser();
             }
 
@@ -35,7 +34,7 @@ namespace AKCWebCore.ViewComponents {
             if (parse) {
                 return InvokeNewResults();
             //There is parse data already stored, we might be receiving query strings to reorder grid.
-            } else if (Helper.parserClientContent.clippingData.Count > 0) {
+            } else if (Helper.clippingData.Count > 0) {
                 return InvokeResults();
             //No parse action call or prior data, invoke main so that the user can pick file, etc. 
             } else {
@@ -72,9 +71,9 @@ namespace AKCWebCore.ViewComponents {
         //This would be better off if we returned the collection. For WPF too I guess.
         public void Parse() {
             //Simpler version compared to WPF, not so many "safety checks". Can add said checks, but simpler. 
-            string content = Helper.parserClientContent.content;
+            string content = Helper.content;
             string preview = ParserController.GeneratePreviewFromContent(content);
-            string language = ParserController.options.Language = Helper.parserClientContent.language;
+            string language = ParserController.options.Language = Helper.language;
             string textSample = preview.Replace("\r", "").Split('\n')[1];
 
             bool correctParser = ParserController.ConfirmParserCompatibility(textSample, preview, true);
@@ -84,12 +83,13 @@ namespace AKCWebCore.ViewComponents {
             }
 
             ParserController.RunParserDirect(content);
-            Helper.parserClientContent.clippingData = ClippingStorage.finalClippingsList;
+            Helper.clippingData = ParserController.ClippingStorage.finalClippingsList;
+            Helper.Save();
         }
 
         public void ResetParser() {
-            ClippingStorage.ClearStorage();
-            Helper.parserClientContent.reset = false;
+            ParserController.ClippingStorage.ClearStorage();
+            Helper.Reset();
         }
     }
 }

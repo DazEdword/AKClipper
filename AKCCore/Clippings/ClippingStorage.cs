@@ -2,11 +2,11 @@
 
 namespace AKCCore {
 
-    public static class ClippingStorage {
-        public static List<Clipping> finalClippingsList;
-        public static Dictionary<int, Clipping> numberedClippings;
+    public class ClippingStorage {
+        public List<Clipping> finalClippingsList;
+        public Dictionary<int, Clipping> numberedClippings;
 
-        static ClippingStorage() {
+        public ClippingStorage() {
             finalClippingsList = new List<Clipping>();
             numberedClippings = new Dictionary<int, Clipping>();
         }
@@ -17,7 +17,7 @@ namespace AKCCore {
         /// <param name="clipping">The clipping to add to the storage</param>
         /// <returns>The unique identifier corresponding to this clipping</returns>
 
-        public static int AddClipping(Clipping clipping) {
+        public int AddClipping(Clipping clipping) {
             int id = numberedClippings.Keys.Count;
             numberedClippings.Add(id, clipping);
             return id;
@@ -29,11 +29,11 @@ namespace AKCCore {
         /// <param name="id">Unique identifier (obtained as the return result of the AddClipping method)</param>
         /// <returns>The clipping associated with the identifier</returns>
 
-        public static Clipping GetClipping(int id) {
+        public Clipping GetClipping(int id) {
             return numberedClippings[id];
         }
 
-        public static void ClearStorage() {
+        public void ClearStorage() {
             finalClippingsList.Clear(); 
             numberedClippings.Clear();  
         }

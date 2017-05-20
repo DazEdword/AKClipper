@@ -1,54 +1,60 @@
 ﻿using AKCCore;
+using AKCWebCore.Extensions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-
 
 namespace AKCWebCore.Models {
 
-    public interface IParserWeb {
-        Task<String> GetPreview();
-    }
+    public class ParserWebHelper {
+        public string language { get; set; }
+        public bool reset { get; set; }
+        public string content { get; set; }
+        public string preview { get; set; }
+        public List<Clipping> clippingData;
 
-    public class ParserWebHelper  {
+        public const string helperKey = "ParserHelper";
 
-        public RoutingHelper routing { get; set; }
-        public ParserClientContent parserClientContent { get; set; }
-
+        //Sync
         public ParserWebHelper() {
-            this.routing = new RoutingHelper();
-            this.parserClientContent = new ParserClientContent();
+            InitHelper();
         }
 
-        public class ParserClientContent : IParserWeb {
-            public string language { get; set; }
-            public bool reset { get; set; }
-            public string content { get; set; }
-            public string preview { get; set; }
-            public List<Clipping> clippingData;
+        public void InitHelper() {
+            this.preview = "A preview of your text will appear here.";
+            this.language = "English";
+            this.reset = false;
+            this.clippingData = new List<Clipping>();
 
-
-            //Sync
-            public ParserClientContent() {
-                this.preview = "A preview of your text will appear here.";
-                this.language = "English";
-                this.reset = false;
-                this.clippingData = new List<Clipping>();
+            //TODO Is this necessary?
+            //Avoids serialization circular reference issue in CultureInfo
+            Newtonsoft.Json.JsonConvert.DefaultSettings = () => new Newtonsoft.Json.JsonSerializerSettings() {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
         }
 
-            //Async
-            public Task<String> GetPreview() {
-                return Task.FromResult("Test test test I will be your preview");
-            }
+        //Session-aware helper
+        public static ParserWebHelper GetHelper(IServiceProvider services) {
+            ISession session = services.GetRequiredService<IHttpContextAccessor>()?
+            .HttpContext.Session;
+            ParserWebHelper helper = session?.GetJson<ParserWebHelper>(helperKey)
+            ?? new ParserWebHelper();
+            helper.Session = session;
+            return helper;
         }
 
-        public class RoutingHelper {
-            public string Controller { get; set; }
-            public string Action { get; set; }
-            public IDictionary<string, object> Data { get; }
-            = new Dictionary<string, object>();
+        public void Save() {
+            Session.SetJson(helperKey, this);
         }
+
+        public void Reset() {
+            Session.Remove(helperKey);
+            InitHelper();
+        }
+
+        [JsonIgnore]
+        public ISession Session { get; set; }
     }
-
-
 }

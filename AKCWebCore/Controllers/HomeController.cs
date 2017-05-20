@@ -18,13 +18,12 @@ namespace AKCWeb.Controllers {
 
         [Route("/new")]
         public ActionResult New() {
-            Helper.parserClientContent.reset = true;
+            Helper.Reset();
             return RedirectToAction("Index");
         }
 
         [Route("/results")]
         public ActionResult Results() {
-            //var path = context.HttpContext.Request.Path.Value.Trim().ToLower();
             ViewData["Title"] = "Results";
             return View("Index", Helper);
         }

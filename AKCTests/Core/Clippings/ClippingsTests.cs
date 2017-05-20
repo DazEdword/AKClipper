@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace AKCTests.Clippings {
 
     [TestClass]
-    public class Clippings_Tests {
+    public class ClippingsTests {
 
         public Clipping clipping;
         public int validBeginning;

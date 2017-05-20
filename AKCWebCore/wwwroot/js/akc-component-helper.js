@@ -1,5 +1,4 @@
-﻿var ENVIRONMENT = "LIVE";
-//var LIVE_ENV_URL = "http://gottabegarabi.com/AKC"; 
+﻿var ENVIRONMENT = "DEV";
 var LIVE_ENV_URL = "http://akc-gbg.azurewebsites.net";
 var DEV_ENV_URL = "http://localhost:60362";
 var CONTENT_ID_NAME = Object.freeze("AKCContent");
