@@ -83,12 +83,12 @@ namespace AKCWebCore.ViewComponents {
             }
 
             ParserController.RunParserDirect(content);
-            Helper.clippingData = ClippingStorage.finalClippingsList;
+            Helper.clippingData = ParserController.ClippingStorage.finalClippingsList;
             Helper.Save();
         }
 
         public void ResetParser() {
-            //ClippingStorage.ClearStorage();
+            ParserController.ClippingStorage.ClearStorage();
             Helper.Reset();
         }
     }

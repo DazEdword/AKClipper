@@ -18,7 +18,6 @@ namespace AKCWPF {
 
     public partial class DatabaseWindow : Window {
         private List<Clipping> finalClippingsList;
-
         private ICollectionView filterableItems { get; set; }
 
         private string query;
@@ -31,11 +30,14 @@ namespace AKCWPF {
 
         private LoadingWindow LW;
         private MainWindow mainWindow;
+        private ParserController parserController;
 
         public DatabaseWindow() {
             InitializeComponent();
 
-            finalClippingsList = ClippingStorage.finalClippingsList;
+            parserController = ((MainWindow)Application.Current.MainWindow).parserController;
+
+            finalClippingsList = parserController.ClippingStorage.finalClippingsList;
 
             query = "";
             category = "";
@@ -144,7 +146,7 @@ namespace AKCWPF {
         private void Window_Closing(object sender, CancelEventArgs e) {
             dataGrid.ItemsSource = null;
             dataGrid.Items.Clear();
-            ClippingStorage.ClearStorage();
+            parserController.ClippingStorage.ClearStorage();
         }
 
         private void FilterTextBox_KeyDown(object sender, KeyEventArgs e) {

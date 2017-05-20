@@ -15,7 +15,7 @@ namespace AKCWPF {
 
     public partial class MainWindow : Window {
 
-        private ParserController parserController;
+        public ParserController parserController;
         private Encoding encoding; //Using UTF8 encoding by default here as defined in OptionsDeprecate, but that can be changed.
         private string textSample;
         private string textPreview; //Text preview gets up to n lines, as defined in var maxLineCounter.
@@ -118,15 +118,6 @@ namespace AKCWPF {
                 }
 
                 if (correctParserConfirmed) {
-                    /*
-                    //TEST
-                    var test = parserController.options.SelectedParser.DirectParse(
-                        "A Dance With Dragons: Book 5 of A Song of Ice and Fire(Song of Ice & Fire 5)(Martin, George R.R.)\r\n- Mi subrayado en la página 41 | Posición 620 - 620 | Añadido el domingo 2 de septiembre de 2012, 23:54:20\r\n \r\n droll?”\r\n==========\r\nLa metamorfosis (Spanish Edition) (Kafka, Franz)\r\n- Mi subrayado Posición 13 - 13 | Añadido el jueves 18 de octubre de 2012, 19:18:28\r\ndespués\r\nhabía\r\nmonos\r\n \r\n==========\r\nA Dance With Dragons: Book 5 of A Song of Ice and Fire(Song of Ice & Fire 5)(Martin, George R.R.)\r\n- Mi marcador en la página 442 | Posición 6769 | Añadido el miércoles 28 de noviembre de 2012, 14:08:48\r\n \r\n==========",
-                         parserController.options.SelectedFormat
-                        );
-
-                    var myResult = test.ToList();
-                    */
 
                     //Async parsing
                     LW = new LoadingWindow();
