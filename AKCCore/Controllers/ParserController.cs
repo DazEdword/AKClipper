@@ -22,6 +22,7 @@ namespace AKCCore {
         private ParserENG parserENG;
         private ParserSPA parserSPA;
         public ParserOptions options;
+        public ClippingStorage ClippingStorage;
 
         //Variable keeping count of raw clippings, declared on the class scope so that 
         //it can be used by several methods.
@@ -31,11 +32,13 @@ namespace AKCCore {
             parserENG = ParserENG.MyParserENG; 
             parserSPA = ParserSPA.MyParserSPA;
             options = new ParserOptions();
+            ClippingStorage = new ClippingStorage();
 
             //Methods generating a Dictionary of FormatTypes on instantiation.
             FormatTypeStorage.PopulateFormatList(parserENG.engFormats);
             FormatTypeStorage.PopulateFormatList(parserSPA.spaFormats);
             FormatTypeStorage.GenerateFormatTypeStorage();
+            
         }
 
         public void SetParser(string id) {
