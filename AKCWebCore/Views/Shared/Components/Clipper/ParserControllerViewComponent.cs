@@ -7,14 +7,13 @@ using System.Collections.Generic;
 namespace AKCWebCore.ViewComponents {
 
     public class ParserControllerViewComponent : ViewComponent {
-        private ParserController ParserController;
         private ParserWebHelper Helper;
+        private ParserController ParserController;
 
         //Parser controller dependency injection.
-        public ParserControllerViewComponent(ParserController parserController,
-            ParserWebHelper helper) {
-            ParserController = parserController;
+        public ParserControllerViewComponent(ParserWebHelper helper) {
             Helper = helper;
+            ParserController = new ParserController();
         }
 
         //ViewComponent Sync/Async methods- Only one active at any given time.
@@ -85,11 +84,12 @@ namespace AKCWebCore.ViewComponents {
 
             ParserController.RunParserDirect(content);
             Helper.clippingData = ClippingStorage.finalClippingsList;
+            Helper.Save();
         }
 
         public void ResetParser() {
-            ClippingStorage.ClearStorage();
-            Helper.reset = false;
+            //ClippingStorage.ClearStorage();
+            Helper.Reset();
         }
     }
 }

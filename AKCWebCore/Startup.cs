@@ -28,8 +28,7 @@ namespace AKCWebCore {
             // Add framework services.
             services.AddMvc();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddSingleton<ParserController, ParserController>();
-            services.AddSingleton<ParserWebHelper, ParserWebHelper>();
+            services.AddScoped<ParserWebHelper, ParserWebHelper>(sp => ParserWebHelper.GetHelper(sp)); 
             services.AddDistributedMemoryCache();
             services.AddMemoryCache();
             services.AddMvcGrid();

@@ -1,22 +1,20 @@
 ﻿using AKCCore;
-using System;
 using AKCWebCore.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Generic;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 
 namespace AKCWebCore.Models {
 
-    public class ParserWebHelper  {
-
+    public class ParserWebHelper {
         public string language { get; set; }
         public bool reset { get; set; }
         public string content { get; set; }
         public string preview { get; set; }
         public List<Clipping> clippingData;
 
-        public ParserController parserController;
         public const string helperKey = "ParserHelper";
 
         //Sync
@@ -29,9 +27,14 @@ namespace AKCWebCore.Models {
             this.language = "English";
             this.reset = false;
             this.clippingData = new List<Clipping>();
-            this.parserController = new ParserController();
+
+            //TODO Is this necessary?
+            //Avoids serialization circular reference issue in CultureInfo
+            Newtonsoft.Json.JsonConvert.DefaultSettings = () => new Newtonsoft.Json.JsonSerializerSettings() {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            };
         }
-        
+
         //Session-aware helper
         public static ParserWebHelper GetHelper(IServiceProvider services) {
             ISession session = services.GetRequiredService<IHttpContextAccessor>()?
@@ -54,6 +57,4 @@ namespace AKCWebCore.Models {
         [JsonIgnore]
         public ISession Session { get; set; }
     }
-
-
 }

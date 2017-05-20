@@ -25,5 +25,6 @@ namespace AKCWebCore.Extensions {
             return sessionData == null
             ? default(T) : JsonConvert.DeserializeObject<T>(sessionData);
         }
+
     }
 }
