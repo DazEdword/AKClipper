@@ -18,7 +18,7 @@ namespace AKCWeb.Controllers {
 
         [Route("/new")]
         public ActionResult New() {
-            Helper.parserClientContent.reset = true;
+            Helper.reset = true;
             return RedirectToAction("Index");
         }
 
