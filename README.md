@@ -6,12 +6,13 @@ Amazing Kindly Clipper is a free tool created to make Amazon Kindle user’s lif
 Installation
 ------------
 
-The program is available in two formats:
+The program is available in three formats:
 
- * Installable, that also installs .NET 4.6.2 for you. Just install the file and look for a new Amazing Kindly Clipper entry in your Start Menu.
- * Executable, to be used only if you’re positive that you have .NET 4.6.2 installed. Unzip it into any folder of your choice and run it to go.
+ * Web (cross-platform): http://akc-gbg.azurewebsites.net 
+ * Installable (Windows), that also installs .NET 4.6.2 for you. Just install the file and look for a new Amazing Kindly Clipper entry in your Start Menu.
+ * Executable (Windows), to be used only if you’re positive that you have .NET 4.6.2 installed. Unzip it into any folder of your choice and run it to go.
 
-In both cases, your antivirus software might stop the program due to a false positive. Feel free to mark the program as safe or halt your antivirus during the installation, Amazing Kindly Clipper does nothing to your computer at any level, apart from writing files to your desktop on export (and only if you want to do that). 
+In the two latter cases your antivirus software might stop the program due to a false positive. Feel free to mark the program as safe or halt your antivirus during the installation, Amazing Kindly Clipper does nothing to your computer at any level, apart from writing files to your desktop on export (and only if you want to do that). Regarding the web app, the content of your text file is sent to the server in order to be parsed, but it is not stored at all. 
 
 How to use the program
 ----------------------

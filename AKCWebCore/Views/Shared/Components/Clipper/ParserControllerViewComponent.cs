@@ -2,7 +2,6 @@
 using AKCWebCore.Extensions;
 using AKCWebCore.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace AKCWebCore.ViewComponents {
 
@@ -58,7 +57,6 @@ namespace AKCWebCore.ViewComponents {
         }
 
         public IViewComponentResult InvokeNewResults() {
-            ResetParser();
             Parse();
 
             return View("~/Views/Shared/Components/Clipper/Results.cshtml", new { model = Helper }.ToExpando());
