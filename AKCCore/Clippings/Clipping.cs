@@ -37,7 +37,7 @@ namespace AKCCore {
             }
         }
 
-        public static bool CharIsDigitOrHyphen(char c) {
+        private static bool CharIsDigitOrHyphen(char c) {
             if (char.IsDigit(c) == true || c.ToString() == "-") {
                 return true;
             } else {

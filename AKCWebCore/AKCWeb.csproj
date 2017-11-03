@@ -13,16 +13,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot\images\world_icon.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="wwwroot\**\*">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AKCCore" Version="1.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
@@ -48,10 +38,6 @@
 
   <ItemGroup>
     <DotNetCliToolReference Include="BundlerMinifier.Core" Version="2.2.301" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\images\AmazingClip.ico" />
   </ItemGroup>
 
 </Project>
