@@ -8,17 +8,12 @@ namespace AKCTests.Clippings {
 
         public Clipping clipping;
         public int validBeginning;
-        public int validEnd;
         public string location;
         public int validPage;
 
         public void InitDefaultClipping(Clipping clipping) {
             clipping.Location = "25-27";
-            validBeginning = 25;
-            validEnd = 27;
-
             clipping.Page = "50";
-            validPage = 50;
         }
 
         [TestInitialize]
@@ -28,35 +23,38 @@ namespace AKCTests.Clippings {
         }
 
         [TestMethod]
-        public void BeginningOfRange() {
-            int testBeginning = (int)clipping.BeginningLocation;
-            Assert.AreEqual(testBeginning, validBeginning);
+        public void TestGetBeginningOfRangeReturnsNumberBeforeHyphen() {
+            int expected = 25;
+            int actual = (int)clipping.BeginningLocation;
+            Assert.AreEqual(actual, expected);
         }
 
         [TestMethod]
-        public void BeginningOfPageRange() {
+        public void TestGetBeginningOfRangeReturnsNullIfCharacterIsAnyOtherThanDigitOrHyphen() {
+            clipping.Location = "2T5-27";
+            int? actual = (int?)clipping.BeginningLocation;
+            Assert.IsNull(actual);
+        }
+
+        [TestMethod]
+        public void TestBeginningOfPageRange() {
+            int validPage = 50;
             int testBeginning = (int)clipping.BeginningPage;
             Assert.AreEqual(testBeginning, validPage);
         }
 
         [TestMethod]
-        public void IllegalRange() {
-            clipping.Location = "2T5-27";
-            Assert.AreEqual(null, clipping.BeginningLocation);
-        }
-
-        [TestMethod]
-        public void TestCharIsDigit() {
+        public void TestCharIsDigitOrHyphenReturnsTrueForDigits() {
             char c = (char)'1';
             bool isDigit = Clipping.CharIsDigitOrHyphen(c);
-            Assert.AreEqual(true, isDigit);
+            Assert.IsTrue(isDigit);
         }
 
         [TestMethod]
-        public void TestCharIsHyphen() {
+        public void TestCharIsDigitOrHyphenReturnsTrueForHyphens() {
             char c = (char)'-';
             bool isHyphen = Clipping.CharIsDigitOrHyphen(c);
-            Assert.AreEqual(true, isHyphen);
+            Assert.IsTrue(isHyphen);
         }
 
         [TestMethod]
@@ -67,17 +65,17 @@ namespace AKCTests.Clippings {
         }
 
         [TestMethod]
-        public void TestClippingNull() {
+        public void IsNullOrEmptyDetectsNullClippings() {
             Clipping myNullClipping = null;
             bool isNull = Clipping.IsNullOrEmpty(myNullClipping);
-            Assert.AreEqual(true, isNull);
+            Assert.IsTrue(isNull);
         }
 
         [TestMethod]
         public void TestIsBookmark() {
             clipping.ClippingType = ClippingTypeEnum.Bookmark;
             bool isBk = Clipping.IsBookMark(clipping);
-            Assert.AreEqual(true, isBk);
+            Assert.IsTrue(isBk);
         }
     }
 }
