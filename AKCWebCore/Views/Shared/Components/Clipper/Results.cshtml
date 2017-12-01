@@ -15,6 +15,7 @@
             var model = (ParserWebHelper)expandoDict["model"];
             var clippingData = model.clippingData;
         }
+        <a href="@(Url.Action("export") + ViewContext.HttpContext.Request.QueryString)">Export</a>
 
         @(Html
             .Grid(clippingData)
@@ -33,6 +34,14 @@
         })
         )
     </div>
+
+    <script type="text/javascript">
+        $(function () {
+            $('#exportButton').click(function () {
+                location.href = MVCGrid.getExportUrl('ExportGrid');
+            });
+        });
+    </script>
 
     <script>
             $('.mvc-grid').mvcgrid();
