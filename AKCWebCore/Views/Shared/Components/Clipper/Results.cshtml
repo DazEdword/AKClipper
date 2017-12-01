@@ -15,7 +15,8 @@
             var model = (ParserWebHelper)expandoDict["model"];
             var clippingData = model.clippingData;
         }
-        <a href="@(Url.Action("export") + ViewContext.HttpContext.Request.QueryString)">Export</a>
+        <a href="@(Url.Action("export") + ViewContext.HttpContext.Request.QueryString)">Export visible</a>
+        <a href="@(Url.Action("export_all"))">Export all</a>
 
         @(Html
             .Grid(clippingData)

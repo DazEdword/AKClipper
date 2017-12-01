@@ -12,6 +12,7 @@ namespace AKCWeb.Controllers {
 
         public ParserWebHelper Helper;
         private const string XlsxContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        private const int max_rows = 99999;
 
         public HomeController(ParserWebHelper helper) {
             Helper = helper;
@@ -39,6 +40,11 @@ namespace AKCWeb.Controllers {
             return ExportGrid();
         }
 
+        [Route("home/export_all")]
+        public ActionResult ExportAll() {
+            return ExportGrid(max_rows);
+        }
+
         [HttpPost]
         public IActionResult Parse(string content, string language) {
             if (content != null && content.Length > 0) {
@@ -53,26 +59,29 @@ namespace AKCWeb.Controllers {
         }
 
         [HttpGet]
-        public ActionResult ExportGrid() {
+        public ActionResult ExportGrid(int rowsPerPage = 10) {
             // Using EPPlus from nuget
             using (ExcelPackage package = new ExcelPackage()) {
                 Int32 row = 2;
                 Int32 col = 1;
 
                 package.Workbook.Worksheets.Add("Data");
-                IGrid<AKCCore.Clipping> grid = CreateExportableGrid();
+                IGrid<AKCCore.Clipping> grid = CreateExportableGrid(rowsPerPage);
                 ExcelWorksheet sheet = package.Workbook.Worksheets["Data"];
 
                 foreach (IGridColumn column in grid.Columns) {
+                    column.IsEncoded = false;
                     sheet.Cells[1, col].Value = column.Title;
                     sheet.Column(col++).Width = 18;
                 }
 
                 foreach (IGridRow<AKCCore.Clipping> gridRow in grid.Rows) {
                     col = 1;
-                    foreach (IGridColumn column in grid.Columns)
+                    foreach (IGridColumn column in grid.Columns) {
+                        column.IsEncoded = false;
                         sheet.Cells[row, col++].Value = column.ValueFor(gridRow);
-
+                    }
+                        
                     row++;
                 }
 
@@ -80,11 +89,13 @@ namespace AKCWeb.Controllers {
 
                 //TODO Add functionality for download visible page, download all.
                 //TODO Fix wrong unicode characters for Spanish language.
+
                 return File(package.GetAsByteArray(), XlsxContentType, "my_clippings.xlsx");
             }
         }
 
-        private IGrid<AKCCore.Clipping> CreateExportableGrid() {
+        private IGrid<AKCCore.Clipping> CreateExportableGrid(int rowsPerPage = 10) {
+
             List<AKCCore.Clipping> clippingData = Helper.clippingData;
 
             IGrid<AKCCore.Clipping> grid = new Grid<AKCCore.Clipping>(clippingData);
@@ -100,7 +111,7 @@ namespace AKCWeb.Controllers {
 
             grid.Pager = new GridPager<AKCCore.Clipping>(grid);
             grid.Processors.Add(grid.Pager);
-            grid.Pager.RowsPerPage = 10;
+            grid.Pager.RowsPerPage = rowsPerPage;
 
             foreach (IGridColumn column in grid.Columns) {
                 column.IsFilterable = true;
