@@ -4,7 +4,7 @@
     <environment names="Development">
     </environment>
 
-    <environment names="Staging, Production">
+    <environment names="Live">
     </environment>
 </head>
 
@@ -15,9 +15,15 @@
             var model = (ParserWebHelper)expandoDict["model"];
             var clippingData = model.clippingData;
         }
-        <a href="@(Url.Action("export") + ViewContext.HttpContext.Request.QueryString)">Export visible</a>
-        <a href="@(Url.Action("export_all"))">Export all</a>
-
+        <div class="mvc-export">
+            <span>
+                <a title="Export visible" href="@(Url.Action("export") + ViewContext.HttpContext.Request.QueryString)">Export visible</a>
+            </span>
+            <span>
+                <a title="Export all" href="@(Url.Action("export_all"))">Export all</a>
+            </span>
+        </div>
+       
         @(Html
             .Grid(clippingData)
             .Build(columns => {

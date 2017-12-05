@@ -11,6 +11,18 @@
 
 /*AKC added START*/
 
+.mvc-export {
+  padding: 12px;
+}
+
+.mvc-export .mvc-export-visible {
+    background-color: red;
+}
+
+.mvc-export .mvc-export-all {
+    background-color: blue;
+}
+
 .mvc-grid tr th {
     background-clip: padding-box;
     position: relative;

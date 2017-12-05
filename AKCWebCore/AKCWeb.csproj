@@ -10,6 +10,7 @@
     <RuntimeFrameworkVersion>1.0.4</RuntimeFrameworkVersion>
     <ApplicationIcon>AmazingClip.ico</ApplicationIcon>
     <RootNamespace>AKCWeb</RootNamespace>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

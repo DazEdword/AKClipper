@@ -5,12 +5,14 @@ using NonFactors.Mvc.Grid;
 using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 
 namespace AKCWeb.Controllers {
 
     public class HomeController : Controller {
 
         public ParserWebHelper Helper;
+        public IConfiguration Config;
         private const string XlsxContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
         private const int max_rows = 99999;
 
@@ -57,6 +59,10 @@ namespace AKCWeb.Controllers {
                 return NotFound();
             }  
         }
+
+        //[HttpGet] public IActionResult GetEnvironment() {
+        //    return Config.GetEn
+        //}
 
         [HttpGet]
         public ActionResult ExportGrid(int rowsPerPage = 10) {

@@ -1,5 +1,4 @@
-﻿using AKCCore;
-using AKCWebCore.Models;
+﻿using AKCWebCore.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -28,6 +27,7 @@ namespace AKCWebCore {
             // Add framework services.
             services.AddMvc();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IConfiguration>(Configuration);
             services.AddScoped<ParserWebHelper, ParserWebHelper>(sp => ParserWebHelper.GetHelper(sp)); 
             services.AddDistributedMemoryCache();
             services.AddMemoryCache();
