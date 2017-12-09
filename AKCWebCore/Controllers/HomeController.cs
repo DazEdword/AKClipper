@@ -55,8 +55,7 @@ namespace AKCWeb.Controllers {
                     language = language,
                 });
             } else {
-                //TODO Not found added just temporarily, return useful error message for user. 
-                return NotFound();
+                return StatusCode(500);
             }  
         }
 

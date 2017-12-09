@@ -28,7 +28,6 @@ namespace AKCWebCore.Models {
             this.reset = false;
             this.clippingData = new List<Clipping>();
 
-            //TODO Is this necessary?
             //Avoids serialization circular reference issue in CultureInfo
             Newtonsoft.Json.JsonConvert.DefaultSettings = () => new Newtonsoft.Json.JsonSerializerSettings() {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
