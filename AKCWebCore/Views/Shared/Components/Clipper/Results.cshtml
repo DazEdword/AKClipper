@@ -17,10 +17,10 @@
         }
         <div class="mvc-export">
             <span>
-                <a title="Export visible" href="@(Url.Action("export") + ViewContext.HttpContext.Request.QueryString)">Export visible</a>
+                <a title="Export visible" class="mvc-export-visible" href="@(Url.Action("export") + ViewContext.HttpContext.Request.QueryString)">Export visible</a>
             </span>
             <span>
-                <a title="Export all" href="@(Url.Action("export_all"))">Export all</a>
+                <a title="Export all"  class="mvc-export-all" href="@(Url.Action("export_all"))">Export all</a>
             </span>
         </div>
        

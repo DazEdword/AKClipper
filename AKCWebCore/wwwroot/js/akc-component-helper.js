@@ -5,7 +5,6 @@ var CONTENT_ID_NAME = Object.freeze("AKCContent");
 var body = $body = $("body");
 
 window.onload = function () {
-    //TODO We are not using JQuery where we could (get elemns by id), fix that.
     document.getElementById('startParsingButton').onclick = function() {
         sendParseRequest(undefined, undefined);
     };
