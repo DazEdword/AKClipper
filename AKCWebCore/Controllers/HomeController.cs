@@ -60,10 +60,6 @@ namespace AKCWeb.Controllers {
             }  
         }
 
-        //[HttpGet] public IActionResult GetEnvironment() {
-        //    return Config.GetEn
-        //}
-
         [HttpGet]
         public ActionResult ExportGrid(int rowsPerPage = 10) {
             // Using EPPlus from nuget
@@ -92,9 +88,6 @@ namespace AKCWeb.Controllers {
                 }
 
                 package.Save();
-
-                //TODO Add functionality for download visible page, download all.
-                //TODO Fix wrong unicode characters for Spanish language.
 
                 return File(package.GetAsByteArray(), XlsxContentType, "my_clippings.xlsx");
             }
