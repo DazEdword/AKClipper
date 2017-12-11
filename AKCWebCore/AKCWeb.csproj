@@ -10,10 +10,12 @@
     <RuntimeFrameworkVersion>1.0.4</RuntimeFrameworkVersion>
     <ApplicationIcon>AmazingClip.ico</ApplicationIcon>
     <RootNamespace>AKCWeb</RootNamespace>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AKCCore" Version="1.0.1" />
+    <PackageReference Include="EPPlus.Core" Version="1.5.4" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Routing" Version="1.1.1" />

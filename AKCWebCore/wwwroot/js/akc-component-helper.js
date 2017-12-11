@@ -5,11 +5,31 @@ var CONTENT_ID_NAME = Object.freeze("AKCContent");
 var body = $body = $("body");
 
 window.onload = function () {
-    //TODO We are not using JQuery where we could (get elemns by id), fix that. 
     document.getElementById('startParsingButton').onclick = function() {
         sendParseRequest(undefined, undefined);
     };
 };
+
+function getEnvironment() {
+    $.ajax({
+        url: url.concat('/home/parse'),
+        data: {
+            content: content,
+            language: language
+        },
+        type: "post",
+        success: function (response) {
+            stop_loading();
+            window.location.reload();
+            var component = document.getElementById('akc-container').innerHTML = response;
+            $('.mvc-grid').mvcgrid();
+        },
+        error: function (dataerror) {
+            stop_loading();
+            alert("Failed to parse. Please refresh your browser and try again.");
+        }
+    });
+}
 
 function sendParseRequest(content, language) {
     //TODO at the moment selecting language also re-sends content, that has to change.

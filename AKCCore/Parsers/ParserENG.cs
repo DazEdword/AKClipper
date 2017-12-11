@@ -108,7 +108,7 @@ namespace AKCCore {
             hasPageNumber = format.pageWording.Any(line.Contains);
             hasLocation = format.locationWording.Any(line.Contains);
 
-            /*Indexes are different in Spanish and English version (answers "where to cut" for the different variables).
+            /* Indexes are different in Spanish and English version (answers "where to cut" for the different variables).
             It also depends on particular formats for each language.*/
 
             var dateIndex = format.dateIndex;

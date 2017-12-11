@@ -3,6 +3,7 @@ using AKCWebCore.Extensions;
 using AKCWebCore.Models;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace AKCWebCore.ViewComponents {
 
     public class ParserControllerViewComponent : ViewComponent {
@@ -16,7 +17,6 @@ namespace AKCWebCore.ViewComponents {
         }
 
         //ViewComponent Sync/Async methods- Only one active at any given time.
-
         //Sync
         public IViewComponentResult Invoke(dynamic parse_params) {
             //Parser setup

@@ -11,6 +11,30 @@
 
 /*AKC added START*/
 
+.mvc-export {
+  padding: 0 12px 12px 0;
+}
+
+.mvc-export .mvc-export-visible:before {
+    vertical-align: -50%;
+    content: "";
+    display: inline-block;
+    background-size: 30px 30px;
+    width: 30px;
+    height: 30px;
+    background-image: url(../images/Export_visible_icon.svg);
+}
+
+.mvc-export .mvc-export-all:before {
+    vertical-align: -50%;
+    content: "";
+    display: inline-block;
+    background-size: 30px 30px;
+    width: 30px;
+    height: 30px;
+    background-image: url(../images/Export_all_icon.svg)
+}
+
 .mvc-grid tr th {
     background-clip: padding-box;
     position: relative;
@@ -38,6 +62,7 @@
 */
 
 .mvc-grid .filterable {
+    padding-left: 30px;
     padding-right: 30px;
     position: relative;
 }

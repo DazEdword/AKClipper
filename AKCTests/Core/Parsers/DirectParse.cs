@@ -3,7 +3,6 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AKCCore;
 
-/* TODO learn how to implement MSTest in .NET Core/ .NETStandard or swap to Xunit/Nunit*/
 
 namespace AKCTests {
     [TestClass]
