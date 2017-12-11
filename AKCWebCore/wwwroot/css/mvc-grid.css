@@ -15,10 +15,6 @@
   padding: 0 12px 12px 0;
 }
 
-.mvc-export .mvc-export-visible {
-
-}
-
 .mvc-export .mvc-export-visible:before {
     vertical-align: -50%;
     content: "";
@@ -26,11 +22,7 @@
     background-size: 30px 30px;
     width: 30px;
     height: 30px;
-    background-image: url('https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSj3XfIpf-OOJRCcWz4iN2CU3qMKVVbj0p0bRvKNGVo1U9pk_8ZIlyR8pWreA');
-}
-
-.mvc-export .mvc-export-all {
-    
+    background-image: url(../images/Export_visible_icon.svg);
 }
 
 .mvc-export .mvc-export-all:before {
@@ -40,7 +32,7 @@
     background-size: 30px 30px;
     width: 30px;
     height: 30px;
-    background-image: url('https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSj3XfIpf-OOJRCcWz4iN2CU3qMKVVbj0p0bRvKNGVo1U9pk_8ZIlyR8pWreA');
+    background-image: url(../images/Export_all_icon.svg)
 }
 
 .mvc-grid tr th {
