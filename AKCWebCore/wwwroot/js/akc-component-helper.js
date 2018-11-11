@@ -41,7 +41,7 @@ function sendParseRequest(content, language) {
         language = document.getElementById("languageSelector").value;
     }
 
-    var url = (ENVIRONMENT === "LIVE") ? LIVE_ENV_URL : DEV_ENV_URL;
+    var url = ENVIRONMENT === "LIVE" ? LIVE_ENV_URL : DEV_ENV_URL;
 
     show_loading();
 
