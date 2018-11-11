@@ -32,6 +32,13 @@ namespace AKCWebCore {
             services.AddDistributedMemoryCache();
             services.AddMemoryCache();
             services.AddMvcGrid();
+            services.AddCors();
+
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
+                options.HttpsPort = 443;
+            });
 
             services.AddSession(options => {
                 options.IdleTimeout = System.TimeSpan.FromMinutes(10);
@@ -41,7 +48,6 @@ namespace AKCWebCore {
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory) {
-
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
@@ -50,10 +56,15 @@ namespace AKCWebCore {
                 app.UseBrowserLink();
             } else {
                 app.UseExceptionHandler("/Home/Error");
+                app.UseHsts();
             }
 
+            app.UseHttpsRedirection();
             app.UseSession();
             app.UseStaticFiles();
+
+            app.UseCors(builder =>
+                builder.WithOrigins("https://akc-gbg.azurewebsites.net"));
 
             app.UseMvc(routes => {
                 routes.MapRoute(

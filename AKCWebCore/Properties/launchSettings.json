@@ -4,7 +4,7 @@
     "anonymousAuthentication": true,
     "iisExpress": {
       "applicationUrl": "http://localhost:60362/",
-      "sslPort": 0
+      "sslPort": 44342
     }
   },
   "profiles": {
@@ -12,16 +12,16 @@
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "applicationUrl": "http://localhost:60362/"
+        "applicationUrl": "http://localhost:60362/",
+        "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "Live IIS": {
       "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Live",
-        "applicationUrl": "http://akc-gbg.azurewebsites.net"
+        "applicationUrl": "http://akc-gbg.azurewebsites.net",
+        "ASPNETCORE_ENVIRONMENT": "Live"
       }
     }
   }
