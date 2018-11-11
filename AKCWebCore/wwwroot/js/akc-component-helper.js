@@ -1,6 +1,6 @@
 ﻿var ENVIRONMENT = "DEV";
-var LIVE_ENV_URL = "http://akc-gbg.azurewebsites.net";
-var DEV_ENV_URL = "http://localhost:60362";
+var LIVE_ENV_URL = "https://akc-gbg.azurewebsites.net";
+var DEV_ENV_URL = "https://localhost:44342";
 var CONTENT_ID_NAME = Object.freeze("AKCContent");
 var body = $body = $("body");
 
@@ -21,7 +21,7 @@ function getEnvironment() {
         success: function (response) {
             stop_loading();
             window.location.reload();
-            var component = document.getElementById('akc-container').innerHTML = response;
+            document.getElementById('akc-container').innerHTML = response;
             $('.mvc-grid').mvcgrid();
         },
         error: function (dataerror) {

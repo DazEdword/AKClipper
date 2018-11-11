@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Hosting;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 
-namespace AKCWebCore
-{
+namespace AKCWebCore {
     public class Program
     {
         public static void Main(string[] args)
