@@ -1,34 +1,15 @@
-﻿var ENVIRONMENT = "DEV";
-var LIVE_ENV_URL = "https://akc-gbg.azurewebsites.net";
-var DEV_ENV_URL = "https://localhost:44342";
-var CONTENT_ID_NAME = Object.freeze("AKCContent");
+﻿var CONTENT_ID_NAME = Object.freeze("AKCContent");
 var body = $body = $("body");
 
 window.onload = function () {
-    document.getElementById('startParsingButton').onclick = function() {
+    document.getElementById('startParsingButton').onclick = function () {
         sendParseRequest(undefined, undefined);
     };
 };
 
-function getEnvironment() {
-    $.ajax({
-        url: url.concat('/home/parse'),
-        data: {
-            content: content,
-            language: language
-        },
-        type: "post",
-        success: function (response) {
-            stop_loading();
-            window.location.reload();
-            document.getElementById('akc-container').innerHTML = response;
-            $('.mvc-grid').mvcgrid();
-        },
-        error: function (dataerror) {
-            stop_loading();
-            alert("Failed to parse. Please refresh your browser and try again.");
-        }
-    });
+function getBaseUrl() {
+    var currentUrl = window.location;
+    return currentUrl.protocol + "//" + currentUrl.host + "/" + currentUrl.pathname.split('/')[1];
 }
 
 function sendParseRequest(content, language) {
@@ -41,7 +22,7 @@ function sendParseRequest(content, language) {
         language = document.getElementById("languageSelector").value;
     }
 
-    var url = ENVIRONMENT === "LIVE" ? LIVE_ENV_URL : DEV_ENV_URL;
+    var url = getBaseUrl();
 
     show_loading();
 
@@ -88,7 +69,7 @@ function SelectFile() {
 
             //Generating preview
             for (var line = 0; line < 39; line++) {
-                if (lines[line] == undefined) break;
+                if (lines[line] === undefined) break;
 
                 var newLine = document.createElement("span");
                 var lineBreak = document.createElement("br");
@@ -97,7 +78,7 @@ function SelectFile() {
                 fileDisplayArea.appendChild(lineBreak);
 
                 //Pick first line for language detection. 
-                if (line == 1) {
+                if (line === 1) {
                     language = detect_language_from_sample(lines[line])
                     if (language) {
                         select_detected_language(language)
@@ -133,11 +114,11 @@ function stop_loading() {
 
 function detect_language_from_sample(sample) {
     list_sample = sample.split(" ")
-    if (list_sample.indexOf("Added") != -1) {
+    if (list_sample.indexOf("Added") !== -1) {
         return "English";
     }
         
-    if (list_sample.indexOf("Añadido") != -1) {
+    if (list_sample.indexOf("Añadido") !== -1) {
         return "Spanish";
     }
 
