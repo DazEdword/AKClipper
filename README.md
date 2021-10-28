@@ -8,7 +8,7 @@ Installation
 
 The program is available in three formats:
 
- * Web (cross-platform): https://akc-gbg.azurewebsites.net 
+ * Web (cross-platform): ~~https://akc-gbg.azurewebsites.net~~ (NOTE: Service no longer available)
  * Installable (Windows), that also installs .NET 4.6.2 for you. Just install the file and look for a new Amazing Kindly Clipper entry in your Start Menu.
  * Executable (Windows), to be used only if you’re positive that you have .NET 4.6.2 installed. Unzip it into any folder of your choice and run it to go.
 
