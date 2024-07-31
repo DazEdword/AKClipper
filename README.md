@@ -37,7 +37,7 @@ How to use the program
 More info & Contact
 -------------------
 
-Ed Garabito - http://www.gottabegarabi.com/blog/amazing-kindly-clipper-1-0/
+Ed Garabito - https://www.gottabegarabi.com/posts/amazing-kindly-clipper-1-0/
 
 License
 -------
